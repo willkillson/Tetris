@@ -38,6 +38,11 @@ Game::Game( MainWindow& wnd )
 		}
 	}
 
+	for (int i = 0; i < bHEIGHT; i++)
+	{
+		line[i] = 0;
+	}
+
 	place_piece(board, &current);
 }
 void Game::Go()
@@ -77,7 +82,7 @@ void Game::UpdateModel()
 
 	}
 	master_move(&current, board);
-	score_board(board, &current, &score, line);
+	score_board();
 
 
 }
@@ -156,7 +161,7 @@ void Game::ComposeFrame()
 
 
 	
-	gfx.DrawRectDem(300, 50, 200, 150, Colors::LightGray);
+	gfx.DrawRectDem(300, 50, 200, 200, Colors::LightGray);
 
 	SevenSegment framecounter(300, 50, 1, Colors::Red, gfx);
 	framecounter.print(int(_TOTFRAMECOUNTER));
@@ -167,7 +172,8 @@ void Game::ComposeFrame()
 	SevenSegment FPS(300, 150, 1, Colors::Blue, gfx);
 	FPS.print(int(_FPSCOUNTER));
 
-
+	SevenSegment SCORE(300, 200, 1, Colors::Blue, gfx);
+	SCORE.print(int(_SCORE));
 
 
 
@@ -227,12 +233,32 @@ void Game::command(piece *x) {
 }
 
 void Game::shift_stack(char board[][bWIDTH], int line[bHEIGHT]) {
+
+
+
+	//calculate how much score you get if line[n] == 10 then we have a point
+	{
+		int score = 0;
+		for (int i = 0; i < bHEIGHT; i++)
+		{
+			if (line[i] == 10)
+			{
+				score++;
+		
+			}
+		}
+		this->_SCORE += score;
+
+	}
+
+
+	//shift stack part
+	{
 	int i = 0;
 	int j = 0;
 	int k = 0;
 	int zero = 0;
 	int one = 1;
-
 	for (i = 0; i < 25; i++) {
 		if (line[i] == 10) {
 			k = i;
@@ -250,22 +276,23 @@ void Game::shift_stack(char board[][bWIDTH], int line[bHEIGHT]) {
 				k--;
 
 			}
+			line[i] = 0;
 		}
 	}
-
+	}
 }
-void Game::score_board(char board[bHEIGHT][bWIDTH], piece *x, int *score, int line[bHEIGHT]) {
+void Game::score_board() {
 
 	int i = 0;
 	int j = 0;
 	int c = 0;
 
-	while (x->set == 1) {// copy x->position into board
+	while (current.set == 1) {// copy current.position into board
 		for (i = 0; i < bHEIGHT; i++) {
 			for (j = 0; j < bWIDTH; j++) {
-				if (x->position[i][j] == block) {
+				if (current.position[i][j] == block) {
 					board[i][j] = block;
-					x->position[i][j] = empty;
+					current.position[i][j] = empty;
 				}
 			}
 		}

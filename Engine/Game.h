@@ -63,6 +63,8 @@ private:
 	float _FPSFRAMECOUNT = 0;
 	float _FPSFRAMETIME = 0;
 
+	unsigned int _SCORE = 0;
+
 	float totalTime = 0;
 	unsigned int levelcounter = 0;
 	FrameTimer ft;
@@ -98,7 +100,7 @@ private:
 
 
 	int line[bHEIGHT];
-	int score = 0;
+
 	int time = 0;
 	int level = 1;
 	char board[bHEIGHT][bWIDTH];
@@ -134,7 +136,7 @@ private:
 	/********************************/
 
 	void shift_stack(char board[][bWIDTH], int line[bHEIGHT]);
-	void score_board(char board[bHEIGHT][bWIDTH], piece *x, int *score, int line[bHEIGHT]);
+	void score_board();
 	void place_piece(char board[][bWIDTH], piece *x);
 	void test();
 	void command(piece *x);
