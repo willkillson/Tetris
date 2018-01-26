@@ -164,98 +164,54 @@ void Game::ComposeFrame()
 
 //testing git comment
 
+void Game::command(piece *x) {
+
+	//This function converts a keypress into a decimal value to be used to move,drop, and rotate pieces through x->command typedef
 
 
+	//skey 0x53
+	//wkey 0x58
+	//akey 0x41
+	//dkey 0x44
 
-void Game::clearScreen() {
-
-	HANDLE hOut;
-	COORD Position;
-
-	hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-
-	Position.X = 0;
-	Position.Y = 0;
-	SetConsoleCursorPosition(hOut, Position);
+	//jkey 0x4A
+	//kkey 0x4B
 
 
-	HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_CURSOR_INFO info;
-	info.dwSize = 100;
-	info.bVisible = FALSE;
-	SetConsoleCursorInfo(consoleHandle, &info);
-}
-void Game::print_board(char board[bHEIGHT][bWIDTH], piece *x, int *score, int time, int line[bHEIGHT]) {
+	const Keyboard::Event e = wnd.kbd.ReadKey();	// get an event from the queue
 
-	int i = 0;
-	int j = 0;
-	int k = 0;
-	int l = 0;
-	int scorees = *score;
+	if (e.IsRelease() || e.GetCode() == 0x53)	// check if it is a release event
+	{
 
-	clearScreen();
-	////////ui///////////
-	int m = 1;
-	if (x->set == 0) {
-		while (m <= 25) {
-			printf("\n");
-			//if (m == 1) {
-			//	printf("\t\t\t Controls   |Left a|  |Right d|  |Down s|  |Instant Drop w|  |Rotate 1| ");
-			//}
-			if (m == 2) {
-				printf("\t\t\t *DEGBUG*  check |W = %d|E =  %d|S =  %d| |SETDELAY = %d", x->W, x->E, x->S, x->setdelay);
-			}
-			if (m == 3) {
-				printf("\t\t\t Time | %d|", (time / 1000));
-			}
-			if (m == 4) {
-				printf("\t\t\t Score = %d", *score);
-			}
+		if (e.GetCode() == 0x53)// check the event
+			x->command = 0;		// respond to  key release event
+		if (e.GetCode() == 0x41)// check the event
+			x->command = 1;		// respond to  key release event
+		if (e.GetCode() == 0x44)// check the event
+			x->command = 2;		// respond to  key release event
+		if (e.GetCode() == 0x57)// check the event
+			x->command = 5;		// respond to  key release event
+		if (e.GetCode() == 0x4A)// check the event
+			x->command = 3;		// respond to  key release event
+		if (e.GetCode() == 0x4B)// check the event
+			x->command = 4;		// respond to  key release event
+	}
+	else
+	{
+		x->command = 999;
+	}
 
-			if (m == 5) {
-				printf("\t\t\tRotate Left Collision - %d\t\t\t\t\t\t", x->rl);
-			}
-			if (m == 6) {
-				printf("\t\t\tRotate Right Collision - %d\t\t\t\t\t\t", x->rr);
-			}
-			if (m == 7) {
-				printf("\t\t\tRotation Position - %d\t\t\t\t\t", x->rotation);
-			}
-			if (m == 8) {
-				printf("\t\t\tTEST 1 - %d\t\t\t\t\t\t", x->test1);
-			}
-			if (m == 9) {
-				printf("\t\t\tTEST 2 - %d\t\t\t\t\t", x->test2);
-			}
+	if (wnd.kbd.KeyIsPressed(0x53))
+	{
+		//this
+		x->command = 0;
 
-			m++;
-		}
 	}
 
 
 
-
-	//copy position of piece x into the board
-
-	clearScreen();
-
-	for (i = 0; i < bHEIGHT; i++) {
-		for (j = 0; j < bWIDTH; j++) {
-			//playable area is 0i to 25i  and 0j to 11j
-			if (x->position[i][j] == block) {
-				printf("%c ", x->position[i][j]);
-			}
-			else {
-				printf("%c ", board[i][j]);
-
-			}
-			//printf("[%d][%d]-%c    ",i,j, board[i][j]);
-		}
-		printf("\n");
-
-	}
-
 }
+
 void Game::shift_stack(char board[][bWIDTH], int line[bHEIGHT]) {
 	int i = 0;
 	int j = 0;
@@ -604,53 +560,6 @@ void Game::test() {
 	//TEST L block position 2
 
 	//TEST L block position 3
-
-}
-void Game::command(piece *x) {
-
-	//This function converts a keypress into a decimal value to be used to move,drop, and rotate pieces through x->command typedef
-
-
-	//skey 0x53
-	//wkey 0x58
-	//akey 0x41
-	//dkey 0x44
-
-	//jkey 0x4A
-	//kkey 0x4B
-
-
-	const Keyboard::Event e = wnd.kbd.ReadKey();	// get an event from the queue
-	
-		if (e.IsRelease()||e.GetCode()== 0x53)	// check if it is a release event
-		{
-
-			if (e.GetCode() == 0x53)// check the event
-				x->command = 0;		// respond to  key release event
-			if (e.GetCode() == 0x41)// check the event
-				x->command = 1;		// respond to  key release event
-			if (e.GetCode() == 0x44)// check the event
-				x->command = 2;		// respond to  key release event
-			if (e.GetCode() == 0x57)// check the event
-				x->command = 5;		// respond to  key release event
-			if (e.GetCode() == 0x4A)// check the event
-				x->command = 3;		// respond to  key release event
-			if (e.GetCode() == 0x4B)// check the event
-				x->command = 4;		// respond to  key release event
-		}
-		else
-		{
-			x->command = 999;
-		}
-
-		if (wnd.kbd.KeyIsPressed(0x53))
-		{
-			//this
-			x->command = 0;
-
-		}
-
-
 
 }
 

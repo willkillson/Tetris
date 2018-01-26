@@ -111,7 +111,6 @@ private:
 
 	piece current;
 
-	void clearScreen();
 	void print_board(char board[bHEIGHT][bWIDTH], piece *x, int *score, int time, int line[bHEIGHT]);
 	void shift_stack(char board[][bWIDTH], int line[bHEIGHT]);
 	void score_board(char board[bHEIGHT][bWIDTH], piece *x, int *score, int line[bHEIGHT]);
