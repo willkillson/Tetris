@@ -40,7 +40,6 @@ Game::Game( MainWindow& wnd )
 
 	place_piece(board, &current);
 }
-
 void Game::Go()
 {
 	gfx.BeginFrame();	
@@ -48,7 +47,6 @@ void Game::Go()
 	ComposeFrame();
 	gfx.EndFrame();
 }
-
 void Game::UpdateModel()
 {
 
@@ -69,18 +67,17 @@ void Game::UpdateModel()
 	}
 	else//players decision
 	{
-		if (movementdelaytotal >= movementdelay)
-		{
+	/*	if (movementdelaytotal >= movementdelay)
+		{*/
 			command(&current);
 			movementdelaytotal = 0;
-		}		
+		/*}		*/
 	}
 	master_move(&current, board);
 	score_board(board, &current, &score, line);
 	current.command = 999;
 
 }
-
 void Game::ComposeFrame()
 {
 
@@ -573,30 +570,29 @@ void Game::command(piece *x) {
 	//jkey 0x4A
 	//kkey 0x4B
 
-	if (wnd.kbd.KeyIsPressed(0x53))
+	while (!wnd.kbd.KeyIsEmpty())
 	{
-		x->command = 0;
+
+	const Keyboard::Event e = wnd.kbd.ReadKey();	// get an event from the queue
+
+		if (e.IsRelease())	// check if it is a release event
+		{
+
+			if (e.GetCode() == 0x53)// check the event
+				x->command = 0;		// respond to  key release event
+			if (e.GetCode() == 0x41)// check the event
+				x->command = 1;		// respond to  key release event
+			if (e.GetCode() == 0x44)// check the event
+				x->command = 2;		// respond to  key release event
+			if (e.GetCode() == 0x58)// check the event
+				x->command = 5;		// respond to  key release event
+			if (e.GetCode() == 0x4A)// check the event
+				x->command = 3;		// respond to  key release event
+			if (e.GetCode() == 0x4B)// check the event
+				x->command = 4;		// respond to  key release event
+		}
 	}
-	if (wnd.kbd.KeyIsPressed(0x41))
-	{
-		x->command = 1;
-	}
-	if (wnd.kbd.KeyIsPressed(0x44))
-	{
-		x->command = 2;
-	}
-	if (wnd.kbd.KeyIsPressed(0x58))
-	{
-		x->command = 5;
-	}
-	if (wnd.kbd.KeyIsPressed(0x4A))
-	{
-		x->command = 3;
-	}
-	if (wnd.kbd.KeyIsPressed(0x4B))
-	{
-		x->command = 4;
-	}
+
 
 }
 

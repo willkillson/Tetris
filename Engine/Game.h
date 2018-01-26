@@ -52,6 +52,7 @@ private:
 
 	float delay = 0;
 	float msdelay = 0;
+	bool duringmovement = false;
 
 	float movementdelaytotal = 0;
 	static constexpr float movementdelay = 0.15f;
