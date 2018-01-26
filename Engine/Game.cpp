@@ -51,21 +51,29 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	//auto startpoint = std::chrono::
+	auto startp = std::chrono::steady_clock::now();
+
 	if (current.set == 1)
 	{
 		place_piece(board, &current);
 	}
 	command(&current);
+
 	master_move(&current, board);
 	score_board(board, &current, &score, line);
-	//print_board(board, &current, &score, time, line);
-	current.command = 999;
+	
 
+	current.command = 999;
+	auto endp = std::chrono::steady_clock::now();
+
+	std::chrono::duration<float> 
 
 }
 
 void Game::ComposeFrame()
 {
+
 	for (int i = 0; i < bHEIGHT; i++)
 	{
 		for (int j = 0; j < bWIDTH; j++)
