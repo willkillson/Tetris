@@ -53,6 +53,7 @@ void Game::UpdateModel()
 {
 
 	const float dt = ft.Mark();
+	movementdelaytotal += dt;
 	msdelay += dt;
 	totalTime += dt;
 
@@ -68,8 +69,11 @@ void Game::UpdateModel()
 	}
 	else//players decision
 	{
-		command(&current);
-		
+		if (movementdelaytotal >= movementdelay)
+		{
+			command(&current);
+			movementdelaytotal = 0;
+		}		
 	}
 	master_move(&current, board);
 	score_board(board, &current, &score, line);

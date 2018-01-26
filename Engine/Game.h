@@ -53,6 +53,13 @@ private:
 	float delay = 0;
 	float msdelay = 0;
 
+	float movementdelaytotal = 0;
+	static constexpr float movementdelay = 0.15f;
+
+	float lockdelay = 0;
+
+
+
 	bool isInputBlocked = false;
 
 	static constexpr int bHEIGHT = 26;
