@@ -51,8 +51,8 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	//auto startpoint = std::chrono::
-	auto startp = std::chrono::steady_clock::now();
+
+	const float dt = ft.Mark();
 
 	if (current.set == 1)
 	{
@@ -65,14 +65,14 @@ void Game::UpdateModel()
 	
 
 	current.command = 999;
-	auto endp = std::chrono::steady_clock::now();
-
-	std::chrono::duration<float> 
 
 }
 
 void Game::ComposeFrame()
 {
+	//auto startpoint = std::chrono::
+	auto start = std::chrono::steady_clock::now();
+
 
 	for (int i = 0; i < bHEIGHT; i++)
 	{
@@ -97,6 +97,11 @@ void Game::ComposeFrame()
 		}
 
 	}
+
+	auto end = std::chrono::steady_clock::now();
+
+	std::chrono::duration<float> runtime = end - start;
+	float durationSecond = runtime.count();
 
 }
 

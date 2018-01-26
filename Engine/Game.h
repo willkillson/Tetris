@@ -24,6 +24,7 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include <chrono>
+#include "FrameTimer.h"
 
 class Game
 {
@@ -44,6 +45,7 @@ private:
 	/********************************/
 	/*  User Variables              */
 	/********************************/
+	FrameTimer ft;
 	static constexpr int bHEIGHT = 26;
 	static constexpr int bWIDTH = 12;
 	static constexpr char boarder = '*';
