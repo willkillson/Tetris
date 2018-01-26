@@ -25,6 +25,7 @@
 #include "Graphics.h"
 #include <chrono>
 #include "FrameTimer.h"
+#include "SevenSegment.h"
 
 class Game
 {
@@ -45,7 +46,15 @@ private:
 	/********************************/
 	/*  User Variables              */
 	/********************************/
+	float totalTime = 0;
+	unsigned int levelcounter = 0;
 	FrameTimer ft;
+
+	float delay = 0;
+	float msdelay = 0;
+
+	bool isInputBlocked = false;
+
 	static constexpr int bHEIGHT = 26;
 	static constexpr int bWIDTH = 12;
 	static constexpr char boarder = '*';
@@ -56,6 +65,8 @@ private:
 	static constexpr int cellpadding = 0;
 	static constexpr int xpos = celldem;
 	static constexpr int ypos = celldem*2;
+
+
 
 	int line[bHEIGHT];
 	int score = 0;

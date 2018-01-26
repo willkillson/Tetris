@@ -53,26 +53,32 @@ void Game::UpdateModel()
 {
 
 	const float dt = ft.Mark();
+	msdelay += dt;
+	totalTime += dt;
 
 	if (current.set == 1)
 	{
 		place_piece(board, &current);
 	}
-	command(&current);
-
+	if (msdelay >= 1+delay)//forcing a movement downward
+	{
+		msdelay = 0;
+		current.command = 0;
+		levelcounter++;
+	}
+	else//players decision
+	{
+		command(&current);
+		
+	}
 	master_move(&current, board);
 	score_board(board, &current, &score, line);
-	
-
 	current.command = 999;
 
 }
 
 void Game::ComposeFrame()
 {
-	//auto startpoint = std::chrono::
-	auto start = std::chrono::steady_clock::now();
-
 
 	for (int i = 0; i < bHEIGHT; i++)
 	{
@@ -98,11 +104,11 @@ void Game::ComposeFrame()
 
 	}
 
-	auto end = std::chrono::steady_clock::now();
 
-	std::chrono::duration<float> runtime = end - start;
-	float durationSecond = runtime.count();
+	SevenSegment totaltimer(200, 0, 1, Colors::Red, gfx);
+	totaltimer.print(int(totalTime));
 
+	//totalTime++;
 }
 
 
