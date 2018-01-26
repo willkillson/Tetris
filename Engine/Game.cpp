@@ -51,9 +51,14 @@ void Game::UpdateModel()
 {
 
 	const float dt = ft.Mark();
-	movementdelaytotal += dt;
-	msdelay += dt;
-	totalTime += dt;
+	_TOTTIME += dt;
+	_FPSFRAMETIME += dt;
+
+
+	_FPSCOUNTER = _FPSFRAMECOUNT / _FPSFRAMETIME;
+	_FPSFRAMETIME = 0;
+	_FPSFRAMECOUNT = 0;
+
 
 	if (current.set == 1)
 	{
@@ -61,7 +66,6 @@ void Game::UpdateModel()
 	}
 	if (msdelay >= 1+delay)//forcing a movement downward
 	{
-		msdelay = 0;
 		current.command = 0;
 		levelcounter++;
 	}
@@ -151,14 +155,24 @@ void Game::ComposeFrame()
 	}
 
 
+	
+	gfx.DrawRectDem(300, 50, 200, 150, Colors::LightGray);
+
+	SevenSegment framecounter(300, 50, 1, Colors::Red, gfx);
+	framecounter.print(int(_TOTFRAMECOUNTER));
+
+	SevenSegment totaltimer(300, 100, 1, Colors::Red, gfx);
+	totaltimer.print(int(_TOTTIME));
+
+	SevenSegment FPS(300, 150, 1, Colors::Blue, gfx);
+	FPS.print(int(_FPSCOUNTER));
 
 
-	SevenSegment totaltimer(200, 0, 1, Colors::Red, gfx);
-	totaltimer.print(int(totalTime));
 
 
 
-	//totalTime++;
+	_FPSFRAMECOUNT++;
+	_TOTFRAMECOUNTER++;
 }
 
 

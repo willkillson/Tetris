@@ -50,15 +50,18 @@ private:
 	//What I am going to model
 	//http://tetris.wikia.com/wiki/Tetris_The_Absolute_The_Grand_Master_2
 	//NEWTIMERSSYEM
-	float _ARE = 25;//measurement is in frames
-	float _DAS = 16;
-	float _LOCK = 30;
-	float _LINECLEAR = 40;
+	float _ARE = 25.0f;//measurement is in frames
+	float _DAS = 16.0f;
+	float _LOCK = 30.0f;
+	float _LINECLEAR = 40.0f;
+	float _GRAVITY = 4.0 /256.0f;//rows per frame
 
-	float _GRAVITY = 4;//rows per frame
+	float _TOTFRAMECOUNTER = 0;
+	float _TOTTIME = 0;
 
-
-
+	float _FPSCOUNTER = 0;
+	float _FPSFRAMECOUNT = 0;
+	float _FPSFRAMETIME = 0;
 
 	float totalTime = 0;
 	unsigned int levelcounter = 0;
