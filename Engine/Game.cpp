@@ -67,15 +67,14 @@ void Game::UpdateModel()
 	}
 	else//players decision
 	{
-	/*	if (movementdelaytotal >= movementdelay)
-		{*/
-			command(&current);
-			movementdelaytotal = 0;
-		/*}		*/
+
+		command(&current);
+		movementdelaytotal = 0;
+
 	}
 	master_move(&current, board);
 	score_board(board, &current, &score, line);
-	current.command = 999;
+
 
 }
 void Game::ComposeFrame()
@@ -570,11 +569,9 @@ void Game::command(piece *x) {
 	//jkey 0x4A
 	//kkey 0x4B
 
-	while (!wnd.kbd.KeyIsEmpty())
-	{
 
 	const Keyboard::Event e = wnd.kbd.ReadKey();	// get an event from the queue
-
+	
 		if (e.IsRelease())	// check if it is a release event
 		{
 
@@ -584,14 +581,18 @@ void Game::command(piece *x) {
 				x->command = 1;		// respond to  key release event
 			if (e.GetCode() == 0x44)// check the event
 				x->command = 2;		// respond to  key release event
-			if (e.GetCode() == 0x58)// check the event
+			if (e.GetCode() == 0x57)// check the event
 				x->command = 5;		// respond to  key release event
 			if (e.GetCode() == 0x4A)// check the event
 				x->command = 3;		// respond to  key release event
 			if (e.GetCode() == 0x4B)// check the event
 				x->command = 4;		// respond to  key release event
 		}
-	}
+		else
+		{
+			x->command = 999;
+		}
+	
 
 
 }
