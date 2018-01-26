@@ -81,6 +81,54 @@ void Game::ComposeFrame()
 {
 
 
+
+	for (int i = 0; i < bHEIGHT; i++)
+	{
+		for (int j = 0; j < bWIDTH; j++)
+		{
+			if (board[i][j] == boarder)
+			{
+				gfx.DrawRectDem(j*celldem+ xpos, i*celldem+ ypos, celldem, celldem, Colors::Blue);
+
+			}
+			if (board[i][j] == block)
+			{
+				gfx.DrawRectDem(j*celldem+ xpos, i*celldem+ypos, celldem, celldem, Colors::MakeRGB(47,79,79));//dimgray
+
+			}
+			/////////////////////////////INDIVIDUAL PIECES HERE
+			if ((current.position[i][j] == block)&&(current.type=='I'))
+			{
+				gfx.DrawRectDem(j*celldem + xpos, i*celldem + ypos, celldem, celldem, Colors::MakeRGB(255,140,0));//dark orange
+			}
+			if ((current.position[i][j] == block) && (current.type == 'Q'))
+			{
+				gfx.DrawRectDem(j*celldem + xpos, i*celldem + ypos, celldem, celldem, Colors::Yellow);
+			}
+			if ((current.position[i][j] == block) && (current.type == 'T'))
+			{
+				gfx.DrawRectDem(j*celldem + xpos, i*celldem + ypos, celldem, celldem, Colors::Cyan);
+			}
+			if ((current.position[i][j] == block) && (current.type == 'L'))
+			{
+				gfx.DrawRectDem(j*celldem + xpos, i*celldem + ypos, celldem, celldem, Colors::MakeRGB(255, 165, 0));//orange
+			}
+			if ((current.position[i][j] == block) && (current.type == 'J'))
+			{
+				gfx.DrawRectDem(j*celldem + xpos, i*celldem + ypos, celldem, celldem, Colors::Blue);
+			}
+			if ((current.position[i][j] == block) && (current.type == 'S'))
+			{
+				gfx.DrawRectDem(j*celldem + xpos, i*celldem + ypos, celldem, celldem, Colors::MakeRGB(255,105,180));//hotpink
+			}
+			if ((current.position[i][j] == block) && (current.type == 'Z'))
+			{
+				gfx.DrawRectDem(j*celldem + xpos, i*celldem + ypos, celldem, celldem, Colors::Green);//hotpink
+			}
+
+		}
+
+	}
 	//gfx.DrawRect(celldem * 2, celldem * 3, celldem * 12, celldem * 27, Colors::LightGray);//inside color
 	for (int k = 3; k < 28; k++) {
 		for (int i = celldem * 2; i < celldem * 12; i++)
@@ -90,37 +138,14 @@ void Game::ComposeFrame()
 
 				if (celldem * k == j)
 				{
-					gfx.PutPixel(i, j, Colors::Red);
+					gfx.PutPixel(i, j, Colors::LightGray);
 				}
+
 				if (celldem * k == i)
 				{
-					gfx.PutPixel(i, j, Colors::Red);
+					gfx.PutPixel(i, j, Colors::LightGray);
 				}
 			}
-		}
-
-	}
-
-	for (int i = 0; i < bHEIGHT; i++)
-	{
-		for (int j = 0; j < bWIDTH; j++)
-		{
-			if (board[i][j] == boarder)
-			{
-				gfx.DrawRectDem(j*celldem+ xpos, i*celldem+ ypos, celldem, celldem, Colors::Cyan);
-				gfx.PutPixel(j, i, Colors::Green);
-			}
-			if (board[i][j] == block)
-			{
-				gfx.DrawRectDem(j*celldem+ xpos, i*celldem+ypos, celldem, celldem, Colors::White);
-				gfx.PutPixel(j, i, Colors::Yellow);
-			}
-			if (current.position[i][j] == block)
-			{
-				gfx.DrawRectDem(j*celldem + xpos, i*celldem + ypos, celldem, celldem, Colors::Yellow);
-				//gfx.PutPixel(j, i, Colors::Red);
-			}
-
 		}
 
 	}
