@@ -51,8 +51,8 @@ private:
 	//http://tetris.wikia.com/wiki/Tetris_The_Absolute_The_Grand_Master_2
 	//NEWTIMERSSYEM
 	float _ARE = 25.0f;//measurement is in frames
-	float _DAS = 16.0f;
-	float _LOCK = 30.0f;
+	float _DAS = 16.0f; //delayed auto shift
+	float _LOCK = 30.0f; //lock delay
 	float _LINECLEAR = 40.0f;
 	float _GRAVITY = 4.0 /256.0f;//rows per frame
 

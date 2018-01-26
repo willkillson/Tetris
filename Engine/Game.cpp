@@ -815,7 +815,7 @@ void Game::collision_I_rotation() {
 		}
 		return;
 	}
-	if ((current.command == 3 | 4) && (current.rotation == 1)) {
+	if ((current.command == (3 | 4)) && (current.rotation == 1)) {
 
 		if ((board[current.from_top][current.from_left + 1] != empty)) {// check right
 			current.rr = 1;
