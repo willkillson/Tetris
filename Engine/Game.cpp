@@ -68,10 +68,12 @@ void Game::ComposeFrame()
 		{
 			if (board[i][j] == boarder)
 			{
+				gfx.DrawRectDem(j*celldem, i*celldem, celldem, celldem, Colors::Cyan);
 				gfx.PutPixel(j, i, Colors::Green);
 			}
 			if (board[i][j] == block)
 			{
+				gfx.DrawRectDem(j*celldem, i*celldem, celldem, celldem, Colors::White);
 				gfx.PutPixel(j, i, Colors::White);
 			}
 		}
