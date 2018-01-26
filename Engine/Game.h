@@ -116,6 +116,8 @@ private:
 		int rr; //prevent rotate right if rotate right is blocked
 		int rl; //prevent rotate left if rotate left is blocked
 
+		int setdelay;
+		int basedelay;
 		int set;// setting a piece will then copy the array position into the array of the board
 		int from_left;//x position to calculate bounds of a block
 		int from_top;//y position to calculate bounds of a block

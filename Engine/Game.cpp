@@ -428,6 +428,11 @@ void Game::place_piece() {
 		current.position[4][6] = block;
 
 	}
+
+	//GLOBAL
+	current.basedelay = 8;
+	current.setdelay = current.basedelay;
+
 }
 
 void Game::music() {
@@ -604,6 +609,10 @@ void Game::test() {
 
 void Game::master_collision() {
 
+	if (current.S == 0) {//reset delay 
+		current.setdelay = current.basedelay;
+	}
+
 	if (current.type == 'I') {
 		collision_I();
 	}
@@ -651,6 +660,9 @@ void Game::master_move() {
 			}
 		}
 		else {
+			if (current.S == 0) {//reset delay 
+				current.setdelay = current.basedelay;
+			}
 			master_collision();
 			move_I();
 			master_collision();
@@ -671,6 +683,9 @@ void Game::master_move() {
 			}
 		}
 		else {
+			if (current.S == 0) {//reset delay 
+				current.setdelay = current.basedelay;
+			}
 			master_collision();
 			move_Q();
 			master_collision();
@@ -689,6 +704,9 @@ void Game::master_move() {
 			}
 		}
 		else {
+			if (current.S == 0) {//reset delay 
+				current.setdelay = current.basedelay;
+			}
 			master_collision();
 			move_S();
 			master_collision();
@@ -706,6 +724,9 @@ void Game::master_move() {
 			}
 		}
 		else {
+			if (current.S == 0) {//reset delay 
+				current.setdelay = current.basedelay;
+			}
 			master_collision();
 			move_L();
 			master_collision();
@@ -723,6 +744,9 @@ void Game::master_move() {
 			}
 		}
 		else {
+			if (current.S == 0) {//reset delay 
+				current.setdelay = current.basedelay;
+			}
 			master_collision();
 			move_J();
 			master_collision();
@@ -740,6 +764,9 @@ void Game::master_move() {
 			}
 		}
 		else {
+			if (current.S == 0) {//reset delay 
+				current.setdelay = current.basedelay;
+			}
 			master_collision();
 			move_Z();
 			master_collision();
@@ -757,6 +784,9 @@ void Game::master_move() {
 			}
 		}
 		else {
+			if (current.S == 0) {//reset delay 
+				current.setdelay = current.basedelay;
+			}
 			master_collision();
 			move_T();
 			master_collision();
@@ -912,7 +942,18 @@ void Game::collision_I() {
 	}
 
 	//This checks if the piece should be set or not, so that it can become apart of the board
-	//FIXME!!!!
+
+	if (current.S == 0) {
+		current.setdelay = current.basedelay;
+	}
+
+	if (current.S == 1) {
+		current.setdelay--;
+	}
+	if ((current.setdelay == 0) && (current.S == 1)) {
+		current.set = 1;
+	}
+
 }
 void Game::move_I_rotate_right() {
 
@@ -1132,17 +1173,15 @@ void Game::collision_Q() {
 
 
 	//This checks if the piece should be set or not, so that it can become apart of the board
-	//FIXME!!!!
-
-	//if (current.S == 0) {
-	//	current.setdelay = current.basedelay;
-	//}
-	//if (current.S == 1) {
-	//	current.setdelay--;
-	//}
-	//if ((current.setdelay == 0) && (current.S == 1)) {
-	//	current.set = 1;
-	//}
+	if (current.S == 0) {
+		current.setdelay = current.basedelay;
+	}
+	if (current.S == 1) {
+		current.setdelay--;
+	}
+	if ((current.setdelay == 0) && (current.S == 1)) {
+		current.set = 1;
+	}
 
 }
 void Game::move_Q() {
@@ -1266,17 +1305,15 @@ void Game::collision_S() {
 
 
 	//This checks if the piece should be set or not, so that it can become apart of the board
-	//FIXME!!!!
-
-	//if (current.S == 0) {
-	//	current.setdelay = current.basedelay;
-	//}
-	//if (current.S == 1) {
-	//	current.setdelay--;
-	//}
-	//if ((current.setdelay == 0) && (current.S == 1)) {
-	//	current.set = 1;
-	//}
+	if (current.S == 0) {
+		current.setdelay = current.basedelay;
+	}
+	if (current.S == 1) {
+		current.setdelay--;
+	}
+	if ((current.setdelay == 0) && (current.S == 1)) {
+		current.set = 1;
+	}
 
 }
 void Game::collision_S_rotation() {
@@ -1611,16 +1648,15 @@ void Game::collision_T() {
 
 
 	//This checks if the piece should be set or not, so that it can become apart of the board
-	//FIXME!!!!
-	//if (current.S == 0) {
-	//	current.setdelay = current.basedelay;
-	//}
-	//if (current.S == 1) {
-	//	current.setdelay--;
-	//}
-	//if ((current.setdelay == 0) && (current.S == 1)) {
-	//	current.set = 1;
-	//}
+	if (current.S == 0) {
+		current.setdelay = current.basedelay;
+	}
+	if (current.S == 1) {
+		current.setdelay--;
+	}
+	if ((current.setdelay == 0) && (current.S == 1)) {
+		current.set = 1;
+	}
 
 }
 void Game::move_T() {
@@ -2122,16 +2158,15 @@ void Game::collision_L() {
 
 
 	//This checks if the piece should be set or not, so that it can become apart of the board
-	//FIXME!!!!
-	//if (current.S == 0) {
-	//	current.setdelay = current.basedelay;
-	//}
-	//if (current.S == 1) {
-	//	current.setdelay--;
-	//}
-	//if ((current.setdelay == 0) && (current.S == 1)) {
-	//	current.set = 1;
-	//}
+	if (current.S == 0) {
+		current.setdelay = current.basedelay;
+	}
+	if (current.S == 1) {
+		current.setdelay--;
+	}
+	if ((current.setdelay == 0) && (current.S == 1)) {
+		current.set = 1;
+	}
 
 }
 void Game::move_L() {
@@ -2796,17 +2831,17 @@ void Game::move_J() {
 
 
 	//This checks if the piece should be set or not, so that it can become apart of the board
-	//FIXME!!!!
-	//if (current.S == 0) {
-	//	current.setdelay = current.basedelay;
-	//}
 
-	//if (current.S == 1) {
-	//	current.setdelay--;
-	//}
-	//if ((current.setdelay == 0) && (current.S == 1)) {
-	//	current.set = 1;
-	//}
+	if (current.S == 0) {
+		current.setdelay = current.basedelay;
+	}
+
+	if (current.S == 1) {
+		current.setdelay--;
+	}
+	if ((current.setdelay == 0) && (current.S == 1)) {
+		current.set = 1;
+	}
 
 
 }
@@ -2995,17 +3030,17 @@ void Game::collision_Z() {
 
 
 	//This checks if the piece should be set or not, so that it can become apart of the board
-	//FIXME!!!!
-	//if (current.S == 0) {
-	//	current.setdelay = current.basedelay;
-	//}
 
-	//if (current.S == 1) {
-	//	current.setdelay--;
-	//}
-	//if ((current.setdelay == 0) && (current.S == 1)) {
-	//	current.set = 1;
-	//}
+	if (current.S == 0) {
+		current.setdelay = current.basedelay;
+	}
+
+	if (current.S == 1) {
+		current.setdelay--;
+	}
+	if ((current.setdelay == 0) && (current.S == 1)) {
+		current.set = 1;
+	}
 
 
 
@@ -3123,17 +3158,17 @@ void Game::move_Z() {
 
 
 	//This checks if the piece should be set or not, so that it can become apart of the board
-	//FIXME!!!!
-	//if (current.S == 0) {
-	//	current.setdelay = current.basedelay;
-	//}
 
-	//if (current.S == 1) {
-	//	current.setdelay--;
-	//}
-	//if ((current.setdelay == 0) && (current.S == 1)) {
-	//	current.set = 1;
-	//}
+	if (current.S == 0) {
+		current.setdelay = current.basedelay;
+	}
+
+	if (current.S == 1) {
+		current.setdelay--;
+	}
+	if ((current.setdelay == 0) && (current.S == 1)) {
+		current.set = 1;
+	}
 
 
 
