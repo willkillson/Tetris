@@ -51,12 +51,12 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-
+	command(&current);
 	master_move(&current, board);
 	score_board(board, &current, &score, line);
 	//print_board(board, &current, &score, time, line);
 	current.command = 999;
-	command(&current);
+
 
 }
 
@@ -68,14 +68,20 @@ void Game::ComposeFrame()
 		{
 			if (board[i][j] == boarder)
 			{
-				gfx.DrawRectDem(j*celldem, i*celldem, celldem, celldem, Colors::Cyan);
+				gfx.DrawRectDem(j*celldem+ xpos, i*celldem+ ypos, celldem, celldem, Colors::Cyan);
 				gfx.PutPixel(j, i, Colors::Green);
 			}
 			if (board[i][j] == block)
 			{
-				gfx.DrawRectDem(j*celldem, i*celldem, celldem, celldem, Colors::White);
+				gfx.DrawRectDem(j*celldem+ xpos, i*celldem+ypos, celldem, celldem, Colors::White);
+				gfx.PutPixel(j, i, Colors::Yellow);
+			}
+			if (current.position[i][j] == block)
+			{
+				gfx.DrawRectDem(j*celldem + xpos, i*celldem + ypos, celldem, celldem, Colors::White);
 				gfx.PutPixel(j, i, Colors::White);
 			}
+
 		}
 
 	}
@@ -238,10 +244,9 @@ void Game::score_board(char board[bHEIGHT][bWIDTH], piece *x, int *score, int li
 }
 void Game::place_piece(char board[][bWIDTH], piece *x) {
 
-	int type = 99;
+	int type = 0;
 
-
-	type = (rand() % 7);
+	x->command = 999;
 
 	if (type == 0) {
 		//drawing an I piece in vertical poistion 0

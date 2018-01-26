@@ -49,10 +49,10 @@ private:
 	static constexpr char empty = ' ';
 	static constexpr char block = 'X';
 
-	static constexpr int celldem = 10;
+	static constexpr int celldem = 20;
 	static constexpr int cellpadding = 0;
-	static constexpr int xpos = 0;
-	static constexpr int ypos = 0;
+	static constexpr int xpos = celldem;
+	static constexpr int ypos = celldem*2;
 
 	int line[bHEIGHT];
 	int score = 0;
