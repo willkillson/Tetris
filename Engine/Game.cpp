@@ -51,6 +51,10 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	if (current.set == 1)
+	{
+		place_piece(board, &current);
+	}
 	command(&current);
 	master_move(&current, board);
 	score_board(board, &current, &score, line);
@@ -244,9 +248,10 @@ void Game::score_board(char board[bHEIGHT][bWIDTH], piece *x, int *score, int li
 }
 void Game::place_piece(char board[][bWIDTH], piece *x) {
 
-	int type = 0;
+	int type = 99;
 
 	x->command = 999;
+	type = (rand() % 7);
 
 	if (type == 0) {
 		//drawing an I piece in vertical poistion 0
