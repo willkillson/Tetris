@@ -80,6 +80,27 @@ void Game::UpdateModel()
 void Game::ComposeFrame()
 {
 
+
+	//gfx.DrawRect(celldem * 2, celldem * 3, celldem * 12, celldem * 27, Colors::LightGray);//inside color
+	for (int k = 3; k < 28; k++) {
+		for (int i = celldem * 2; i < celldem * 12; i++)
+		{
+			for (int j = celldem * 3; j < celldem * 27; j++)
+			{
+
+				if (celldem * k == j)
+				{
+					gfx.PutPixel(i, j, Colors::Red);
+				}
+				if (celldem * k == i)
+				{
+					gfx.PutPixel(i, j, Colors::Red);
+				}
+			}
+		}
+
+	}
+
 	for (int i = 0; i < bHEIGHT; i++)
 	{
 		for (int j = 0; j < bWIDTH; j++)
@@ -96,8 +117,8 @@ void Game::ComposeFrame()
 			}
 			if (current.position[i][j] == block)
 			{
-				gfx.DrawRectDem(j*celldem + xpos, i*celldem + ypos, celldem, celldem, Colors::White);
-				gfx.PutPixel(j, i, Colors::White);
+				gfx.DrawRectDem(j*celldem + xpos, i*celldem + ypos, celldem, celldem, Colors::Yellow);
+				//gfx.PutPixel(j, i, Colors::Red);
 			}
 
 		}
@@ -105,8 +126,12 @@ void Game::ComposeFrame()
 	}
 
 
+
+
 	SevenSegment totaltimer(200, 0, 1, Colors::Red, gfx);
 	totaltimer.print(int(totalTime));
+
+
 
 	//totalTime++;
 }
@@ -572,7 +597,7 @@ void Game::command(piece *x) {
 
 	const Keyboard::Event e = wnd.kbd.ReadKey();	// get an event from the queue
 	
-		if (e.IsRelease())	// check if it is a release event
+		if (e.IsRelease()||e.GetCode()== 0x53)	// check if it is a release event
 		{
 
 			if (e.GetCode() == 0x53)// check the event
@@ -592,7 +617,14 @@ void Game::command(piece *x) {
 		{
 			x->command = 999;
 		}
-	
+
+		if (wnd.kbd.KeyIsPressed(0x53))
+		{
+			//this
+			x->command = 0;
+
+		}
+
 
 
 }

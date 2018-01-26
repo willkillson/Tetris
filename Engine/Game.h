@@ -57,7 +57,11 @@ private:
 	float movementdelaytotal = 0;
 	static constexpr float movementdelay = 0.15f;
 
+
 	float lockdelay = 0;
+
+	float Piecevx = 0;
+	float Piecevy = 0;
 
 
 
