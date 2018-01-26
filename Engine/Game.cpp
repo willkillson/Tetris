@@ -43,7 +43,7 @@ Game::Game( MainWindow& wnd )
 		line[i] = 0;
 	}
 
-	place_piece(board, &current);
+	place_piece();
 }
 void Game::Go()
 {
@@ -67,7 +67,7 @@ void Game::UpdateModel()
 
 	if (current.set == 1)
 	{
-		place_piece(board, &current);
+		place_piece();
 	}
 	if (msdelay >= 1+delay)//forcing a movement downward
 	{
@@ -77,11 +77,11 @@ void Game::UpdateModel()
 	else//players decision
 	{
 
-		command(&current);
+		command();
 		movementdelaytotal = 0;
 
 	}
-	master_move(&current, board);
+	master_move();
 	score_board();
 
 
@@ -184,9 +184,9 @@ void Game::ComposeFrame()
 
 //testing git comment
 
-void Game::command(piece *x) {
+void Game::command() {
 
-	//This function converts a keypress into a decimal value to be used to move,drop, and rotate pieces through x->command typedef
+	//This function converts a keypress into a decimal value to be used to move,drop, and rotate pieces through current.command typedef
 
 
 	//skey 0x53
@@ -204,27 +204,27 @@ void Game::command(piece *x) {
 	{
 
 		if (e.GetCode() == 0x53)// check the event
-			x->command = 0;		// respond to  key release event
+			current.command = 0;		// respond to  key release event
 		if (e.GetCode() == 0x41)// check the event
-			x->command = 1;		// respond to  key release event
+			current.command = 1;		// respond to  key release event
 		if (e.GetCode() == 0x44)// check the event
-			x->command = 2;		// respond to  key release event
+			current.command = 2;		// respond to  key release event
 		if (e.GetCode() == 0x57)// check the event
-			x->command = 5;		// respond to  key release event
+			current.command = 5;		// respond to  key release event
 		if (e.GetCode() == 0x4A)// check the event
-			x->command = 3;		// respond to  key release event
+			current.command = 3;		// respond to  key release event
 		if (e.GetCode() == 0x4B)// check the event
-			x->command = 4;		// respond to  key release event
+			current.command = 4;		// respond to  key release event
 	}
 	else
 	{
-		x->command = 999;
+		current.command = 999;
 	}
 
 	if (wnd.kbd.KeyIsPressed(0x53))
 	{
 		//this
-		x->command = 0;
+		current.command = 0;
 
 	}
 
@@ -232,7 +232,7 @@ void Game::command(piece *x) {
 
 }
 
-void Game::shift_stack(char board[][bWIDTH], int line[bHEIGHT]) {
+void Game::shift_stack() {
 
 
 
@@ -309,129 +309,129 @@ void Game::score_board() {
 		c = 0;
 	}
 
-	shift_stack(board, line);
+	shift_stack();
 
 }
-void Game::place_piece(char board[][bWIDTH], piece *x) {
+void Game::place_piece() {
 
 	int type = 99;
 
-	x->command = 999;
+	current.command = 999;
 	type = (rand() % 7);
 
 	if (type == 0) {
 		//drawing an I piece in vertical poistion 0
-		x->set = 0;
-		x->S = 0;
-		x->E = 0;
-		x->W = 0;
-		x->rl = 0;
-		x->rr = 0;
-		x->rotation = 0;
-		x->type = 'I';
-		x->from_left = 6;
-		x->from_top = 4;
-		x->position[4][4] = block;
-		x->position[4][5] = block;
-		x->position[4][6] = block;
-		x->position[4][7] = block;
+		current.set = 0;
+		current.S = 0;
+		current.E = 0;
+		current.W = 0;
+		current.rl = 0;
+		current.rr = 0;
+		current.rotation = 0;
+		current.type = 'I';
+		current.from_left = 6;
+		current.from_top = 4;
+		current.position[4][4] = block;
+		current.position[4][5] = block;
+		current.position[4][6] = block;
+		current.position[4][7] = block;
 	}
 	if (type == 1) {
 		//drawing a Q square piece
-		x->set = 0;
-		x->S = 0;
-		x->E = 0;
-		x->W = 0;
-		x->rotation = 0;
-		x->type = 'Q';
-		x->from_left = 5;
-		x->from_top = 4;
-		x->position[3][5] = block;
-		x->position[3][6] = block;
-		x->position[4][5] = block;
-		x->position[4][6] = block;
+		current.set = 0;
+		current.S = 0;
+		current.E = 0;
+		current.W = 0;
+		current.rotation = 0;
+		current.type = 'Q';
+		current.from_left = 5;
+		current.from_top = 4;
+		current.position[3][5] = block;
+		current.position[3][6] = block;
+		current.position[4][5] = block;
+		current.position[4][6] = block;
 	}
 	if (type == 2) {
 		//drawing a S piece
-		x->set = 0;
-		x->S = 0;
-		x->E = 0;
-		x->W = 0;
-		x->rotation = 0;
-		x->type = 'S';
-		x->from_left = 5;
-		x->from_top = 4;
-		x->position[4][4] = block;
-		x->position[4][5] = block;
-		x->position[3][5] = block;
-		x->position[3][6] = block;
+		current.set = 0;
+		current.S = 0;
+		current.E = 0;
+		current.W = 0;
+		current.rotation = 0;
+		current.type = 'S';
+		current.from_left = 5;
+		current.from_top = 4;
+		current.position[4][4] = block;
+		current.position[4][5] = block;
+		current.position[3][5] = block;
+		current.position[3][6] = block;
 	}
 	if (type == 3) {
 		//drawing a T piece
-		x->set = 0;
-		x->S = 0;
-		x->E = 0;
-		x->W = 0;
-		x->rotation = 0;
-		x->type = 'T';
-		x->from_left = 5;
-		x->from_top = 3;
-		x->position[3][4] = block;
-		x->position[3][5] = block;
-		x->position[3][6] = block;
-		x->position[4][5] = block;
+		current.set = 0;
+		current.S = 0;
+		current.E = 0;
+		current.W = 0;
+		current.rotation = 0;
+		current.type = 'T';
+		current.from_left = 5;
+		current.from_top = 3;
+		current.position[3][4] = block;
+		current.position[3][5] = block;
+		current.position[3][6] = block;
+		current.position[4][5] = block;
 	}
 	if (type == 4) {
 		//drawing a L piece
-		x->set = 0;
-		x->S = 0;
-		x->E = 0;
-		x->W = 0;
-		x->rotation = 0;
-		x->type = 'L';
-		x->from_left = 4;
-		x->from_top = 4;
-		x->position[4][4] = block;
-		x->position[3][4] = block;
-		x->position[3][5] = block;
-		x->position[3][6] = block;
+		current.set = 0;
+		current.S = 0;
+		current.E = 0;
+		current.W = 0;
+		current.rotation = 0;
+		current.type = 'L';
+		current.from_left = 4;
+		current.from_top = 4;
+		current.position[4][4] = block;
+		current.position[3][4] = block;
+		current.position[3][5] = block;
+		current.position[3][6] = block;
 	}
 	if (type == 5) {
 		//drawing a J piece
-		x->set = 0;
-		x->S = 0;
-		x->E = 0;
-		x->W = 0;
-		x->rotation = 0;
-		x->type = 'J';
-		x->from_left = 6;
-		x->from_top = 4;
-		x->position[3][5] = block;
-		x->position[3][4] = block;
-		x->position[3][6] = block;
-		x->position[4][6] = block;
+		current.set = 0;
+		current.S = 0;
+		current.E = 0;
+		current.W = 0;
+		current.rotation = 0;
+		current.type = 'J';
+		current.from_left = 6;
+		current.from_top = 4;
+		current.position[3][5] = block;
+		current.position[3][4] = block;
+		current.position[3][6] = block;
+		current.position[4][6] = block;
 
 	}
 	if (type == 6) {
 		//drawing a Z piece
-		x->set = 0;
-		x->S = 0;
-		x->E = 0;
-		x->W = 0;
-		x->rotation = 0;
-		x->type = 'Z';
-		x->from_left = 5;
-		x->from_top = 4;
-		x->position[4][5] = block;
-		x->position[3][5] = block;
-		x->position[3][4] = block;
-		x->position[4][6] = block;
+		current.set = 0;
+		current.S = 0;
+		current.E = 0;
+		current.W = 0;
+		current.rotation = 0;
+		current.type = 'Z';
+		current.from_left = 5;
+		current.from_top = 4;
+		current.position[4][5] = block;
+		current.position[3][5] = block;
+		current.position[3][4] = block;
+		current.position[4][6] = block;
 
 	}
 
 	//GLOBAL
-	x->basedelay = 8;
-	x->setdelay = x->basedelay;
+	current.basedelay = 8;
+	current.setdelay = current.basedelay;
 
 }
 
@@ -607,32 +607,32 @@ void Game::test() {
 //Move functions first checks collision off the pieces, before they are moved, and then set into the board[][] array.
 
 
-void Game::master_collision(piece *x, char board[][bWIDTH]) {
+void Game::master_collision() {
 
-	if (x->S == 0) {//reset delay 
-		x->setdelay = x->basedelay;
+	if (current.S == 0) {//reset delay 
+		current.setdelay = current.basedelay;
 	}
 
-	if (x->type == 'I') {
-		collision_I(x, board);
+	if (current.type == 'I') {
+		collision_I();
 	}
-	if (x->type == 'Q') {
-		collision_Q(x, board);
+	if (current.type == 'Q') {
+		collision_Q();
 	}
-	if (x->type == 'L') {
-		collision_L(x, board);
+	if (current.type == 'L') {
+		collision_L();
 	}
-	if (x->type == 'Z') {
-		collision_Z(x, board);
+	if (current.type == 'Z') {
+		collision_Z();
 	}
-	if (x->type == 'S') {
-		collision_S(x, board);
+	if (current.type == 'S') {
+		collision_S();
 	}
-	if (x->type == 'J') {
-		collision_J(x, board);
+	if (current.type == 'J') {
+		collision_J();
 	}
-	if (x->type == 'T') {
-		collision_T(x, board);
+	if (current.type == 'T') {
+		collision_T();
 	}
 
 	///////for all pieces
@@ -640,156 +640,156 @@ void Game::master_collision(piece *x, char board[][bWIDTH]) {
 
 
 }
-void Game::master_move(piece *x, char board[][bWIDTH]) {
+void Game::master_move() {
 
 
 	//999 prevents further movement
-	if (x->command == 999) {
+	if (current.command == 999) {
 		return;
 	}
 
-	if (x->type == 'I') {
-		if (x->command == 5) {
-			x->command = 0;
-			while (x->set != 1) {
-				master_collision(x, board);
-				move_I(x);
-				master_collision(x, board);
+	if (current.type == 'I') {
+		if (current.command == 5) {
+			current.command = 0;
+			while (current.set != 1) {
+				master_collision();
+				move_I();
+				master_collision();
 
 
 			}
 		}
 		else {
-			if (x->S == 0) {//reset delay 
-				x->setdelay = x->basedelay;
+			if (current.S == 0) {//reset delay 
+				current.setdelay = current.basedelay;
 			}
-			master_collision(x, board);
-			move_I(x);
-			master_collision(x, board);
+			master_collision();
+			move_I();
+			master_collision();
 		}
 
 
 
 	}
-	if (x->type == 'Q') {
-		if (x->command == 5) {
-			x->command = 0;
-			while (x->set != 1) {
-				master_collision(x, board);
-				move_Q(x);
-				master_collision(x, board);
+	if (current.type == 'Q') {
+		if (current.command == 5) {
+			current.command = 0;
+			while (current.set != 1) {
+				master_collision();
+				move_Q();
+				master_collision();
 
 
 			}
 		}
 		else {
-			if (x->S == 0) {//reset delay 
-				x->setdelay = x->basedelay;
+			if (current.S == 0) {//reset delay 
+				current.setdelay = current.basedelay;
 			}
-			master_collision(x, board);
-			move_Q(x);
-			master_collision(x, board);
+			master_collision();
+			move_Q();
+			master_collision();
 		}
 
 	}
-	if (x->type == 'S') {
-		if (x->command == 5) {
-			x->command = 0;
-			while (x->set != 1) {
-				master_collision(x, board);
-				move_S(x);
-				master_collision(x, board);
+	if (current.type == 'S') {
+		if (current.command == 5) {
+			current.command = 0;
+			while (current.set != 1) {
+				master_collision();
+				move_S();
+				master_collision();
 
 
 			}
 		}
 		else {
-			if (x->S == 0) {//reset delay 
-				x->setdelay = x->basedelay;
+			if (current.S == 0) {//reset delay 
+				current.setdelay = current.basedelay;
 			}
-			master_collision(x, board);
-			move_S(x);
-			master_collision(x, board);
+			master_collision();
+			move_S();
+			master_collision();
 		}
 	}
-	if (x->type == 'L') {
-		if (x->command == 5) {
-			x->command = 0;
-			while (x->set != 1) {
-				master_collision(x, board);
-				move_L(x);
-				master_collision(x, board);
+	if (current.type == 'L') {
+		if (current.command == 5) {
+			current.command = 0;
+			while (current.set != 1) {
+				master_collision();
+				move_L();
+				master_collision();
 
 
 			}
 		}
 		else {
-			if (x->S == 0) {//reset delay 
-				x->setdelay = x->basedelay;
+			if (current.S == 0) {//reset delay 
+				current.setdelay = current.basedelay;
 			}
-			master_collision(x, board);
-			move_L(x);
-			master_collision(x, board);
+			master_collision();
+			move_L();
+			master_collision();
 		}
 	}
-	if (x->type == 'J') {
-		if (x->command == 5) {
-			x->command = 0;
-			while (x->set != 1) {
-				master_collision(x, board);
-				move_J(x);
-				master_collision(x, board);
+	if (current.type == 'J') {
+		if (current.command == 5) {
+			current.command = 0;
+			while (current.set != 1) {
+				master_collision();
+				move_J();
+				master_collision();
 
 
 			}
 		}
 		else {
-			if (x->S == 0) {//reset delay 
-				x->setdelay = x->basedelay;
+			if (current.S == 0) {//reset delay 
+				current.setdelay = current.basedelay;
 			}
-			master_collision(x, board);
-			move_J(x);
-			master_collision(x, board);
+			master_collision();
+			move_J();
+			master_collision();
 		}
 	}
-	if (x->type == 'Z') {
-		if (x->command == 5) {
-			x->command = 0;
-			while (x->set != 1) {
-				master_collision(x, board);
-				move_Z(x);
-				master_collision(x, board);
+	if (current.type == 'Z') {
+		if (current.command == 5) {
+			current.command = 0;
+			while (current.set != 1) {
+				master_collision();
+				move_Z();
+				master_collision();
 
 
 			}
 		}
 		else {
-			if (x->S == 0) {//reset delay 
-				x->setdelay = x->basedelay;
+			if (current.S == 0) {//reset delay 
+				current.setdelay = current.basedelay;
 			}
-			master_collision(x, board);
-			move_Z(x);
-			master_collision(x, board);
+			master_collision();
+			move_Z();
+			master_collision();
 		}
 	}
-	if (x->type == 'T') {
-		if (x->command == 5) {
-			x->command = 0;
-			while (x->set != 1) {
-				master_collision(x, board);
-				move_T(x);
-				master_collision(x, board);
+	if (current.type == 'T') {
+		if (current.command == 5) {
+			current.command = 0;
+			while (current.set != 1) {
+				master_collision();
+				move_T();
+				master_collision();
 
 
 			}
 		}
 		else {
-			if (x->S == 0) {//reset delay 
-				x->setdelay = x->basedelay;
+			if (current.S == 0) {//reset delay 
+				current.setdelay = current.basedelay;
 			}
-			master_collision(x, board);
-			move_T(x);
-			master_collision(x, board);
+			master_collision();
+			move_T();
+			master_collision();
 		}
 	}
 
@@ -801,42 +801,42 @@ void Game::master_move(piece *x, char board[][bWIDTH]) {
 }
 
 //I Piece type = 0
-void Game::collision_I_rotation(piece *x, char board[][bWIDTH]) {
-	x->rr = 0;
-	x->rl = 0;
+void Game::collision_I_rotation() {
+	current.rr = 0;
+	current.rl = 0;
 
 
 	//I only has two rotation positions, and so we only need to check the top in position one.
-	if (((x->command == 3) || (x->command == 4)) && (x->rotation == 0)) {
+	if (((current.command == 3) || (current.command == 4)) && (current.rotation == 0)) {
 
-		if ((board[x->from_top - 1][x->from_left] != empty) || (board[x->from_top - 2][x->from_left] != empty) || (board[x->from_top + 1][x->from_left] != empty)) {// check top
-			x->rr = 1;
-			x->rl = 1;
+		if ((board[current.from_top - 1][current.from_left] != empty) || (board[current.from_top - 2][current.from_left] != empty) || (board[current.from_top + 1][current.from_left] != empty)) {// check top
+			current.rr = 1;
+			current.rl = 1;
 		}
 		return;
 	}
-	if ((x->command == 3 | 4) && (x->rotation == 1)) {
+	if ((current.command == 3 | 4) && (current.rotation == 1)) {
 
-		if ((board[x->from_top][x->from_left + 1] != empty)) {// check right
-			x->rr = 1;
-			x->rl = 1;
+		if ((board[current.from_top][current.from_left + 1] != empty)) {// check right
+			current.rr = 1;
+			current.rl = 1;
 		}
-		if ((board[x->from_top][x->from_left - 1] != empty) || (board[x->from_top][x->from_left - 2] != empty)) {// check left
-			x->rr = 1;
-			x->rl = 1;
+		if ((board[current.from_top][current.from_left - 1] != empty) || (board[current.from_top][current.from_left - 2] != empty)) {// check left
+			current.rr = 1;
+			current.rl = 1;
 		}
 		return;
 	}
 
 }
-void Game::collision_I(piece *x, char board[][bWIDTH]) {
+void Game::collision_I() {
 
-	if (x->command == 3) {
-		collision_I_rotation(x, board);
+	if (current.command == 3) {
+		collision_I_rotation();
 		return;
 	}
-	if (x->command == 4) {
-		collision_I_rotation(x, board);
+	if (current.command == 4) {
+		collision_I_rotation();
 		return;
 	}
 
@@ -844,78 +844,78 @@ void Game::collision_I(piece *x, char board[][bWIDTH]) {
 
 	////Rotation = 0
 
-	if (((x->command == 0) || (x->command == 1) || (x->command == 2)) && (x->rotation == 0)) {
+	if (((current.command == 0) || (current.command == 1) || (current.command == 2)) && (current.rotation == 0)) {
 
-		if (board[x->from_top][x->from_left - 3] != empty) {// check left
-			x->W = 1;
+		if (board[current.from_top][current.from_left - 3] != empty) {// check left
+			current.W = 1;
 		}
 		else {
-			x->W = 0;
+			current.W = 0;
 		}
-		if (board[x->from_top][x->from_left + 2] != empty) {// check right
-			x->E = 1;
-		}
-		else {
-			x->E = 0;
-		}
-		if ((board[x->from_top + 1][x->from_left] != empty) || (board[x->from_top + 1][x->from_left - 1] != empty) || (board[x->from_top + 1][x->from_left - 2] != empty) || (board[x->from_top + 1][x->from_left + 1] != empty)) {// check south
-			x->S = 1;
+		if (board[current.from_top][current.from_left + 2] != empty) {// check right
+			current.E = 1;
 		}
 		else {
-			x->S = 0;
+			current.E = 0;
+		}
+		if ((board[current.from_top + 1][current.from_left] != empty) || (board[current.from_top + 1][current.from_left - 1] != empty) || (board[current.from_top + 1][current.from_left - 2] != empty) || (board[current.from_top + 1][current.from_left + 1] != empty)) {// check south
+			current.S = 1;
+		}
+		else {
+			current.S = 0;
 		}
 	}
 
 	//Rotation = 1 
 
-	if (((x->command == 0) || (x->command == 1) || (x->command == 2)) && (x->rotation == 1)) {
+	if (((current.command == 0) || (current.command == 1) || (current.command == 2)) && (current.rotation == 1)) {
 		//check left
-		if ((board[x->from_top][x->from_left - 1] != empty) || (board[x->from_top - 1][x->from_left - 1] != empty) || (board[x->from_top - 2][x->from_left - 1] != empty) || (board[x->from_top + 1][x->from_left - 1] != empty)) {
-			x->W = 1;
+		if ((board[current.from_top][current.from_left - 1] != empty) || (board[current.from_top - 1][current.from_left - 1] != empty) || (board[current.from_top - 2][current.from_left - 1] != empty) || (board[current.from_top + 1][current.from_left - 1] != empty)) {
+			current.W = 1;
 
 		}
 		else {
-			x->W = 0;
+			current.W = 0;
 		}
 		//check right
-		if ((board[x->from_top][x->from_left + 1] != empty) || (board[x->from_top - 1][x->from_left + 1] != empty) || (board[x->from_top - 2][x->from_left + 1] != empty) || (board[x->from_top + 1][x->from_left + 1] != empty)) {
-			x->E = 1;
+		if ((board[current.from_top][current.from_left + 1] != empty) || (board[current.from_top - 1][current.from_left + 1] != empty) || (board[current.from_top - 2][current.from_left + 1] != empty) || (board[current.from_top + 1][current.from_left + 1] != empty)) {
+			current.E = 1;
 
 		}
 		else {
-			x->E = 0;
+			current.E = 0;
 		}
 		//check south
-		if (board[x->from_top + 2][x->from_left] != empty) {
-			x->S = 1;
+		if (board[current.from_top + 2][current.from_left] != empty) {
+			current.S = 1;
 
 		}
 		else {
-			x->S = 0;
+			current.S = 0;
 		}
 
 	}
 
 	////Type = I Rotation from 0 to 1
 
-	if ((x->command == 3) && (x->rotation == 0)) {
+	if ((current.command == 3) && (current.rotation == 0)) {
 
-		if ((board[x->from_top - 1][x->from_left] != empty) && (board[x->from_top - 2][x->from_left] != empty)) {// check north
-			x->N = 1;
+		if ((board[current.from_top - 1][current.from_left] != empty) && (board[current.from_top - 2][current.from_left] != empty)) {// check north
+			current.N = 1;
 		}
 		else {
-			x->N = 0;
+			current.N = 0;
 		}
-		if (board[x->from_top + 1][x->from_left] != empty) {// check south
-			x->S = 1;
+		if (board[current.from_top + 1][current.from_left] != empty) {// check south
+			current.S = 1;
 			//prevent set returning now, set should only activate on downward motion;
 			return;
 		}
 		else {
-			x->S = 0;
+			current.S = 0;
 		}
-		x->W = 0;
-		x->E = 0;
+		current.W = 0;
+		current.E = 0;
 
 
 
@@ -923,19 +923,19 @@ void Game::collision_I(piece *x, char board[][bWIDTH]) {
 
 	////Type = I Rotation from 1 to 0
 
-	if ((x->command == 3) && (x->rotation == 1)) {
-		if ((board[x->from_top][x->from_left - 1] != empty) || (board[x->from_top][x->from_left - 2] != empty)) {// check west
-			x->W = 1;
+	if ((current.command == 3) && (current.rotation == 1)) {
+		if ((board[current.from_top][current.from_left - 1] != empty) || (board[current.from_top][current.from_left - 2] != empty)) {// check west
+			current.W = 1;
 		}
 		else {
-			x->W = 0;
+			current.W = 0;
 		}
-		if (board[x->from_top][x->from_left + 1] != empty) {// check east
-			x->E = 1;
+		if (board[current.from_top][current.from_left + 1] != empty) {// check east
+			current.E = 1;
 
 		}
 		else {
-			x->E = 0;
+			current.E = 0;
 		}
 
 
@@ -943,122 +943,122 @@ void Game::collision_I(piece *x, char board[][bWIDTH]) {
 
 	//This checks if the piece should be set or not, so that it can become apart of the board
 
-	if (x->S == 0) {
-		x->setdelay = x->basedelay;
+	if (current.S == 0) {
+		current.setdelay = current.basedelay;
 	}
 
-	if (x->S == 1) {
-		x->setdelay--;
+	if (current.S == 1) {
+		current.setdelay--;
 	}
-	if ((x->setdelay == 0) && (x->S == 1)) {
-		x->set = 1;
+	if ((current.setdelay == 0) && (current.S == 1)) {
+		current.set = 1;
 	}
 
 }
-void Game::move_I_rotate_right(piece *x) {
+void Game::move_I_rotate_right() {
 
 
-	if ((x->rotation == 0) && ((x->rr == 0) && (x->rl == 0))) {//clear if rotation is 0
+	if ((current.rotation == 0) && ((current.rr == 0) && (current.rl == 0))) {//clear if rotation is 0
 															   //erase old rotation
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left - 1] = empty;
-		x->position[x->from_top][x->from_left - 2] = empty;
-		x->position[x->from_top][x->from_left + 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left - 1] = empty;
+		current.position[current.from_top][current.from_left - 2] = empty;
+		current.position[current.from_top][current.from_left + 1] = empty;
 
 		//set new rotation
-		x->rotation = 1;
+		current.rotation = 1;
 		//draw new rotation
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top + 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top + 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left] = block;
 		return;
 	}
 
-	if ((x->rotation == 1) && ((x->rr == 0) && (x->rl == 0))) {
+	if ((current.rotation == 1) && ((current.rr == 0) && (current.rl == 0))) {
 		//erase old rotation
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top + 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top + 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left] = empty;
 		//set new rotation
-		x->rotation = 0;
+		current.rotation = 0;
 		//draw new rotation
-		x->position[x->from_top][x->from_left] = block;
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top][x->from_left - 2] = block;
-		x->position[x->from_top][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top][current.from_left - 2] = block;
+		current.position[current.from_top][current.from_left + 1] = block;
 		return;
 	}
 
 }
-void Game::move_I(piece *x) {
+void Game::move_I() {
 
-	if ((x->command == 4) || (x->command == 3)) {
-		move_I_rotate_right(x);
+	if ((current.command == 4) || (current.command == 3)) {
+		move_I_rotate_right();
 		return;
 	}
 
 
 	// Rotation = 0 Movement =  down
-	if ((x->command == 0) && (x->rotation == 0) && (x->S == 0) && (x->S == 0)) {
-		x->from_top++;
+	if ((current.command == 0) && (current.rotation == 0) && (current.S == 0) && (current.S == 0)) {
+		current.from_top++;
 
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left - 1] = empty;
-		x->position[x->from_top - 1][x->from_left - 2] = empty;
-		x->position[x->from_top - 1][x->from_left + 1] = empty;
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left - 1] = empty;
+		current.position[current.from_top - 1][current.from_left - 2] = empty;
+		current.position[current.from_top - 1][current.from_left + 1] = empty;
 
-		x->position[x->from_top][x->from_left] = block; // middle block
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top][x->from_left - 2] = block;
-		x->position[x->from_top][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block; // middle block
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top][current.from_left - 2] = block;
+		current.position[current.from_top][current.from_left + 1] = block;
 
 
 
 	}
 	// Rotation = 0 Movement =  left
-	if ((x->command == 1) && (x->rotation == 0) && (x->W == 0)) {
-		x->from_left--;
+	if ((current.command == 1) && (current.rotation == 0) && (current.W == 0)) {
+		current.from_left--;
 
 
-		x->position[x->from_top][x->from_left] = empty; // middle block
-		x->position[x->from_top][x->from_left - 1] = empty; // middle block
-		x->position[x->from_top][x->from_left + 1] = empty; // middle block
-		x->position[x->from_top][x->from_left + 2] = empty; // middle block
+		current.position[current.from_top][current.from_left] = empty; // middle block
+		current.position[current.from_top][current.from_left - 1] = empty; // middle block
+		current.position[current.from_top][current.from_left + 1] = empty; // middle block
+		current.position[current.from_top][current.from_left + 2] = empty; // middle block
 
-		x->position[x->from_top][x->from_left] = block; // middle block
-		x->position[x->from_top][x->from_left - 1] = block; // middle block
-		x->position[x->from_top][x->from_left - 2] = block; // middle block
-		x->position[x->from_top][x->from_left + 1] = block; // middle block
+		current.position[current.from_top][current.from_left] = block; // middle block
+		current.position[current.from_top][current.from_left - 1] = block; // middle block
+		current.position[current.from_top][current.from_left - 2] = block; // middle block
+		current.position[current.from_top][current.from_left + 1] = block; // middle block
 
 	}
 	//Rotation = 0 Movement =  right
-	if ((x->command == 2) && (x->rotation == 0) && (x->E == 0)) {
-		x->from_left++;
+	if ((current.command == 2) && (current.rotation == 0) && (current.E == 0)) {
+		current.from_left++;
 
-		x->position[x->from_top][x->from_left] = empty; // middle block
-		x->position[x->from_top][x->from_left - 1] = empty; // middle block
-		x->position[x->from_top][x->from_left - 2] = empty; // middle block
-		x->position[x->from_top][x->from_left - 3] = empty; // middle block
+		current.position[current.from_top][current.from_left] = empty; // middle block
+		current.position[current.from_top][current.from_left - 1] = empty; // middle block
+		current.position[current.from_top][current.from_left - 2] = empty; // middle block
+		current.position[current.from_top][current.from_left - 3] = empty; // middle block
 
-		x->position[x->from_top][x->from_left] = block; // middle block
-		x->position[x->from_top][x->from_left - 1] = block; // middle block
-		x->position[x->from_top][x->from_left - 2] = block; // middle block
-		x->position[x->from_top][x->from_left + 1] = block; // middle block
+		current.position[current.from_top][current.from_left] = block; // middle block
+		current.position[current.from_top][current.from_left - 1] = block; // middle block
+		current.position[current.from_top][current.from_left - 2] = block; // middle block
+		current.position[current.from_top][current.from_left + 1] = block; // middle block
 
 	}
 	//Rotation = 1 Movement = down
-	if ((x->command == 0) && (x->rotation == 1) && (x->S == 0)) {
-		x->from_top++;
+	if ((current.command == 0) && (current.rotation == 1) && (current.S == 0)) {
+		current.from_top++;
 
-		x->position[x->from_top][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left] = block;
-		x->position[x->from_top + 1][x->from_left] = block;
+		current.position[current.from_top][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left] = block;
+		current.position[current.from_top + 1][current.from_left] = block;
 
-		x->position[x->from_top - 4][x->from_left] = empty;
-		x->position[x->from_top - 3][x->from_left] = empty;
+		current.position[current.from_top - 4][current.from_left] = empty;
+		current.position[current.from_top - 3][current.from_left] = empty;
 
 
 
@@ -1066,76 +1066,76 @@ void Game::move_I(piece *x) {
 
 	}
 	//Rotation = 1 Movement =  left
-	if ((x->command == 1) && (x->rotation == 1) && (x->W == 0)) {
-		x->from_left--;
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top + 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left] = block;
+	if ((current.command == 1) && (current.rotation == 1) && (current.W == 0)) {
+		current.from_left--;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top + 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left] = block;
 
-		x->position[x->from_top][x->from_left + 1] = empty;
-		x->position[x->from_top + 1][x->from_left + 1] = empty;
-		x->position[x->from_top - 2][x->from_left + 1] = empty;
-		x->position[x->from_top - 1][x->from_left + 1] = empty;
+		current.position[current.from_top][current.from_left + 1] = empty;
+		current.position[current.from_top + 1][current.from_left + 1] = empty;
+		current.position[current.from_top - 2][current.from_left + 1] = empty;
+		current.position[current.from_top - 1][current.from_left + 1] = empty;
 
 	}
 	//Rotation = 1 Movement =  right
-	if ((x->command == 2) && (x->rotation == 1) && (x->E == 0)) {
-		x->from_left++;
-		x->position[x->from_top][x->from_left] = block;
-		x->position[x->from_top + 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left] = block;
+	if ((current.command == 2) && (current.rotation == 1) && (current.E == 0)) {
+		current.from_left++;
+		current.position[current.from_top][current.from_left] = block;
+		current.position[current.from_top + 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left] = block;
 
-		x->position[x->from_top][x->from_left - 1] = empty;
-		x->position[x->from_top - 1][x->from_left - 1] = empty;
-		x->position[x->from_top - 2][x->from_left - 1] = empty;
-		x->position[x->from_top + 1][x->from_left - 1] = empty;
+		current.position[current.from_top][current.from_left - 1] = empty;
+		current.position[current.from_top - 1][current.from_left - 1] = empty;
+		current.position[current.from_top - 2][current.from_left - 1] = empty;
+		current.position[current.from_top + 1][current.from_left - 1] = empty;
 
 	}
 	//Rotation = 0 Movement = rotate
 	//
 	//
 	//
-	//if ((x->command == 3) && (x->rotation == 0) && (x->W == 0) && (x->E == 0)) {
+	//if ((current.command == 3) && (current.rotation == 0) && (current.W == 0) && (current.E == 0)) {
 
-	//	x->position[x->from_top][x->from_left] = empty;
-	//	x->position[x->from_top][x->from_left - 1] = empty;
-	//	x->position[x->from_top][x->from_left - 2] = empty;
-	//	x->position[x->from_top][x->from_left + 1] = empty;
+	//	current.position[current.from_top][current.from_left] = empty;
+	//	current.position[current.from_top][current.from_left - 1] = empty;
+	//	current.position[current.from_top][current.from_left - 2] = empty;
+	//	current.position[current.from_top][current.from_left + 1] = empty;
 
-	//	x->position[x->from_top][x->from_left] = block;//middle block
-	//	x->position[x->from_top + 1][x->from_left] = block;
-	//	x->position[x->from_top - 1][x->from_left] = block;
-	//	x->position[x->from_top - 2][x->from_left] = block;
+	//	current.position[current.from_top][current.from_left] = block;//middle block
+	//	current.position[current.from_top + 1][current.from_left] = block;
+	//	current.position[current.from_top - 1][current.from_left] = block;
+	//	current.position[current.from_top - 2][current.from_left] = block;
 
 	//	// set new rotation position
-	//	x->rotation = 1;
+	//	current.rotation = 1;
 	//	return;
 	//	//void Game::command so it doesn't interact anymore
-	//	x->command = NULL;
+	//	current.command = NULL;
 	//}
 	//Rotation = 1 Movement = rotate
 
 	//
 	//
 	//
-	//if ((x->command == 3) && (x->rotation == 1) && (x->W == 0) && (x->E == 0)) {
+	//if ((current.command == 3) && (current.rotation == 1) && (current.W == 0) && (current.E == 0)) {
 
-	//	x->position[x->from_top][x->from_left] = empty;
-	//	x->position[x->from_top - 1][x->from_left] = empty;
-	//	x->position[x->from_top - 2][x->from_left] = empty;
-	//	x->position[x->from_top + 1][x->from_left] = empty;
+	//	current.position[current.from_top][current.from_left] = empty;
+	//	current.position[current.from_top - 1][current.from_left] = empty;
+	//	current.position[current.from_top - 2][current.from_left] = empty;
+	//	current.position[current.from_top + 1][current.from_left] = empty;
 
-	//	x->position[x->from_top][x->from_left] = block;
-	//	x->position[x->from_top][x->from_left - 1] = block;
-	//	x->position[x->from_top][x->from_left - 2] = block;
-	//	x->position[x->from_top][x->from_left + 1] = block;
+	//	current.position[current.from_top][current.from_left] = block;
+	//	current.position[current.from_top][current.from_left - 1] = block;
+	//	current.position[current.from_top][current.from_left - 2] = block;
+	//	current.position[current.from_top][current.from_left + 1] = block;
 
 	//	// set new rotation position
-	//	x->rotation = 0;
+	//	current.rotation = 0;
 	//	//void Game::command so it doesn't interact anymore
-	//	x->command = NULL;
+	//	current.command = NULL;
 
 	//}
 
@@ -1144,107 +1144,107 @@ void Game::move_I(piece *x) {
 }
 
 //Q Piece type = 1
-void Game::collision_Q(piece *x, char board[][bWIDTH]) {
+void Game::collision_Q() {
 
 	//Type = Q doesn't rotate
 
 
-	if ((board[x->from_top][x->from_left - 1] != empty) || (board[x->from_top - 1][x->from_left - 1] != empty)) {// check left 
-		x->W = 1;
+	if ((board[current.from_top][current.from_left - 1] != empty) || (board[current.from_top - 1][current.from_left - 1] != empty)) {// check left 
+		current.W = 1;
 	}
 	else {
-		x->W = 0;
+		current.W = 0;
 	}
 
 
-	if ((board[x->from_top][x->from_left + 2] != empty) || (board[x->from_top - 1][x->from_left + 2] != empty)) {// check right
-		x->E = 1;
+	if ((board[current.from_top][current.from_left + 2] != empty) || (board[current.from_top - 1][current.from_left + 2] != empty)) {// check right
+		current.E = 1;
 	}
 	else {
-		x->E = 0;
+		current.E = 0;
 	}
-	if (((board[x->from_top + 1][x->from_left] != empty)) || ((board[x->from_top + 1][x->from_left + 1] != empty))) {// check south
-		x->S = 1;
+	if (((board[current.from_top + 1][current.from_left] != empty)) || ((board[current.from_top + 1][current.from_left + 1] != empty))) {// check south
+		current.S = 1;
 	}
 	else {
-		x->S = 0;
+		current.S = 0;
 	}
 
 
 
 	//This checks if the piece should be set or not, so that it can become apart of the board
-	if (x->S == 0) {
-		x->setdelay = x->basedelay;
+	if (current.S == 0) {
+		current.setdelay = current.basedelay;
 	}
-	if (x->S == 1) {
-		x->setdelay--;
+	if (current.S == 1) {
+		current.setdelay--;
 	}
-	if ((x->setdelay == 0) && (x->S == 1)) {
-		x->set = 1;
+	if ((current.setdelay == 0) && (current.S == 1)) {
+		current.set = 1;
 	}
 
 }
-void Game::move_Q(piece *x) {
+void Game::move_Q() {
 
 
 
 	//prevent Q from rotating because Q doesn't rotate
-	//if ((x->type == 'Q') && ((x->command == 3) || (x->command == 4))) {
-	//	x->command = 0;
+	//if ((current.type == 'Q') && ((current.command == 3) || (current.command == 4))) {
+	//	current.command = 0;
 	//}
 	// Movement =  down
-	if ((x->type == 'Q') && (x->command == 0) && (x->S == 0)) {
-		x->from_top++;
+	if ((current.type == 'Q') && (current.command == 0) && (current.S == 0)) {
+		current.from_top++;
 
-		x->position[x->from_top][x->from_left] = block;
-		x->position[x->from_top][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;
+		current.position[current.from_top][current.from_left + 1] = block;
 
-		x->position[x->from_top - 2][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left + 1] = empty;
+		current.position[current.from_top - 2][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left + 1] = empty;
 
 
 	}
 
 	// Movement =  left
-	if ((x->type == 'Q') && (x->W == 0) && (x->command == 1)) {
-		x->from_left--;
+	if ((current.type == 'Q') && (current.W == 0) && (current.command == 1)) {
+		current.from_left--;
 
-		x->position[x->from_top][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
+		current.position[current.from_top][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
 
 
-		x->position[x->from_top - 1][x->from_left + 2] = empty;
-		x->position[x->from_top][x->from_left + 2] = empty;
+		current.position[current.from_top - 1][current.from_left + 2] = empty;
+		current.position[current.from_top][current.from_left + 2] = empty;
 
 
 
 	}
 
 	// Movement =  right
-	if ((x->type == 'Q') && (x->command == 2) && (x->E == 0)) {
-		x->from_left++;
+	if ((current.type == 'Q') && (current.command == 2) && (current.E == 0)) {
+		current.from_left++;
 
 
-		x->position[x->from_top][x->from_left + 1] = block;
-		x->position[x->from_top - 1][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left + 1] = block;
+		current.position[current.from_top - 1][current.from_left + 1] = block;
 
-		x->position[x->from_top - 1][x->from_left - 1] = empty;
-		x->position[x->from_top][x->from_left - 1] = empty;
+		current.position[current.from_top - 1][current.from_left - 1] = empty;
+		current.position[current.from_top][current.from_left - 1] = empty;
 
 
 	}
 }
 
 //S Piece type = 2
-void Game::collision_S(piece *x, char board[][bWIDTH]) {
+void Game::collision_S() {
 
 
-	if (x->command == 3) {
-		collision_S_rotation(x, board);
+	if (current.command == 3) {
+		collision_S_rotation();
 		return;
 	}
-	if (x->command == 4) {
-		collision_S_rotation(x, board);
+	if (current.command == 4) {
+		collision_S_rotation();
 		return;
 	}
 
@@ -1255,48 +1255,48 @@ void Game::collision_S(piece *x, char board[][bWIDTH]) {
 
 	////Rotation = 0
 
-	if (((x->command == 0) || (x->command == 1) || (x->command == 2) || (x->command == 3)) && (x->rotation == 0)) {
+	if (((current.command == 0) || (current.command == 1) || (current.command == 2) || (current.command == 3)) && (current.rotation == 0)) {
 
-		if ((board[x->from_top][x->from_left - 2] != empty) || (board[x->from_top - 1][x->from_left - 1] != empty)) {// check left
-			x->W = 1;
+		if ((board[current.from_top][current.from_left - 2] != empty) || (board[current.from_top - 1][current.from_left - 1] != empty)) {// check left
+			current.W = 1;
 		}
 		else {
-			x->W = 0;
+			current.W = 0;
 		}
-		if ((board[x->from_top - 1][x->from_left + 2] != empty) || (board[x->from_top][x->from_left + 1] != empty)) {// check right
-			x->E = 1;
-		}
-		else {
-			x->E = 0;
-		}
-		if ((board[x->from_top + 1][x->from_left] != empty) || (board[x->from_top + 1][x->from_left - 1] != empty) || (board[x->from_top][x->from_left + 1] != empty)) {// check south
-			x->S = 1;
+		if ((board[current.from_top - 1][current.from_left + 2] != empty) || (board[current.from_top][current.from_left + 1] != empty)) {// check right
+			current.E = 1;
 		}
 		else {
-			x->S = 0;
+			current.E = 0;
+		}
+		if ((board[current.from_top + 1][current.from_left] != empty) || (board[current.from_top + 1][current.from_left - 1] != empty) || (board[current.from_top][current.from_left + 1] != empty)) {// check south
+			current.S = 1;
+		}
+		else {
+			current.S = 0;
 		}
 	}
 
 
-	if (((x->command == 0) || (x->command == 1) || (x->command == 2) || (x->command == 3)) && (x->rotation == 1)) {
+	if (((current.command == 0) || (current.command == 1) || (current.command == 2) || (current.command == 3)) && (current.rotation == 1)) {
 
-		if ((board[x->from_top][x->from_left - 2] != empty) || (board[x->from_top - 1][x->from_left - 2] != empty) || (board[x->from_top + 1][x->from_left - 1] != empty)) {// check left
-			x->W = 1;
+		if ((board[current.from_top][current.from_left - 2] != empty) || (board[current.from_top - 1][current.from_left - 2] != empty) || (board[current.from_top + 1][current.from_left - 1] != empty)) {// check left
+			current.W = 1;
 		}
 		else {
-			x->W = 0;
+			current.W = 0;
 		}
-		if ((board[x->from_top][x->from_left + 1] != empty) || (board[x->from_top + 1][x->from_left + 1] != empty)) {// check right
-			x->E = 1;
-		}
-		else {
-			x->E = 0;
-		}
-		if ((board[x->from_top + 2][x->from_left] != empty) || (board[x->from_top + 1][x->from_left - 1] != empty)) {// check south
-			x->S = 1;
+		if ((board[current.from_top][current.from_left + 1] != empty) || (board[current.from_top + 1][current.from_left + 1] != empty)) {// check right
+			current.E = 1;
 		}
 		else {
-			x->S = 0;
+			current.E = 0;
+		}
+		if ((board[current.from_top + 2][current.from_left] != empty) || (board[current.from_top + 1][current.from_left - 1] != empty)) {// check south
+			current.S = 1;
+		}
+		else {
+			current.S = 0;
 		}
 	}
 
@@ -1305,80 +1305,80 @@ void Game::collision_S(piece *x, char board[][bWIDTH]) {
 
 
 	//This checks if the piece should be set or not, so that it can become apart of the board
-	if (x->S == 0) {
-		x->setdelay = x->basedelay;
+	if (current.S == 0) {
+		current.setdelay = current.basedelay;
 	}
-	if (x->S == 1) {
-		x->setdelay--;
+	if (current.S == 1) {
+		current.setdelay--;
 	}
-	if ((x->setdelay == 0) && (x->S == 1)) {
-		x->set = 1;
+	if ((current.setdelay == 0) && (current.S == 1)) {
+		current.set = 1;
 	}
 
 }
-void Game::collision_S_rotation(piece *x, char board[][bWIDTH]) {
-	x->rr = 0;
-	x->rl = 0;
+void Game::collision_S_rotation() {
+	current.rr = 0;
+	current.rl = 0;
 
 
 	//S only has two rotation positions, and so we only need to check the top in position one.
-	if ((x->rotation == 0)) {
+	if ((current.rotation == 0)) {
 
-		if ((board[x->from_top - 2][x->from_left - 1] != empty) || (board[x->from_top - 1][x->from_left - 1] != empty) || (board[x->from_top + 1][x->from_left] != empty)) {// check top
-			x->rr = 1;
-			x->rl = 1;
+		if ((board[current.from_top - 2][current.from_left - 1] != empty) || (board[current.from_top - 1][current.from_left - 1] != empty) || (board[current.from_top + 1][current.from_left] != empty)) {// check top
+			current.rr = 1;
+			current.rl = 1;
 		}
 		return;
 	}
-	if ((x->rotation == 1)) {
+	if ((current.rotation == 1)) {
 
-		if ((board[x->from_top - 1][x->from_left + 1] != empty) || (board[x->from_top - 1][x->from_left] != empty)) {// check right
-			x->rr = 1;
-			x->rl = 1;
+		if ((board[current.from_top - 1][current.from_left + 1] != empty) || (board[current.from_top - 1][current.from_left] != empty)) {// check right
+			current.rr = 1;
+			current.rl = 1;
 		}
-		if ((board[x->from_top + 1][x->from_left - 1] != empty)) {// check below
-			x->rr = 1;
-			x->rl = 1;
+		if ((board[current.from_top + 1][current.from_left - 1] != empty)) {// check below
+			current.rr = 1;
+			current.rl = 1;
 		}
 		return;
 	}
 
 
 }
-void Game::move_S_rotate_right(piece *x) {
+void Game::move_S_rotate_right() {
 
-	if ((x->rotation == 0) && ((x->rr == 0) && (x->rl == 0))) {//clear if rotation is 0
+	if ((current.rotation == 0) && ((current.rr == 0) && (current.rl == 0))) {//clear if rotation is 0
 															   //erase old rotation
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left - 1] = empty;
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left + 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left - 1] = empty;
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left + 1] = empty;
 
 		//set new rotation
-		x->from_top--;
-		x->rotation = 1;
+		current.from_top--;
+		current.rotation = 1;
 		//draw new rotation
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top + 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left - 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top + 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left - 1] = block;
 		return;
 	}
 
-	if ((x->rotation == 1) && ((x->rr == 0) && (x->rl == 0))) {
+	if ((current.rotation == 1) && ((current.rr == 0) && (current.rl == 0))) {
 		//erase old rotation
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left - 1] = empty;
-		x->position[x->from_top + 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left - 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left - 1] = empty;
+		current.position[current.from_top + 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left - 1] = empty;
 		//set new rotation
-		x->from_top++;
-		x->rotation = 0;
+		current.from_top++;
+		current.rotation = 0;
 		//draw new rotation
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left + 1] = block;
 		return;
 	}
 
@@ -1386,27 +1386,27 @@ void Game::move_S_rotate_right(piece *x) {
 
 
 }
-void Game::move_S(piece *x) {
+void Game::move_S() {
 
-	if ((x->command == 3) || (x->command == 4)) {
-		move_S_rotate_right(x);
+	if ((current.command == 3) || (current.command == 4)) {
+		move_S_rotate_right();
 	}
 
 
 
 
 	// Rotation = 0 Movement =  down
-	if ((x->command == 0) && (x->rotation == 0) && (x->S == 0) && (x->S == 0)) {
-		x->from_top++;
+	if ((current.command == 0) && (current.rotation == 0) && (current.S == 0) && (current.S == 0)) {
+		current.from_top++;
 
-		x->position[x->from_top][x->from_left] = block;
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top - 1][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top - 1][current.from_left + 1] = block;
 
 
-		x->position[x->from_top - 1][x->from_left - 1] = empty;
-		x->position[x->from_top - 2][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left + 1] = empty;
+		current.position[current.from_top - 1][current.from_left - 1] = empty;
+		current.position[current.from_top - 2][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left + 1] = empty;
 
 
 
@@ -1414,74 +1414,74 @@ void Game::move_S(piece *x) {
 	}
 
 	// Rotation = 0 Movement =  right
-	if ((x->E == 0) && (x->command == 2) && (x->rotation == 0) && (x->E == 0)) {
-		x->from_left++;
+	if ((current.E == 0) && (current.command == 2) && (current.rotation == 0) && (current.E == 0)) {
+		current.from_left++;
 
-		x->position[x->from_top][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left + 1] = block;
 
-		x->position[x->from_top][x->from_left - 2] = empty;
-		x->position[x->from_top - 1][x->from_left - 1] = empty;
+		current.position[current.from_top][current.from_left - 2] = empty;
+		current.position[current.from_top - 1][current.from_left - 1] = empty;
 
 
 	}
 
 	// Rotation = 0 Movement =  left
-	if ((x->W == 0) && (x->command == 1) && (x->rotation == 0) && (x->W == 0)) {
-		x->from_left--;
+	if ((current.W == 0) && (current.command == 1) && (current.rotation == 0) && (current.W == 0)) {
+		current.from_left--;
 
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
 
-		x->position[x->from_top][x->from_left + 1] = empty;
-		x->position[x->from_top - 1][x->from_left + 2] = empty;
+		current.position[current.from_top][current.from_left + 1] = empty;
+		current.position[current.from_top - 1][current.from_left + 2] = empty;
 
 
 	}
 
 	// Rotation = 1 Movement =  down
-	if ((x->command == 0) && (x->rotation == 1) && (x->S == 0) && (x->S == 0)) {
-		x->from_top++;
+	if ((current.command == 0) && (current.rotation == 1) && (current.S == 0) && (current.S == 0)) {
+		current.from_top++;
 
-		x->position[x->from_top - 1][x->from_left] = empty;//middle
-		x->position[x->from_top - 1][x->from_left - 1] = empty;
-		x->position[x->from_top - 2][x->from_left - 1] = empty;
-		x->position[x->from_top][x->from_left] = empty;
+		current.position[current.from_top - 1][current.from_left] = empty;//middle
+		current.position[current.from_top - 1][current.from_left - 1] = empty;
+		current.position[current.from_top - 2][current.from_left - 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;
 
-		x->position[x->from_top][x->from_left] = block;//middle
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top - 1][x->from_left - 1] = block;
-		x->position[x->from_top + 1][x->from_left] = block;
+		current.position[current.from_top][current.from_left] = block;//middle
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top - 1][current.from_left - 1] = block;
+		current.position[current.from_top + 1][current.from_left] = block;
 
 
 
 	}
 
 	// Rotation = 1 Movement =  left
-	if ((x->command == 1) && (x->rotation == 1) && (x->W == 0)) {
-		x->from_left--;
+	if ((current.command == 1) && (current.rotation == 1) && (current.W == 0)) {
+		current.from_left--;
 
-		x->position[x->from_top][x->from_left - 1] = block;//middle
-		x->position[x->from_top - 1][x->from_left - 1] = block;
-		x->position[x->from_top + 1][x->from_left] = block;
+		current.position[current.from_top][current.from_left - 1] = block;//middle
+		current.position[current.from_top - 1][current.from_left - 1] = block;
+		current.position[current.from_top + 1][current.from_left] = block;
 
-		x->position[x->from_top][x->from_left + 1] = empty;
-		x->position[x->from_top + 1][x->from_left + 1] = empty;
-		x->position[x->from_top - 1][x->from_left] = empty;
+		current.position[current.from_top][current.from_left + 1] = empty;
+		current.position[current.from_top + 1][current.from_left + 1] = empty;
+		current.position[current.from_top - 1][current.from_left] = empty;
 
 	}
 
 	// Rotation = 1 Movement =  right
-	if ((x->command == 2) && (x->rotation == 1) && (x->E == 0)) {
-		x->from_left++;
+	if ((current.command == 2) && (current.rotation == 1) && (current.E == 0)) {
+		current.from_left++;
 
-		x->position[x->from_top][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left - 1] = block;
-		x->position[x->from_top + 1][x->from_left] = block;
+		current.position[current.from_top][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left - 1] = block;
+		current.position[current.from_top + 1][current.from_left] = block;
 
-		x->position[x->from_top][x->from_left - 2] = empty;
-		x->position[x->from_top - 1][x->from_left - 2] = empty;
-		x->position[x->from_top + 1][x->from_left - 1] = empty;
+		current.position[current.from_top][current.from_left - 2] = empty;
+		current.position[current.from_top - 1][current.from_left - 2] = empty;
+		current.position[current.from_top + 1][current.from_left - 1] = empty;
 
 
 
@@ -1493,154 +1493,154 @@ void Game::move_S(piece *x) {
 }
 
 //T Piece type = 3
-void Game::collision_T_rotation(piece * x, char board[][bWIDTH]) {
-	x->rr = 0;
-	x->rl = 0;
+void Game::collision_T_rotation() {
+	current.rr = 0;
+	current.rl = 0;
 
-	if (x->rotation == 0) {
+	if (current.rotation == 0) {
 
-		if ((board[x->from_top - 1][x->from_left] != empty)) {
-			x->rl = 1;
-			x->rr = 1;
+		if ((board[current.from_top - 1][current.from_left] != empty)) {
+			current.rl = 1;
+			current.rr = 1;
 		}
 		return;
 	}
-	if (x->rotation == 1) {
+	if (current.rotation == 1) {
 
-		if ((board[x->from_top][x->from_left + 1] != empty)) {
-			x->rl = 1;
+		if ((board[current.from_top][current.from_left + 1] != empty)) {
+			current.rl = 1;
 		}
-		if ((board[x->from_top + 1][x->from_left - 1] != empty) || (board[x->from_top + 1][x->from_left + 1] != empty)) {
-			x->rr = 1;
+		if ((board[current.from_top + 1][current.from_left - 1] != empty) || (board[current.from_top + 1][current.from_left + 1] != empty)) {
+			current.rr = 1;
 		}
 		return;
 	}
-	if (x->rotation == 2) {
+	if (current.rotation == 2) {
 
-		if ((board[x->from_top][x->from_left + 1] != empty) || (board[x->from_top][x->from_left - 1] != empty)) {
-			x->rl = 1;
+		if ((board[current.from_top][current.from_left + 1] != empty) || (board[current.from_top][current.from_left - 1] != empty)) {
+			current.rl = 1;
 		}
-		if ((board[x->from_top + 1][x->from_left - 1] != empty) || (board[x->from_top + 1][x->from_left + 1] != empty)) {
-			x->rr = 1;
+		if ((board[current.from_top + 1][current.from_left - 1] != empty) || (board[current.from_top + 1][current.from_left + 1] != empty)) {
+			current.rr = 1;
 		}
 		return;
 	}
-	if (x->rotation == 3) {
+	if (current.rotation == 3) {
 
-		if ((board[x->from_top + 1][x->from_left - 1] != empty) || (board[x->from_top + 1][x->from_left + 1] != empty)) {
-			x->rl = 1;
+		if ((board[current.from_top + 1][current.from_left - 1] != empty) || (board[current.from_top + 1][current.from_left + 1] != empty)) {
+			current.rl = 1;
 		}
-		if (board[x->from_top][x->from_left - 1] != empty) {
-			x->rr = 1;
+		if (board[current.from_top][current.from_left - 1] != empty) {
+			current.rr = 1;
 		}
 		return;
 	}
 
 }
-void Game::collision_T(piece *x, char board[][bWIDTH]) {
+void Game::collision_T() {
 
 
-	if (x->command == 3) {
-		collision_T_rotation(x, board);
+	if (current.command == 3) {
+		collision_T_rotation();
 		return;
 	}
-	if (x->command == 4) {
-		collision_T_rotation(x, board);
+	if (current.command == 4) {
+		collision_T_rotation();
 		return;
 	}
 
 	////Rotation = 0
-	if (x->rotation == 0) {
+	if (current.rotation == 0) {
 
-		if ((board[x->from_top][x->from_left - 2] != empty) || (board[x->from_top + 1][x->from_left - 1] != empty)) {// check left
-			x->W = 1;
+		if ((board[current.from_top][current.from_left - 2] != empty) || (board[current.from_top + 1][current.from_left - 1] != empty)) {// check left
+			current.W = 1;
 		}
 		else {
-			x->W = 0;
+			current.W = 0;
 		}
-		if ((board[x->from_top][x->from_left + 2] != empty) || (board[x->from_top + 1][x->from_left + 1] != empty)) {// check right
-			x->E = 1;
-		}
-		else {
-			x->E = 0;
-		}
-		if ((board[x->from_top + 2][x->from_left] != empty) || (board[x->from_top + 1][x->from_left - 1] != empty) || (board[x->from_top + 1][x->from_left + 1] != empty)) {// check south
-			x->S = 1;
+		if ((board[current.from_top][current.from_left + 2] != empty) || (board[current.from_top + 1][current.from_left + 1] != empty)) {// check right
+			current.E = 1;
 		}
 		else {
-			x->S = 0;
+			current.E = 0;
+		}
+		if ((board[current.from_top + 2][current.from_left] != empty) || (board[current.from_top + 1][current.from_left - 1] != empty) || (board[current.from_top + 1][current.from_left + 1] != empty)) {// check south
+			current.S = 1;
+		}
+		else {
+			current.S = 0;
 		}
 
 	}
 
 	////Rotation = 1
-	if (x->rotation == 1) {
+	if (current.rotation == 1) {
 
-		if ((board[x->from_top][x->from_left - 2] != empty) || (board[x->from_top + 1][x->from_left - 1] != empty) || (board[x->from_top - 1][x->from_left - 1] != empty)) {// check left
-			x->W = 1;
+		if ((board[current.from_top][current.from_left - 2] != empty) || (board[current.from_top + 1][current.from_left - 1] != empty) || (board[current.from_top - 1][current.from_left - 1] != empty)) {// check left
+			current.W = 1;
 		}
 		else {
-			x->W = 0;
+			current.W = 0;
 		}
-		if ((board[x->from_top - 1][x->from_left + 1] != empty) || (board[x->from_top][x->from_left + 1] != empty) || (board[x->from_top + 1][x->from_left + 1] != empty)) {// check right
-			x->E = 1;
-		}
-		else {
-			x->E = 0;
-		}
-		if ((board[x->from_top + 2][x->from_left] != empty) || (board[x->from_top + 1][x->from_left - 1] != empty)) {// check south
-			x->S = 1;
+		if ((board[current.from_top - 1][current.from_left + 1] != empty) || (board[current.from_top][current.from_left + 1] != empty) || (board[current.from_top + 1][current.from_left + 1] != empty)) {// check right
+			current.E = 1;
 		}
 		else {
-			x->S = 0;
+			current.E = 0;
+		}
+		if ((board[current.from_top + 2][current.from_left] != empty) || (board[current.from_top + 1][current.from_left - 1] != empty)) {// check south
+			current.S = 1;
+		}
+		else {
+			current.S = 0;
 		}
 
 	}
 
 	////Rotation = 2
-	if (((x->command == 0) || (x->command == 1) || (x->command == 2) || (x->command == 3)) && (x->rotation == 2)) {
+	if (((current.command == 0) || (current.command == 1) || (current.command == 2) || (current.command == 3)) && (current.rotation == 2)) {
 
-		if ((board[x->from_top][x->from_left - 1] != empty) || (board[x->from_top + 1][x->from_left - 2] != empty)) {// check left
-			x->W = 1;
+		if ((board[current.from_top][current.from_left - 1] != empty) || (board[current.from_top + 1][current.from_left - 2] != empty)) {// check left
+			current.W = 1;
 		}
 		else {
-			x->W = 0;
+			current.W = 0;
 		}
-		if ((board[x->from_top][x->from_left + 1] != empty) || (board[x->from_top + 1][x->from_left + 2] != empty)) {// check right
-			x->E = 1;
-		}
-		else {
-			x->E = 0;
-		}
-		if ((board[x->from_top + 2][x->from_left] != empty) || (board[x->from_top + 2][x->from_left + 1] != empty) || (board[x->from_top + 2][x->from_left - 1] != empty)) {// check south
-			x->S = 1;
+		if ((board[current.from_top][current.from_left + 1] != empty) || (board[current.from_top + 1][current.from_left + 2] != empty)) {// check right
+			current.E = 1;
 		}
 		else {
-			x->S = 0;
+			current.E = 0;
+		}
+		if ((board[current.from_top + 2][current.from_left] != empty) || (board[current.from_top + 2][current.from_left + 1] != empty) || (board[current.from_top + 2][current.from_left - 1] != empty)) {// check south
+			current.S = 1;
+		}
+		else {
+			current.S = 0;
 		}
 
 	}
 
 	////Rotation = 3
-	if (((x->command == 0) || (x->command == 1) || (x->command == 2) || (x->command == 3)) && (x->rotation == 3)) {
+	if (((current.command == 0) || (current.command == 1) || (current.command == 2) || (current.command == 3)) && (current.rotation == 3)) {
 
-		if ((board[x->from_top][x->from_left - 1] != empty) || (board[x->from_top + 1][x->from_left - 1] != empty) || (board[x->from_top - 1][x->from_left - 1] != empty)) {// check left
-			x->W = 1;
+		if ((board[current.from_top][current.from_left - 1] != empty) || (board[current.from_top + 1][current.from_left - 1] != empty) || (board[current.from_top - 1][current.from_left - 1] != empty)) {// check left
+			current.W = 1;
 		}
 		else {
-			x->W = 0;
+			current.W = 0;
 		}
-		if ((board[x->from_top][x->from_left + 2] != empty) || (board[x->from_top - 1][x->from_left + 1] != empty) || (board[x->from_top + 1][x->from_left + 1] != empty)) {// check right
-			x->E = 1;
-		}
-		else {
-			x->E = 0;
-		}
-		if ((board[x->from_top + 2][x->from_left] != empty) || (board[x->from_top + 1][x->from_left + 1] != empty)) {// check south
-			x->S = 1;
+		if ((board[current.from_top][current.from_left + 2] != empty) || (board[current.from_top - 1][current.from_left + 1] != empty) || (board[current.from_top + 1][current.from_left + 1] != empty)) {// check right
+			current.E = 1;
 		}
 		else {
-			x->S = 0;
+			current.E = 0;
+		}
+		if ((board[current.from_top + 2][current.from_left] != empty) || (board[current.from_top + 1][current.from_left + 1] != empty)) {// check south
+			current.S = 1;
+		}
+		else {
+			current.S = 0;
 		}
 
 	}
@@ -1648,212 +1648,212 @@ void Game::collision_T(piece *x, char board[][bWIDTH]) {
 
 
 	//This checks if the piece should be set or not, so that it can become apart of the board
-	if (x->S == 0) {
-		x->setdelay = x->basedelay;
+	if (current.S == 0) {
+		current.setdelay = current.basedelay;
 	}
-	if (x->S == 1) {
-		x->setdelay--;
+	if (current.S == 1) {
+		current.setdelay--;
 	}
-	if ((x->setdelay == 0) && (x->S == 1)) {
-		x->set = 1;
+	if ((current.setdelay == 0) && (current.S == 1)) {
+		current.set = 1;
 	}
 
 }
-void Game::move_T(piece *x) {
+void Game::move_T() {
 
-	if ((x->command == 3) || (x->command == 4)) {
-		move_T_rotate(x);
+	if ((current.command == 3) || (current.command == 4)) {
+		move_T_rotate();
 		return;
 	}
 
 	// Rotation = 0 Movement =  down
-	if ((x->command == 0) && (x->rotation == 0) && (x->S == 0)) {
+	if ((current.command == 0) && (current.rotation == 0) && (current.S == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left - 1] = empty;
-		x->position[x->from_top][x->from_left + 1] = empty;
-		x->position[x->from_top + 1][x->from_left] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left - 1] = empty;
+		current.position[current.from_top][current.from_left + 1] = empty;
+		current.position[current.from_top + 1][current.from_left] = empty;
 
-		x->from_top++;
+		current.from_top++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top][x->from_left + 1] = block;
-		x->position[x->from_top + 1][x->from_left] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top][current.from_left + 1] = block;
+		current.position[current.from_top + 1][current.from_left] = block;
 
 	}
 	// Rotation = 0 Movement =  right
-	if ((x->command == 2) && (x->rotation == 0) && (x->E == 0)) {
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left - 1] = empty;
-		x->position[x->from_top][x->from_left + 1] = empty;
-		x->position[x->from_top + 1][x->from_left] = empty;
+	if ((current.command == 2) && (current.rotation == 0) && (current.E == 0)) {
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left - 1] = empty;
+		current.position[current.from_top][current.from_left + 1] = empty;
+		current.position[current.from_top + 1][current.from_left] = empty;
 
-		x->from_left++;
+		current.from_left++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top][x->from_left + 1] = block;
-		x->position[x->from_top + 1][x->from_left] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top][current.from_left + 1] = block;
+		current.position[current.from_top + 1][current.from_left] = block;
 
 	}
 	// Rotation = 0 Movement =  left
-	if ((x->command == 1) && (x->rotation == 0) && (x->W == 0)) {
+	if ((current.command == 1) && (current.rotation == 0) && (current.W == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left - 1] = empty;
-		x->position[x->from_top][x->from_left + 1] = empty;
-		x->position[x->from_top + 1][x->from_left] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left - 1] = empty;
+		current.position[current.from_top][current.from_left + 1] = empty;
+		current.position[current.from_top + 1][current.from_left] = empty;
 
-		x->from_left--;
+		current.from_left--;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top][x->from_left + 1] = block;
-		x->position[x->from_top + 1][x->from_left] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top][current.from_left + 1] = block;
+		current.position[current.from_top + 1][current.from_left] = block;
 
 	}
 
 
 	// Rotation = 1 Movement =  down
-	if ((x->command == 0) && (x->rotation == 1) && (x->S == 0)) {
+	if ((current.command == 0) && (current.rotation == 1) && (current.S == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left - 1] = empty;
-		x->position[x->from_top + 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left - 1] = empty;
+		current.position[current.from_top + 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left] = empty;
 
-		x->from_top++;
+		current.from_top++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top + 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top + 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
 
 	}
 	// Rotation = 1 Movement =  right
-	if ((x->command == 2) && (x->rotation == 1) && (x->E == 0)) {
+	if ((current.command == 2) && (current.rotation == 1) && (current.E == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left - 1] = empty;
-		x->position[x->from_top + 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left - 1] = empty;
+		current.position[current.from_top + 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left] = empty;
 
-		x->from_left++;
+		current.from_left++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top + 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top + 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
 
 	}
 	// Rotation = 1 Movement =  left
-	if ((x->command == 1) && (x->rotation == 1) && (x->W == 0)) {
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left - 1] = empty;
-		x->position[x->from_top + 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left] = empty;
+	if ((current.command == 1) && (current.rotation == 1) && (current.W == 0)) {
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left - 1] = empty;
+		current.position[current.from_top + 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left] = empty;
 
-		x->from_left--;
+		current.from_left--;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top + 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top + 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
 	}
 
 	// Rotation = 2 Movement =  down
-	if ((x->command == 0) && (x->rotation == 2) && (x->S == 0)) {
+	if ((current.command == 0) && (current.rotation == 2) && (current.S == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top + 1][x->from_left] = empty;
-		x->position[x->from_top + 1][x->from_left - 1] = empty;
-		x->position[x->from_top + 1][x->from_left + 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top + 1][current.from_left] = empty;
+		current.position[current.from_top + 1][current.from_left - 1] = empty;
+		current.position[current.from_top + 1][current.from_left + 1] = empty;
 
-		x->from_top++;
+		current.from_top++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top + 1][x->from_left] = block;
-		x->position[x->from_top + 1][x->from_left - 1] = block;
-		x->position[x->from_top + 1][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top + 1][current.from_left] = block;
+		current.position[current.from_top + 1][current.from_left - 1] = block;
+		current.position[current.from_top + 1][current.from_left + 1] = block;
 
 	}
 	// Rotation = 2 Movement =  right
-	if ((x->command == 2) && (x->rotation == 2) && (x->E == 0)) {
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top + 1][x->from_left] = empty;
-		x->position[x->from_top + 1][x->from_left - 1] = empty;
-		x->position[x->from_top + 1][x->from_left + 1] = empty;
+	if ((current.command == 2) && (current.rotation == 2) && (current.E == 0)) {
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top + 1][current.from_left] = empty;
+		current.position[current.from_top + 1][current.from_left - 1] = empty;
+		current.position[current.from_top + 1][current.from_left + 1] = empty;
 
-		x->from_left++;
+		current.from_left++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top + 1][x->from_left] = block;
-		x->position[x->from_top + 1][x->from_left - 1] = block;
-		x->position[x->from_top + 1][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top + 1][current.from_left] = block;
+		current.position[current.from_top + 1][current.from_left - 1] = block;
+		current.position[current.from_top + 1][current.from_left + 1] = block;
 
 	}
 	// Rotation = 2 Movement =  left
-	if ((x->command == 1) && (x->rotation == 2) && (x->W == 0)) {
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top + 1][x->from_left] = empty;
-		x->position[x->from_top + 1][x->from_left - 1] = empty;
-		x->position[x->from_top + 1][x->from_left + 1] = empty;
+	if ((current.command == 1) && (current.rotation == 2) && (current.W == 0)) {
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top + 1][current.from_left] = empty;
+		current.position[current.from_top + 1][current.from_left - 1] = empty;
+		current.position[current.from_top + 1][current.from_left + 1] = empty;
 
-		x->from_left--;
+		current.from_left--;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top + 1][x->from_left] = block;
-		x->position[x->from_top + 1][x->from_left - 1] = block;
-		x->position[x->from_top + 1][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top + 1][current.from_left] = block;
+		current.position[current.from_top + 1][current.from_left - 1] = block;
+		current.position[current.from_top + 1][current.from_left + 1] = block;
 
 	}
 
 	// Rotation = 3 Movement =  down
-	if ((x->command == 0) && (x->rotation == 3) && (x->S == 0)) {
+	if ((current.command == 0) && (current.rotation == 3) && (current.S == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top + 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top][x->from_left + 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top + 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top][current.from_left + 1] = empty;
 
-		x->from_top++;
+		current.from_top++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top + 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top + 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top][current.from_left + 1] = block;
 
 	}
 	// Rotation = 3 Movement =  right
-	if ((x->command == 2) && (x->rotation == 3) && (x->E == 0)) {
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top + 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top][x->from_left + 1] = empty;
+	if ((current.command == 2) && (current.rotation == 3) && (current.E == 0)) {
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top + 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top][current.from_left + 1] = empty;
 
-		x->from_left++;
+		current.from_left++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top + 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top + 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top][current.from_left + 1] = block;
 
 
 	}
 	// Rotation = 3 Movement =  left
-	if ((x->command == 1) && (x->rotation == 3) && (x->W == 0)) {
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top + 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top][x->from_left + 1] = empty;
+	if ((current.command == 1) && (current.rotation == 3) && (current.W == 0)) {
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top + 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top][current.from_left + 1] = empty;
 
-		x->from_left--;
+		current.from_left--;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top + 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top + 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top][current.from_left + 1] = block;
 
 	}
 
@@ -1865,46 +1865,46 @@ void Game::move_T(piece *x) {
 
 
 	//// Rotation = 0 Movement =  rotateright
-	//if ((x->command == 3) && (x->rotation == 0)) {
+	//if ((current.command == 3) && (current.rotation == 0)) {
 
-	//	x->position[x->from_top - 1][x->from_left] = block;
+	//	current.position[current.from_top - 1][current.from_left] = block;
 
-	//	x->position[x->from_top][x->from_left - 1] = empty;
+	//	current.position[current.from_top][current.from_left - 1] = empty;
 
-	//	x->rotation = 1;
+	//	current.rotation = 1;
 	//	return;
 
 	//}
 	//// Rotation = 1 Movement =  rotateright
-	//if ((x->command == 3) && (x->rotation == 1)) {
+	//if ((current.command == 3) && (current.rotation == 1)) {
 
-	//	x->position[x->from_top][x->from_left - 1] = block;
+	//	current.position[current.from_top][current.from_left - 1] = block;
 
-	//	x->position[x->from_top + 1][x->from_left] = empty;
+	//	current.position[current.from_top + 1][current.from_left] = empty;
 
-	//	x->rotation = 2;
+	//	current.rotation = 2;
 	//	return;
 
 	//}
 	//// Rotation = 2 Movement =  rotateright
-	//if ((x->command == 3) && (x->rotation == 2)) {
+	//if ((current.command == 3) && (current.rotation == 2)) {
 
-	//	x->position[x->from_top + 1][x->from_left] = block;
+	//	current.position[current.from_top + 1][current.from_left] = block;
 
-	//	x->position[x->from_top][x->from_left + 1] = empty;
+	//	current.position[current.from_top][current.from_left + 1] = empty;
 
-	//	x->rotation = 3;
+	//	current.rotation = 3;
 	//	return;
 
 	//}
 	//// Rotation = 3 Movement =  rotateright
-	//if ((x->command == 3) && (x->rotation == 3)) {
+	//if ((current.command == 3) && (current.rotation == 3)) {
 
-	//	x->position[x->from_top][x->from_left + 1] = block;
+	//	current.position[current.from_top][current.from_left + 1] = block;
 
-	//	x->position[x->from_top - 1][x->from_left] = empty;
+	//	current.position[current.from_top - 1][current.from_left] = empty;
 
-	//	x->rotation = 0;
+	//	current.rotation = 0;
 	//	return;
 
 	//}
@@ -1912,88 +1912,88 @@ void Game::move_T(piece *x) {
 
 
 }
-void Game::move_T_rotate(piece * x) {
+void Game::move_T_rotate() {
 
-	int i = x->rotation;
+	int i = current.rotation;
 
-	if ((x->command == 3) && (x->rl == 1)) {
+	if ((current.command == 3) && (current.rl == 1)) {
 		return;
 	}
-	if ((x->command == 4) && (x->rr == 1)) {
+	if ((current.command == 4) && (current.rr == 1)) {
 		return;
 	}
 
-	if (x->command == 3) {
-		x->rotation--;
-		if (x->rotation == -1) {
-			x->rotation = 3;
+	if (current.command == 3) {
+		current.rotation--;
+		if (current.rotation == -1) {
+			current.rotation = 3;
 		}
 	}
-	if (x->command == 4) {
-		x->rotation++;
-		if (x->rotation == 4) {
-			x->rotation = 0;
+	if (current.command == 4) {
+		current.rotation++;
+		if (current.rotation == 4) {
+			current.rotation = 0;
 		}
 	}
 
 
 	if (i == 0) { //clear if rotation is 0
 				  //erase old rotation
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left - 1] = empty;
-		x->position[x->from_top][x->from_left + 1] = empty;
-		x->position[x->from_top + 1][x->from_left] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left - 1] = empty;
+		current.position[current.from_top][current.from_left + 1] = empty;
+		current.position[current.from_top + 1][current.from_left] = empty;
 	}
 	if (i == 1) { //clear if rotation is 0
 				  //erase old rotation
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left - 1] = empty;
-		x->position[x->from_top + 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left - 1] = empty;
+		current.position[current.from_top + 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left] = empty;
 	}
 	if (i == 2) { //clear if rotation is 0
 				  //erase old rotation
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top + 1][x->from_left] = empty;
-		x->position[x->from_top + 1][x->from_left - 1] = empty;
-		x->position[x->from_top + 1][x->from_left + 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top + 1][current.from_left] = empty;
+		current.position[current.from_top + 1][current.from_left - 1] = empty;
+		current.position[current.from_top + 1][current.from_left + 1] = empty;
 	}
 	if (i == 3) { //clear if rotation is 0
 				  //erase old rotation
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top + 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top][x->from_left + 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top + 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top][current.from_left + 1] = empty;
 	}
 
 
-	if (x->rotation == 3) {
+	if (current.rotation == 3) {
 		//draw new rotation
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top + 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top + 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top][current.from_left + 1] = block;
 	}
-	if (x->rotation == 2) {
+	if (current.rotation == 2) {
 		//draw new rotation
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top + 1][x->from_left] = block;
-		x->position[x->from_top + 1][x->from_left - 1] = block;
-		x->position[x->from_top + 1][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top + 1][current.from_left] = block;
+		current.position[current.from_top + 1][current.from_left - 1] = block;
+		current.position[current.from_top + 1][current.from_left + 1] = block;
 	}
-	if (x->rotation == 1) {
+	if (current.rotation == 1) {
 		//draw new rotation
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top + 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top + 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
 	}
-	if (x->rotation == 0) {
+	if (current.rotation == 0) {
 		//draw new rotation
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top][x->from_left + 1] = block;
-		x->position[x->from_top + 1][x->from_left] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top][current.from_left + 1] = block;
+		current.position[current.from_top + 1][current.from_left] = block;
 	}
 
 
@@ -2001,152 +2001,152 @@ void Game::move_T_rotate(piece * x) {
 }
 
 //L Piece type = 4
-void Game::collision_L_rotation(piece *x, char board[][bWIDTH]) {
-	x->rr = 0;
-	x->rl = 0;
+void Game::collision_L_rotation() {
+	current.rr = 0;
+	current.rl = 0;
 
-	if (x->rotation == 0) {
+	if (current.rotation == 0) {
 
-		if ((board[x->from_top - 2][x->from_left] != empty) || (board[x->from_top][x->from_left + 1] != empty) || (board[x->from_top][x->from_left + 2] != empty)) {
-			x->rl = 1;
+		if ((board[current.from_top - 2][current.from_left] != empty) || (board[current.from_top][current.from_left + 1] != empty) || (board[current.from_top][current.from_left + 2] != empty)) {
+			current.rl = 1;
 		}
-		if ((board[x->from_top][x->from_left + 1] != empty) || (board[x->from_top - 2][x->from_left + 1] != empty) || (board[x->from_top - 2][x->from_left] != empty)) {
-			x->rr = 1;
+		if ((board[current.from_top][current.from_left + 1] != empty) || (board[current.from_top - 2][current.from_left + 1] != empty) || (board[current.from_top - 2][current.from_left] != empty)) {
+			current.rr = 1;
 		}
 		return;
 	}
-	if (x->rotation == 1) {
+	if (current.rotation == 1) {
 
-		if ((board[x->from_top - 1][x->from_left + 1] != empty) || (board[x->from_top][x->from_left - 1] != empty) || (board[x->from_top - 1][x->from_left - 1] != empty)) {
-			x->rl = 1;
+		if ((board[current.from_top - 1][current.from_left + 1] != empty) || (board[current.from_top][current.from_left - 1] != empty) || (board[current.from_top - 1][current.from_left - 1] != empty)) {
+			current.rl = 1;
 		}
-		if ((board[x->from_top][x->from_left - 1] != empty) || (board[x->from_top - 1][x->from_left - 1] != empty) || (board[x->from_top - 1][x->from_left + 1] != empty) || (board[x->from_top][x->from_left + 1] != empty)) {
-			x->rr = 1;
+		if ((board[current.from_top][current.from_left - 1] != empty) || (board[current.from_top - 1][current.from_left - 1] != empty) || (board[current.from_top - 1][current.from_left + 1] != empty) || (board[current.from_top][current.from_left + 1] != empty)) {
+			current.rr = 1;
 		}
 		return;
 	}
-	if (x->rotation == 2) {
+	if (current.rotation == 2) {
 
-		if ((board[x->from_top - 1][x->from_left] != empty) || (board[x->from_top - 2][x->from_left - 1] != empty) || (board[x->from_top - 2][x->from_left] != empty)) {
-			x->rl = 1;
+		if ((board[current.from_top - 1][current.from_left] != empty) || (board[current.from_top - 2][current.from_left - 1] != empty) || (board[current.from_top - 2][current.from_left] != empty)) {
+			current.rl = 1;
 		}
-		if ((board[x->from_top - 1][x->from_left] != empty) || (board[x->from_top - 2][x->from_left] != empty)) {
-			x->rr = 1;
+		if ((board[current.from_top - 1][current.from_left] != empty) || (board[current.from_top - 2][current.from_left] != empty)) {
+			current.rr = 1;
 		}
 		return;
 	}
-	if (x->rotation == 3) {
+	if (current.rotation == 3) {
 
-		if ((board[x->from_top][x->from_left - 1] != empty) || (board[x->from_top - 1][x->from_left + 1] != empty)) {
-			x->rl = 1;
+		if ((board[current.from_top][current.from_left - 1] != empty) || (board[current.from_top - 1][current.from_left + 1] != empty)) {
+			current.rl = 1;
 		}
-		if ((board[x->from_top][x->from_left - 1] != empty) || (board[x->from_top - 1][x->from_left - 1] != empty) || (board[x->from_top - 1][x->from_left + 1] != empty)) {
-			x->rr = 1;
+		if ((board[current.from_top][current.from_left - 1] != empty) || (board[current.from_top - 1][current.from_left - 1] != empty) || (board[current.from_top - 1][current.from_left + 1] != empty)) {
+			current.rr = 1;
 		}
 		return;
 	}
 
 
 }
-void Game::collision_L(piece *x, char board[][bWIDTH]) {
+void Game::collision_L() {
 
-	if (x->command == 3) {
-		collision_L_rotation(x, board);
+	if (current.command == 3) {
+		collision_L_rotation();
 		return;
 	}
-	if (x->command == 4) {
-		collision_L_rotation(x, board);
+	if (current.command == 4) {
+		collision_L_rotation();
 		return;
 	}
 
 
 	////Rotation = 0
 
-	if (x->rotation == 0) {
+	if (current.rotation == 0) {
 
-		if ((board[x->from_top][x->from_left - 1] != empty) || (board[x->from_top - 1][x->from_left - 1] != empty)) {// check left
-			x->W = 1;
+		if ((board[current.from_top][current.from_left - 1] != empty) || (board[current.from_top - 1][current.from_left - 1] != empty)) {// check left
+			current.W = 1;
 		}
 		else {
-			x->W = 0;
+			current.W = 0;
 		}
-		if ((board[x->from_top][x->from_left + 1] != empty) || (board[x->from_top - 1][x->from_left + 3] != empty)) {// check right
-			x->E = 1;
-		}
-		else {
-			x->E = 0;
-		}
-		if ((board[x->from_top + 1][x->from_left] != empty) || (board[x->from_top][x->from_left + 1] != empty) || (board[x->from_top][x->from_left + 2] != empty)) {// check south
-			x->S = 1;
+		if ((board[current.from_top][current.from_left + 1] != empty) || (board[current.from_top - 1][current.from_left + 3] != empty)) {// check right
+			current.E = 1;
 		}
 		else {
-			x->S = 0;
+			current.E = 0;
+		}
+		if ((board[current.from_top + 1][current.from_left] != empty) || (board[current.from_top][current.from_left + 1] != empty) || (board[current.from_top][current.from_left + 2] != empty)) {// check south
+			current.S = 1;
+		}
+		else {
+			current.S = 0;
 		}
 	}
 
-	if (x->rotation == 1) {
+	if (current.rotation == 1) {
 
-		if ((board[x->from_top][x->from_left - 1] != empty) || (board[x->from_top - 1][x->from_left - 1] != empty) || (board[x->from_top - 2][x->from_left - 2] != empty)) {// check left
-			x->W = 1;
+		if ((board[current.from_top][current.from_left - 1] != empty) || (board[current.from_top - 1][current.from_left - 1] != empty) || (board[current.from_top - 2][current.from_left - 2] != empty)) {// check left
+			current.W = 1;
 		}
 		else {
-			x->W = 0;
+			current.W = 0;
 		}
-		if ((board[x->from_top][x->from_left + 1] != empty) || (board[x->from_top - 1][x->from_left + 1] != empty) || (board[x->from_top - 2][x->from_left + 1] != empty)) {// check right
-			x->E = 1;
-		}
-		else {
-			x->E = 0;
-		}
-		if ((board[x->from_top + 1][x->from_left] != empty) || (board[x->from_top - 1][x->from_left - 1] != empty)) {// check south
-			x->S = 1;
+		if ((board[current.from_top][current.from_left + 1] != empty) || (board[current.from_top - 1][current.from_left + 1] != empty) || (board[current.from_top - 2][current.from_left + 1] != empty)) {// check right
+			current.E = 1;
 		}
 		else {
-			x->S = 0;
+			current.E = 0;
+		}
+		if ((board[current.from_top + 1][current.from_left] != empty) || (board[current.from_top - 1][current.from_left - 1] != empty)) {// check south
+			current.S = 1;
+		}
+		else {
+			current.S = 0;
 		}
 	}
 
-	if (x->rotation == 2) {
+	if (current.rotation == 2) {
 
-		if ((board[x->from_top][x->from_left - 2] != empty) || (board[x->from_top - 1][x->from_left] != empty)) {// check left
-			x->W = 1;
+		if ((board[current.from_top][current.from_left - 2] != empty) || (board[current.from_top - 1][current.from_left] != empty)) {// check left
+			current.W = 1;
 		}
 		else {
-			x->W = 0;
+			current.W = 0;
 		}
-		if ((board[x->from_top][x->from_left + 2] != empty) || (board[x->from_top - 1][x->from_left + 2] != empty)) {// check right
-			x->E = 1;
-		}
-		else {
-			x->E = 0;
-		}
-		if ((board[x->from_top + 1][x->from_left] != empty) || (board[x->from_top + 1][x->from_left - 1] != empty) || (board[x->from_top + 1][x->from_left + 1] != empty)) {// check south
-			x->S = 1;
+		if ((board[current.from_top][current.from_left + 2] != empty) || (board[current.from_top - 1][current.from_left + 2] != empty)) {// check right
+			current.E = 1;
 		}
 		else {
-			x->S = 0;
+			current.E = 0;
+		}
+		if ((board[current.from_top + 1][current.from_left] != empty) || (board[current.from_top + 1][current.from_left - 1] != empty) || (board[current.from_top + 1][current.from_left + 1] != empty)) {// check south
+			current.S = 1;
+		}
+		else {
+			current.S = 0;
 		}
 	}
 
-	if (x->rotation == 3) {
+	if (current.rotation == 3) {
 
-		if ((board[x->from_top][x->from_left - 1] != empty) || (board[x->from_top - 1][x->from_left - 1] != empty) || (board[x->from_top - 2][x->from_left - 1] != empty)) {// check left
-			x->W = 1;
+		if ((board[current.from_top][current.from_left - 1] != empty) || (board[current.from_top - 1][current.from_left - 1] != empty) || (board[current.from_top - 2][current.from_left - 1] != empty)) {// check left
+			current.W = 1;
 		}
 		else {
-			x->W = 0;
+			current.W = 0;
 		}
-		if ((board[x->from_top][x->from_left + 2] != empty) || (board[x->from_top - 1][x->from_left + 1] != empty) || (board[x->from_top - 2][x->from_left + 1] != empty)) {// check right
-			x->E = 1;
-		}
-		else {
-			x->E = 0;
-		}
-		if ((board[x->from_top + 1][x->from_left] != empty) || (board[x->from_top + 1][x->from_left + 1] != empty)) {// check south
-			x->S = 1;
+		if ((board[current.from_top][current.from_left + 2] != empty) || (board[current.from_top - 1][current.from_left + 1] != empty) || (board[current.from_top - 2][current.from_left + 1] != empty)) {// check right
+			current.E = 1;
 		}
 		else {
-			x->S = 0;
+			current.E = 0;
+		}
+		if ((board[current.from_top + 1][current.from_left] != empty) || (board[current.from_top + 1][current.from_left + 1] != empty)) {// check south
+			current.S = 1;
+		}
+		else {
+			current.S = 0;
 		}
 	}
 
@@ -2158,191 +2158,191 @@ void Game::collision_L(piece *x, char board[][bWIDTH]) {
 
 
 	//This checks if the piece should be set or not, so that it can become apart of the board
-	if (x->S == 0) {
-		x->setdelay = x->basedelay;
+	if (current.S == 0) {
+		current.setdelay = current.basedelay;
 	}
-	if (x->S == 1) {
-		x->setdelay--;
+	if (current.S == 1) {
+		current.setdelay--;
 	}
-	if ((x->setdelay == 0) && (x->S == 1)) {
-		x->set = 1;
+	if ((current.setdelay == 0) && (current.S == 1)) {
+		current.set = 1;
 	}
 
 }
-void Game::move_L(piece *x) {
+void Game::move_L() {
 
-	if ((x->command == 3) || (x->command == 4)) {
-		move_L_rotate(x);
+	if ((current.command == 3) || (current.command == 4)) {
+		move_L_rotate();
 		return;
 	}
 
 	// Rotation = 0 Movement =  down
-	if ((x->command == 0) && (x->rotation == 0) && (x->S == 0)) {
+	if ((current.command == 0) && (current.rotation == 0) && (current.S == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left + 1] = empty;
-		x->position[x->from_top - 1][x->from_left + 2] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left + 1] = empty;
+		current.position[current.from_top - 1][current.from_left + 2] = empty;
 
-		x->from_top++;
+		current.from_top++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left + 1] = block;
-		x->position[x->from_top - 1][x->from_left + 2] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left + 1] = block;
+		current.position[current.from_top - 1][current.from_left + 2] = block;
 	}
 	// Rotation = 0 Movement =  right
-	if ((x->command == 2) && (x->rotation == 0) && (x->E != 1)) {
+	if ((current.command == 2) && (current.rotation == 0) && (current.E != 1)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left + 1] = empty;
-		x->position[x->from_top - 1][x->from_left + 2] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left + 1] = empty;
+		current.position[current.from_top - 1][current.from_left + 2] = empty;
 
-		x->from_left++;
+		current.from_left++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left + 1] = block;
-		x->position[x->from_top - 1][x->from_left + 2] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left + 1] = block;
+		current.position[current.from_top - 1][current.from_left + 2] = block;
 	}
 	// Rotation = 0 Movement =  left
-	if ((x->command == 1) && (x->rotation == 0) && (x->W != 1)) {
+	if ((current.command == 1) && (current.rotation == 0) && (current.W != 1)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left + 1] = empty;
-		x->position[x->from_top - 1][x->from_left + 2] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left + 1] = empty;
+		current.position[current.from_top - 1][current.from_left + 2] = empty;
 
-		x->from_left--;
+		current.from_left--;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left + 1] = block;
-		x->position[x->from_top - 1][x->from_left + 2] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left + 1] = block;
+		current.position[current.from_top - 1][current.from_left + 2] = block;
 	}
 	// Rotation = 1 Movement =  left
-	if ((x->command == 1) && (x->rotation == 1) && (x->W != 1)) {
+	if ((current.command == 1) && (current.rotation == 1) && (current.W != 1)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left - 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left - 1] = empty;
 
-		x->from_left--;
+		current.from_left--;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left - 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left - 1] = block;
 	}
 	// Rotation = 1 Movement =  down
-	if ((x->command == 0) && (x->rotation == 1) && (x->S == 0)) {
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left - 1] = empty;
+	if ((current.command == 0) && (current.rotation == 1) && (current.S == 0)) {
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left - 1] = empty;
 
-		x->from_top++;
+		current.from_top++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left - 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left - 1] = block;
 	}
 	// Rotation = 1 Movement =  right
-	if ((x->command == 2) && (x->rotation == 1) && (x->E != 1)) {
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left - 1] = empty;
+	if ((current.command == 2) && (current.rotation == 1) && (current.E != 1)) {
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left - 1] = empty;
 
-		x->from_left++;
+		current.from_left++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left - 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left - 1] = block;
 	}
 	// Rotation = 2 Movement =  left
-	if ((x->command == 1) && (x->rotation == 2) && (x->W != 1)) {
+	if ((current.command == 1) && (current.rotation == 2) && (current.W != 1)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left + 1] = empty;
-		x->position[x->from_top - 1][x->from_left + 1] = empty;
-		x->position[x->from_top][x->from_left - 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left + 1] = empty;
+		current.position[current.from_top - 1][current.from_left + 1] = empty;
+		current.position[current.from_top][current.from_left - 1] = empty;
 
-		x->from_left--;
+		current.from_left--;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left + 1] = block;
-		x->position[x->from_top - 1][x->from_left + 1] = block;
-		x->position[x->from_top][x->from_left - 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left + 1] = block;
+		current.position[current.from_top - 1][current.from_left + 1] = block;
+		current.position[current.from_top][current.from_left - 1] = block;
 	}
 	// Rotation = 2 Movement =  right
-	if ((x->command == 2) && (x->rotation == 2) && (x->E != 1)) {
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left + 1] = empty;
-		x->position[x->from_top - 1][x->from_left + 1] = empty;
-		x->position[x->from_top][x->from_left - 1] = empty;
+	if ((current.command == 2) && (current.rotation == 2) && (current.E != 1)) {
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left + 1] = empty;
+		current.position[current.from_top - 1][current.from_left + 1] = empty;
+		current.position[current.from_top][current.from_left - 1] = empty;
 
-		x->from_left++;
+		current.from_left++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left + 1] = block;
-		x->position[x->from_top - 1][x->from_left + 1] = block;
-		x->position[x->from_top][x->from_left - 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left + 1] = block;
+		current.position[current.from_top - 1][current.from_left + 1] = block;
+		current.position[current.from_top][current.from_left - 1] = block;
 	}
 	// Rotation = 2 Movement =  down
-	if ((x->command == 0) && (x->rotation == 2) && (x->S == 0)) {
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left + 1] = empty;
-		x->position[x->from_top - 1][x->from_left + 1] = empty;
-		x->position[x->from_top][x->from_left - 1] = empty;
+	if ((current.command == 0) && (current.rotation == 2) && (current.S == 0)) {
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left + 1] = empty;
+		current.position[current.from_top - 1][current.from_left + 1] = empty;
+		current.position[current.from_top][current.from_left - 1] = empty;
 
-		x->from_top++;
+		current.from_top++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left + 1] = block;
-		x->position[x->from_top - 1][x->from_left + 1] = block;
-		x->position[x->from_top][x->from_left - 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left + 1] = block;
+		current.position[current.from_top - 1][current.from_left + 1] = block;
+		current.position[current.from_top][current.from_left - 1] = block;
 	}
 	// Rotation = 3 Movement =  down
-	if ((x->command == 0) && (x->rotation == 3) && (x->S == 0)) {
+	if ((current.command == 0) && (current.rotation == 3) && (current.S == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left + 1] = empty;
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left] = empty;
-		x->from_top++;
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left + 1] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left] = block;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left + 1] = empty;
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left] = empty;
+		current.from_top++;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left + 1] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left] = block;
 	}
 	// Rotation = 3 Movement =  right
-	if ((x->command == 2) && (x->rotation == 3) && (x->E != 1)) {
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left + 1] = empty;
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left] = empty;
-		x->from_left++;
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left + 1] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left] = block;
+	if ((current.command == 2) && (current.rotation == 3) && (current.E != 1)) {
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left + 1] = empty;
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left] = empty;
+		current.from_left++;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left + 1] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left] = block;
 	}
 	// Rotation = 3 Movement =  left
-	if ((x->command == 1) && (x->rotation == 3) && (x->W != 1)) {
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left + 1] = empty;
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left] = empty;
-		x->from_left--;
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left + 1] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left] = block;
+	if ((current.command == 1) && (current.rotation == 3) && (current.W != 1)) {
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left + 1] = empty;
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left] = empty;
+		current.from_left--;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left + 1] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left] = block;
 	}
 
 
@@ -2354,101 +2354,101 @@ void Game::move_L(piece *x) {
 
 
 }
-void Game::move_L_rotate(piece *x) {
-	int i = x->rotation;
+void Game::move_L_rotate() {
+	int i = current.rotation;
 
-	if ((x->command == 3) && (x->rl == 1)) {
+	if ((current.command == 3) && (current.rl == 1)) {
 		return;
 	}
-	if ((x->command == 4) && (x->rr == 1)) {
+	if ((current.command == 4) && (current.rr == 1)) {
 		return;
 	}
 
-	if (x->command == 3) {
-		x->rotation--;
-		if (x->rotation == -1) {
-			x->rotation = 3;
+	if (current.command == 3) {
+		current.rotation--;
+		if (current.rotation == -1) {
+			current.rotation = 3;
 		}
 	}
-	if (x->command == 4) {
-		x->rotation++;
-		if (x->rotation == 4) {
-			x->rotation = 0;
+	if (current.command == 4) {
+		current.rotation++;
+		if (current.rotation == 4) {
+			current.rotation = 0;
 		}
 	}
 
 
 	if (i == 0) { //clear if rotation is 0
 				  //erase old rotation
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left + 1] = empty;
-		x->position[x->from_top - 1][x->from_left + 2] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left + 1] = empty;
+		current.position[current.from_top - 1][current.from_left + 2] = empty;
 	}
 	if (i == 1) { //clear if rotation is 0
 				  //erase old rotation
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left - 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left - 1] = empty;
 	}
 	if (i == 2) { //clear if rotation is 0
 				  //erase old rotation
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left + 1] = empty;
-		x->position[x->from_top - 1][x->from_left + 1] = empty;
-		x->position[x->from_top][x->from_left - 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left + 1] = empty;
+		current.position[current.from_top - 1][current.from_left + 1] = empty;
+		current.position[current.from_top][current.from_left - 1] = empty;
 	}
 	if (i == 3) { //clear if rotation is 0
 				  //erase old rotation
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left + 1] = empty;
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left + 1] = empty;
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left] = empty;
 	}
 
 	//Sets proper rotation so the pieces don't run away!
-	if ((i == 0) && (x->rotation == 1)) {
-		x->from_left++;
+	if ((i == 0) && (current.rotation == 1)) {
+		current.from_left++;
 	}
-	if ((i == 3) && (x->rotation == 0)) {
-		x->from_left--;
+	if ((i == 3) && (current.rotation == 0)) {
+		current.from_left--;
 	}
-	if ((i == 0) && (x->rotation == 3)) {
-		x->from_left++;
+	if ((i == 0) && (current.rotation == 3)) {
+		current.from_left++;
 	}
-	if ((i == 1) && (x->rotation == 0)) {
-		x->from_left--;
+	if ((i == 1) && (current.rotation == 0)) {
+		current.from_left--;
 	}
 	//
 
-	if (x->rotation == 3) {
+	if (current.rotation == 3) {
 		//draw new rotation
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left + 1] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left + 1] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left] = block;
 	}
-	if (x->rotation == 2) {
+	if (current.rotation == 2) {
 		//draw new rotation
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left + 1] = block;
-		x->position[x->from_top - 1][x->from_left + 1] = block;
-		x->position[x->from_top][x->from_left - 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left + 1] = block;
+		current.position[current.from_top - 1][current.from_left + 1] = block;
+		current.position[current.from_top][current.from_left - 1] = block;
 	}
-	if (x->rotation == 1) {
+	if (current.rotation == 1) {
 		//draw new rotation
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left - 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left - 1] = block;
 	}
-	if (x->rotation == 0) {
+	if (current.rotation == 0) {
 		//draw new rotation
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left + 1] = block;
-		x->position[x->from_top - 1][x->from_left + 2] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left + 1] = block;
+		current.position[current.from_top - 1][current.from_left + 2] = block;
 	}
 
 
@@ -2456,59 +2456,59 @@ void Game::move_L_rotate(piece *x) {
 }
 
 //J Piece  type = 5
-void Game::collision_J_rotation(piece *x, char board[][bWIDTH]) {
-	x->rr = 0;
-	x->rl = 0;
+void Game::collision_J_rotation() {
+	current.rr = 0;
+	current.rl = 0;
 
-	if (x->rotation == 0) {
+	if (current.rotation == 0) {
 
-		if ((board[x->from_top][x->from_left - 1] != empty) || (board[x->from_top - 2][x->from_left - 1] != empty) || (board[x->from_top - 2][x->from_left] != empty)) {
-			x->rl = 1;
+		if ((board[current.from_top][current.from_left - 1] != empty) || (board[current.from_top - 2][current.from_left - 1] != empty) || (board[current.from_top - 2][current.from_left] != empty)) {
+			current.rl = 1;
 		}
-		if ((board[x->from_top][x->from_left - 1] != empty) || (board[x->from_top][x->from_left - 2] != empty)) {
-			x->rr = 1;
+		if ((board[current.from_top][current.from_left - 1] != empty) || (board[current.from_top][current.from_left - 2] != empty)) {
+			current.rr = 1;
 		}
 		return;
 	}
-	if (x->rotation == 1) {
+	if (current.rotation == 1) {
 
-		if ((board[x->from_top - 1][x->from_left - 1] != empty) || (board[x->from_top - 1][x->from_left + 1] != empty) || (board[x->from_top][x->from_left + 1] != empty)) {
-			x->rl = 1;
+		if ((board[current.from_top - 1][current.from_left - 1] != empty) || (board[current.from_top - 1][current.from_left + 1] != empty) || (board[current.from_top][current.from_left + 1] != empty)) {
+			current.rl = 1;
 		}
-		if ((board[x->from_top - 1][x->from_left - 1] != empty) || (board[x->from_top][x->from_left + 1] != empty)) {
-			x->rr = 1;
+		if ((board[current.from_top - 1][current.from_left - 1] != empty) || (board[current.from_top][current.from_left + 1] != empty)) {
+			current.rr = 1;
 		}
 		return;
 	}
-	if (x->rotation == 2) {
+	if (current.rotation == 2) {
 
-		if ((board[x->from_top - 1][x->from_left] != empty) || (board[x->from_top - 2][x->from_left] != empty)) {
-			x->rl = 1;
+		if ((board[current.from_top - 1][current.from_left] != empty) || (board[current.from_top - 2][current.from_left] != empty)) {
+			current.rl = 1;
 		}
-		if ((board[x->from_top - 1][x->from_left] != empty) || (board[x->from_top - 2][x->from_left] != empty) || (board[x->from_top - 2][x->from_left + 1] != empty)) {
-			x->rr = 1;
+		if ((board[current.from_top - 1][current.from_left] != empty) || (board[current.from_top - 2][current.from_left] != empty) || (board[current.from_top - 2][current.from_left + 1] != empty)) {
+			current.rr = 1;
 		}
 		return;
 	}
-	if (x->rotation == 3) {
+	if (current.rotation == 3) {
 
-		if ((board[x->from_top][x->from_left - 1] != empty) || (board[x->from_top - 1][x->from_left - 1] != empty) || (board[x->from_top][x->from_left + 1] != empty)) {
-			x->rl = 1;
+		if ((board[current.from_top][current.from_left - 1] != empty) || (board[current.from_top - 1][current.from_left - 1] != empty) || (board[current.from_top][current.from_left + 1] != empty)) {
+			current.rl = 1;
 		}
-		if ((board[x->from_top][x->from_left + 1] != empty) || (board[x->from_top - 1][x->from_left + 1] != empty) || (board[x->from_top - 1][x->from_left - 1] != empty)) {
-			x->rr = 1;
+		if ((board[current.from_top][current.from_left + 1] != empty) || (board[current.from_top - 1][current.from_left + 1] != empty) || (board[current.from_top - 1][current.from_left - 1] != empty)) {
+			current.rr = 1;
 		}
 		return;
 	}
 }
-void Game::collision_J(piece *x, char board[][bWIDTH]) {
+void Game::collision_J() {
 
-	if (x->command == 3) {
-		collision_J_rotation(x, board);
+	if (current.command == 3) {
+		collision_J_rotation();
 		return;
 	}
-	if (x->command == 4) {
-		collision_J_rotation(x, board);
+	if (current.command == 4) {
+		collision_J_rotation();
 		return;
 	}
 
@@ -2516,24 +2516,24 @@ void Game::collision_J(piece *x, char board[][bWIDTH]) {
 	////Rotation = 0
 	////////////////
 
-	if (x->rotation == 0) {
-		if ((board[x->from_top + 1][x->from_left] != empty) || (board[x->from_top][x->from_left - 1] != empty) || (board[x->from_top][x->from_left - 2] != empty)) {// check down
-			x->S = 1;
+	if (current.rotation == 0) {
+		if ((board[current.from_top + 1][current.from_left] != empty) || (board[current.from_top][current.from_left - 1] != empty) || (board[current.from_top][current.from_left - 2] != empty)) {// check down
+			current.S = 1;
 		}
 		else {
-			x->S = 0;
+			current.S = 0;
 		}
-		if ((board[x->from_top][x->from_left - 1] != empty) || (board[x->from_top - 1][x->from_left - 3] != empty)) {// check left
-			x->W = 1;
-		}
-		else {
-			x->W = 0;
-		}
-		if ((board[x->from_top][x->from_left + 1] != empty) || (board[x->from_top - 1][x->from_left + 1] != empty)) {// check right
-			x->E = 1;
+		if ((board[current.from_top][current.from_left - 1] != empty) || (board[current.from_top - 1][current.from_left - 3] != empty)) {// check left
+			current.W = 1;
 		}
 		else {
-			x->E = 0;
+			current.W = 0;
+		}
+		if ((board[current.from_top][current.from_left + 1] != empty) || (board[current.from_top - 1][current.from_left + 1] != empty)) {// check right
+			current.E = 1;
+		}
+		else {
+			current.E = 0;
 		}
 
 	}
@@ -2542,24 +2542,24 @@ void Game::collision_J(piece *x, char board[][bWIDTH]) {
 	////Rotation = 1
 	////////////////
 
-	if (x->rotation == 1) {
-		if ((board[x->from_top + 1][x->from_left] != empty) || (board[x->from_top + 1][x->from_left - 1] != empty)) {// check down
-			x->S = 1;
+	if (current.rotation == 1) {
+		if ((board[current.from_top + 1][current.from_left] != empty) || (board[current.from_top + 1][current.from_left - 1] != empty)) {// check down
+			current.S = 1;
 		}
 		else {
-			x->S = 0;
+			current.S = 0;
 		}
-		if ((board[x->from_top][x->from_left - 2] != empty) || (board[x->from_top - 1][x->from_left - 1] != empty) || (board[x->from_top - 2][x->from_left - 1] != empty)) {// check left
-			x->W = 1;
-		}
-		else {
-			x->W = 0;
-		}
-		if ((board[x->from_top][x->from_left + 1] != empty) || (board[x->from_top - 1][x->from_left + 1] != empty) || (board[x->from_top - 2][x->from_left + 1] != empty)) {// check right
-			x->E = 1;
+		if ((board[current.from_top][current.from_left - 2] != empty) || (board[current.from_top - 1][current.from_left - 1] != empty) || (board[current.from_top - 2][current.from_left - 1] != empty)) {// check left
+			current.W = 1;
 		}
 		else {
-			x->E = 0;
+			current.W = 0;
+		}
+		if ((board[current.from_top][current.from_left + 1] != empty) || (board[current.from_top - 1][current.from_left + 1] != empty) || (board[current.from_top - 2][current.from_left + 1] != empty)) {// check right
+			current.E = 1;
+		}
+		else {
+			current.E = 0;
 		}
 
 	}
@@ -2568,24 +2568,24 @@ void Game::collision_J(piece *x, char board[][bWIDTH]) {
 	////Rotation = 2
 	////////////////
 
-	if (x->rotation == 2) {//DOWN
-		if ((board[x->from_top + 1][x->from_left] != empty) || (board[x->from_top + 1][x->from_left + 1] != empty) || (board[x->from_top + 1][x->from_left - 1] != empty)) {// check down
-			x->S = 1;
+	if (current.rotation == 2) {//DOWN
+		if ((board[current.from_top + 1][current.from_left] != empty) || (board[current.from_top + 1][current.from_left + 1] != empty) || (board[current.from_top + 1][current.from_left - 1] != empty)) {// check down
+			current.S = 1;
 		}
 		else {
-			x->S = 0;
+			current.S = 0;
 		}
-		if ((board[x->from_top][x->from_left - 2] != empty) || (board[x->from_top - 1][x->from_left - 2] != empty)) {// check left
-			x->W = 1;
-		}
-		else {
-			x->W = 0;
-		}
-		if ((board[x->from_top][x->from_left + 2] != empty) || (board[x->from_top - 1][x->from_left] != empty)) {// check right
-			x->E = 1;
+		if ((board[current.from_top][current.from_left - 2] != empty) || (board[current.from_top - 1][current.from_left - 2] != empty)) {// check left
+			current.W = 1;
 		}
 		else {
-			x->E = 0;
+			current.W = 0;
+		}
+		if ((board[current.from_top][current.from_left + 2] != empty) || (board[current.from_top - 1][current.from_left] != empty)) {// check right
+			current.E = 1;
+		}
+		else {
+			current.E = 0;
 		}
 
 	}
@@ -2593,24 +2593,24 @@ void Game::collision_J(piece *x, char board[][bWIDTH]) {
 	////Rotation = 3
 	////////////////
 
-	if (x->rotation == 3) {//DOWN
-		if ((board[x->from_top + 1][x->from_left] != empty) || (board[x->from_top - 1][x->from_left + 1] != empty)) {// check down
-			x->S = 1;
+	if (current.rotation == 3) {//DOWN
+		if ((board[current.from_top + 1][current.from_left] != empty) || (board[current.from_top - 1][current.from_left + 1] != empty)) {// check down
+			current.S = 1;
 		}
 		else {
-			x->S = 0;
+			current.S = 0;
 		}
-		if ((board[x->from_top][x->from_left - 1] != empty) || (board[x->from_top - 1][x->from_left - 1] != empty) || (board[x->from_top - 2][x->from_left - 1] != empty)) {// check left
-			x->W = 1;
-		}
-		else {
-			x->W = 0;
-		}
-		if ((board[x->from_top][x->from_left + 1] != empty) || (board[x->from_top - 1][x->from_left + 1] != empty) || (board[x->from_top - 2][x->from_left + 2] != empty)) {// check right
-			x->E = 1;
+		if ((board[current.from_top][current.from_left - 1] != empty) || (board[current.from_top - 1][current.from_left - 1] != empty) || (board[current.from_top - 2][current.from_left - 1] != empty)) {// check left
+			current.W = 1;
 		}
 		else {
-			x->E = 0;
+			current.W = 0;
+		}
+		if ((board[current.from_top][current.from_left + 1] != empty) || (board[current.from_top - 1][current.from_left + 1] != empty) || (board[current.from_top - 2][current.from_left + 2] != empty)) {// check right
+			current.E = 1;
+		}
+		else {
+			current.E = 0;
 		}
 
 	}
@@ -2618,156 +2618,156 @@ void Game::collision_J(piece *x, char board[][bWIDTH]) {
 
 
 }
-void Game::move_J(piece *x) {
+void Game::move_J() {
 
-	if ((x->command == 3) || (x->command == 4)) {
-		move_J_rotate(x);
+	if ((current.command == 3) || (current.command == 4)) {
+		move_J_rotate();
 		return;
 	}
 
 	// Rotation = 0 Movement =  down
-	if ((x->command == 0) && (x->rotation == 0) && (x->S == 0)) {
+	if ((current.command == 0) && (current.rotation == 0) && (current.S == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left - 1] = empty;
-		x->position[x->from_top - 1][x->from_left - 2] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left - 1] = empty;
+		current.position[current.from_top - 1][current.from_left - 2] = empty;
 
-		x->from_top++;
+		current.from_top++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left - 1] = block;
-		x->position[x->from_top - 1][x->from_left - 2] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left - 1] = block;
+		current.position[current.from_top - 1][current.from_left - 2] = block;
 
 	}
 	// Rotation = 0 Movement =  right
-	if ((x->command == 2) && (x->rotation == 0) && (x->E == 0)) {
+	if ((current.command == 2) && (current.rotation == 0) && (current.E == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left - 1] = empty;
-		x->position[x->from_top - 1][x->from_left - 2] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left - 1] = empty;
+		current.position[current.from_top - 1][current.from_left - 2] = empty;
 
-		x->from_left++;
+		current.from_left++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left - 1] = block;
-		x->position[x->from_top - 1][x->from_left - 2] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left - 1] = block;
+		current.position[current.from_top - 1][current.from_left - 2] = block;
 
 	}
 	// Rotation = 0 Movement =  left
-	if ((x->command == 1) && (x->rotation == 0) && (x->W == 0)) {
+	if ((current.command == 1) && (current.rotation == 0) && (current.W == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left - 1] = empty;
-		x->position[x->from_top - 1][x->from_left - 2] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left - 1] = empty;
+		current.position[current.from_top - 1][current.from_left - 2] = empty;
 
-		x->from_left--;
+		current.from_left--;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left - 1] = block;
-		x->position[x->from_top - 1][x->from_left - 2] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left - 1] = block;
+		current.position[current.from_top - 1][current.from_left - 2] = block;
 
 	}
 
 	////////////////////////
 
 	// Rotation = 1 Movement =  down
-	if ((x->command == 0) && (x->rotation == 1) && (x->S == 0)) {
+	if ((current.command == 0) && (current.rotation == 1) && (current.S == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left - 1] = empty;
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left] = empty;
-		x->from_top++;
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left] = block;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left - 1] = empty;
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left] = empty;
+		current.from_top++;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left] = block;
 	}
 	// Rotation = 1 Movement =  right
-	if ((x->command == 2) && (x->rotation == 1) && (x->E == 0)) {
+	if ((current.command == 2) && (current.rotation == 1) && (current.E == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left - 1] = empty;
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left] = empty;
-		x->from_left++;
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left] = block;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left - 1] = empty;
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left] = empty;
+		current.from_left++;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left] = block;
 
 	}
 	// Rotation = 1 Movement =  left
-	if ((x->command == 1) && (x->rotation == 1) && (x->W == 0)) {
+	if ((current.command == 1) && (current.rotation == 1) && (current.W == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left - 1] = empty;
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left] = empty;
-		x->from_left--;
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left] = block;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left - 1] = empty;
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left] = empty;
+		current.from_left--;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left] = block;
 
 	}
 
 	////////////////////////
 
 	// Rotation = 2 Movement =  down
-	if ((x->command == 0) && (x->rotation == 2) && (x->S == 0)) {
+	if ((current.command == 0) && (current.rotation == 2) && (current.S == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left + 1] = empty;
-		x->position[x->from_top][x->from_left - 1] = empty;
-		x->position[x->from_top - 1][x->from_left - 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left + 1] = empty;
+		current.position[current.from_top][current.from_left - 1] = empty;
+		current.position[current.from_top - 1][current.from_left - 1] = empty;
 
-		x->from_top++;
+		current.from_top++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left + 1] = block;
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top - 1][x->from_left - 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left + 1] = block;
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top - 1][current.from_left - 1] = block;
 
 
 	}
 	// Rotation = 2 Movement =  right
-	if ((x->command == 2) && (x->rotation == 2) && (x->E == 0)) {
+	if ((current.command == 2) && (current.rotation == 2) && (current.E == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left + 1] = empty;
-		x->position[x->from_top][x->from_left - 1] = empty;
-		x->position[x->from_top - 1][x->from_left - 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left + 1] = empty;
+		current.position[current.from_top][current.from_left - 1] = empty;
+		current.position[current.from_top - 1][current.from_left - 1] = empty;
 
-		x->from_left++;
+		current.from_left++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left + 1] = block;
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top - 1][x->from_left - 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left + 1] = block;
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top - 1][current.from_left - 1] = block;
 
 
 	}
 	// Rotation = 2 Movement =  left
-	if ((x->command == 1) && (x->rotation == 2) && (x->W == 0)) {
+	if ((current.command == 1) && (current.rotation == 2) && (current.W == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left + 1] = empty;
-		x->position[x->from_top][x->from_left - 1] = empty;
-		x->position[x->from_top - 1][x->from_left - 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left + 1] = empty;
+		current.position[current.from_top][current.from_left - 1] = empty;
+		current.position[current.from_top - 1][current.from_left - 1] = empty;
 
-		x->from_left--;
+		current.from_left--;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left + 1] = block;
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top - 1][x->from_left - 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left + 1] = block;
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top - 1][current.from_left - 1] = block;
 
 
 	}
@@ -2776,53 +2776,53 @@ void Game::move_J(piece *x) {
 	////////////////////////
 
 	// Rotation = 3 Movement =  down
-	if ((x->command == 0) && (x->rotation == 3) && (x->S == 0)) {
+	if ((current.command == 0) && (current.rotation == 3) && (current.S == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left + 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left + 1] = empty;
 
-		x->from_top++;
+		current.from_top++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left + 1] = block;
 
 
 	}
 	// Rotation = 3 Movement =  left
-	if ((x->command == 1) && (x->rotation == 3) && (x->W == 0)) {
+	if ((current.command == 1) && (current.rotation == 3) && (current.W == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left + 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left + 1] = empty;
 
-		x->from_left--;
+		current.from_left--;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left + 1] = block;
 
 
 	}
 	// Rotation = 3 Movement =  right
-	if ((x->command == 2) && (x->rotation == 3) && (x->E == 0)) {
+	if ((current.command == 2) && (current.rotation == 3) && (current.E == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left + 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left + 1] = empty;
 
-		x->from_left++;
+		current.from_left++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left + 1] = block;
 
 
 	}
@@ -2832,147 +2832,147 @@ void Game::move_J(piece *x) {
 
 	//This checks if the piece should be set or not, so that it can become apart of the board
 
-	if (x->S == 0) {
-		x->setdelay = x->basedelay;
+	if (current.S == 0) {
+		current.setdelay = current.basedelay;
 	}
 
-	if (x->S == 1) {
-		x->setdelay--;
+	if (current.S == 1) {
+		current.setdelay--;
 	}
-	if ((x->setdelay == 0) && (x->S == 1)) {
-		x->set = 1;
+	if ((current.setdelay == 0) && (current.S == 1)) {
+		current.set = 1;
 	}
 
 
 }
-void Game::move_J_rotate(piece *x) {
-	int i = x->rotation;
+void Game::move_J_rotate() {
+	int i = current.rotation;
 
-	if ((x->command == 3) && (x->rl == 1)) {
+	if ((current.command == 3) && (current.rl == 1)) {
 		return;
 	}
-	if ((x->command == 4) && (x->rr == 1)) {
+	if ((current.command == 4) && (current.rr == 1)) {
 		return;
 	}
 
-	if (x->command == 3) {
-		x->rotation--;
-		if (x->rotation == -1) {
-			x->rotation = 3;
+	if (current.command == 3) {
+		current.rotation--;
+		if (current.rotation == -1) {
+			current.rotation = 3;
 		}
 	}
-	if (x->command == 4) {
-		x->rotation++;
-		if (x->rotation == 4) {
-			x->rotation = 0;
+	if (current.command == 4) {
+		current.rotation++;
+		if (current.rotation == 4) {
+			current.rotation = 0;
 		}
 	}
 
 	if (i == 0) { //clear if rotation is 0
 				  //erase old rotation
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left - 1] = empty;
-		x->position[x->from_top - 1][x->from_left - 2] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left - 1] = empty;
+		current.position[current.from_top - 1][current.from_left - 2] = empty;
 	}
 	if (i == 1) { //clear if rotation is 0
 				  //erase old rotation
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left - 1] = empty;
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left - 1] = empty;
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left] = empty;
 	}
 	if (i == 2) { //clear if rotation is 0
 				  //erase old rotation
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top][x->from_left + 1] = empty;
-		x->position[x->from_top][x->from_left - 1] = empty;
-		x->position[x->from_top - 1][x->from_left - 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top][current.from_left + 1] = empty;
+		current.position[current.from_top][current.from_left - 1] = empty;
+		current.position[current.from_top - 1][current.from_left - 1] = empty;
 	}
 	if (i == 3) { //clear if rotation is 0
 				  //erase old rotation
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left] = empty;
-		x->position[x->from_top - 2][x->from_left + 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left] = empty;
+		current.position[current.from_top - 2][current.from_left + 1] = empty;
 	}
 
 	//Sets proper rotation so the pieces don't run away!
-	if ((i == 0) && (x->rotation == 1)) {
-		x->from_left--;
+	if ((i == 0) && (current.rotation == 1)) {
+		current.from_left--;
 	}
-	if ((i == 3) && (x->rotation == 0)) {
-		x->from_left++;
+	if ((i == 3) && (current.rotation == 0)) {
+		current.from_left++;
 	}
-	if ((i == 0) && (x->rotation == 3)) {
-		x->from_left--;
+	if ((i == 0) && (current.rotation == 3)) {
+		current.from_left--;
 	}
-	if ((i == 1) && (x->rotation == 0)) {
-		x->from_left++;
+	if ((i == 1) && (current.rotation == 0)) {
+		current.from_left++;
 	}
 
 
-	if (x->rotation == 3) {
+	if (current.rotation == 3) {
 		//draw new rotation
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left + 1] = block;
 	}
-	if (x->rotation == 2) {
+	if (current.rotation == 2) {
 		//draw new rotation
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left + 1] = block;
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top - 1][x->from_left - 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left + 1] = block;
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top - 1][current.from_left - 1] = block;
 	}
-	if (x->rotation == 1) {
+	if (current.rotation == 1) {
 		//draw new rotation
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top][x->from_left - 1] = block;
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 2][x->from_left] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top][current.from_left - 1] = block;
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 2][current.from_left] = block;
 	}
-	if (x->rotation == 0) {
+	if (current.rotation == 0) {
 		//draw new rotation
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left - 1] = block;
-		x->position[x->from_top - 1][x->from_left - 2] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left - 1] = block;
+		current.position[current.from_top - 1][current.from_left - 2] = block;
 	}
 }
 
 //Z Piece type = 6
-void Game::collision_Z_rotation(piece *x, char board[][bWIDTH]) {
-	x->rr = 0;
-	x->rl = 0;
+void Game::collision_Z_rotation() {
+	current.rr = 0;
+	current.rl = 0;
 
-	if (x->rotation == 0) {
+	if (current.rotation == 0) {
 
-		if ((board[x->from_top - 1][x->from_left + 1] != empty) || (board[x->from_top - 2][x->from_left + 1] != empty)) {
-			x->rl = 1;
-			x->rr = 1;
+		if ((board[current.from_top - 1][current.from_left + 1] != empty) || (board[current.from_top - 2][current.from_left + 1] != empty)) {
+			current.rl = 1;
+			current.rr = 1;
 		}
 		return;
 	}
-	if (x->rotation == 1) {
+	if (current.rotation == 1) {
 
-		if ((board[x->from_top - 1][x->from_left - 1] != empty) || (board[x->from_top][x->from_left + 1] != empty)) {
-			x->rl = 1;
-			x->rr = 1;
+		if ((board[current.from_top - 1][current.from_left - 1] != empty) || (board[current.from_top][current.from_left + 1] != empty)) {
+			current.rl = 1;
+			current.rr = 1;
 		}
 		return;
 	}
 }
-void Game::collision_Z(piece *x, char board[][bWIDTH]) {
+void Game::collision_Z() {
 
-	if (x->command == 3) {
-		collision_Z_rotation(x, board);
+	if (current.command == 3) {
+		collision_Z_rotation();
 		return;
 	}
-	if (x->command == 4) {
-		collision_Z_rotation(x, board);
+	if (current.command == 4) {
+		collision_Z_rotation();
 		return;
 	}
 
@@ -2980,24 +2980,24 @@ void Game::collision_Z(piece *x, char board[][bWIDTH]) {
 	////Rotation = 0
 	////////////////
 
-	if (x->rotation == 0) {//DOWN
-		if ((board[x->from_top + 1][x->from_left] != empty) || (board[x->from_top + 1][x->from_left + 1] != empty) || (board[x->from_top][x->from_left - 1] != empty)) {// check down
-			x->S = 1;
+	if (current.rotation == 0) {//DOWN
+		if ((board[current.from_top + 1][current.from_left] != empty) || (board[current.from_top + 1][current.from_left + 1] != empty) || (board[current.from_top][current.from_left - 1] != empty)) {// check down
+			current.S = 1;
 		}
 		else {
-			x->S = 0;
+			current.S = 0;
 		}
-		if ((board[x->from_top][x->from_left - 1] != empty) || (board[x->from_top - 1][x->from_left - 2] != empty)) {// check left
-			x->W = 1;
-		}
-		else {
-			x->W = 0;
-		}
-		if ((board[x->from_top][x->from_left + 2] != empty) || (board[x->from_top - 1][x->from_left + 1] != empty)) {// check right
-			x->E = 1;
+		if ((board[current.from_top][current.from_left - 1] != empty) || (board[current.from_top - 1][current.from_left - 2] != empty)) {// check left
+			current.W = 1;
 		}
 		else {
-			x->E = 0;
+			current.W = 0;
+		}
+		if ((board[current.from_top][current.from_left + 2] != empty) || (board[current.from_top - 1][current.from_left + 1] != empty)) {// check right
+			current.E = 1;
+		}
+		else {
+			current.E = 0;
 		}
 
 	}
@@ -3006,24 +3006,24 @@ void Game::collision_Z(piece *x, char board[][bWIDTH]) {
 	////Rotation = 1
 	////////////////
 
-	if (x->rotation == 1) {//DOWN
-		if ((board[x->from_top + 1][x->from_left] != empty) || (board[x->from_top][x->from_left + 1] != empty)) {// check down
-			x->S = 1;
+	if (current.rotation == 1) {//DOWN
+		if ((board[current.from_top + 1][current.from_left] != empty) || (board[current.from_top][current.from_left + 1] != empty)) {// check down
+			current.S = 1;
 		}
 		else {
-			x->S = 0;
+			current.S = 0;
 		}
-		if ((board[x->from_top][x->from_left - 1] != empty) || (board[x->from_top - 1][x->from_left - 1] != empty) || (board[x->from_top - 2][x->from_left] != empty)) {// check left
-			x->W = 1;
-		}
-		else {
-			x->W = 0;
-		}
-		if ((board[x->from_top][x->from_left + 1] != empty) || (board[x->from_top - 1][x->from_left + 2] != empty) || (board[x->from_top - 2][x->from_left + 2] != empty)) {// check right
-			x->E = 1;
+		if ((board[current.from_top][current.from_left - 1] != empty) || (board[current.from_top - 1][current.from_left - 1] != empty) || (board[current.from_top - 2][current.from_left] != empty)) {// check left
+			current.W = 1;
 		}
 		else {
-			x->E = 0;
+			current.W = 0;
+		}
+		if ((board[current.from_top][current.from_left + 1] != empty) || (board[current.from_top - 1][current.from_left + 2] != empty) || (board[current.from_top - 2][current.from_left + 2] != empty)) {// check right
+			current.E = 1;
+		}
+		else {
+			current.E = 0;
 		}
 
 	}
@@ -3031,127 +3031,127 @@ void Game::collision_Z(piece *x, char board[][bWIDTH]) {
 
 	//This checks if the piece should be set or not, so that it can become apart of the board
 
-	if (x->S == 0) {
-		x->setdelay = x->basedelay;
+	if (current.S == 0) {
+		current.setdelay = current.basedelay;
 	}
 
-	if (x->S == 1) {
-		x->setdelay--;
+	if (current.S == 1) {
+		current.setdelay--;
 	}
-	if ((x->setdelay == 0) && (x->S == 1)) {
-		x->set = 1;
+	if ((current.setdelay == 0) && (current.S == 1)) {
+		current.set = 1;
 	}
 
 
 
 
 }
-void Game::move_Z(piece *x) {
+void Game::move_Z() {
 
-	if ((x->command == 3) || (x->command == 4)) {
-		move_Z_rotate(x);
+	if ((current.command == 3) || (current.command == 4)) {
+		move_Z_rotate();
 		return;
 	}
 
 
 	// Rotation = 0 Movement =  down
-	if ((x->command == 0) && (x->rotation == 0) && (x->S == 0)) {
+	if ((current.command == 0) && (current.rotation == 0) && (current.S == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left - 1] = empty;
-		x->position[x->from_top][x->from_left + 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left - 1] = empty;
+		current.position[current.from_top][current.from_left + 1] = empty;
 
-		x->from_top++;
+		current.from_top++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left - 1] = block;
-		x->position[x->from_top][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left - 1] = block;
+		current.position[current.from_top][current.from_left + 1] = block;
 
 	}
 	// Rotation = 0 Movement =  right
-	if ((x->command == 2) && (x->rotation == 0) && (x->E == 0)) {
+	if ((current.command == 2) && (current.rotation == 0) && (current.E == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left - 1] = empty;
-		x->position[x->from_top][x->from_left + 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left - 1] = empty;
+		current.position[current.from_top][current.from_left + 1] = empty;
 
-		x->from_left++;
+		current.from_left++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left - 1] = block;
-		x->position[x->from_top][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left - 1] = block;
+		current.position[current.from_top][current.from_left + 1] = block;
 
 	}
 	// Rotation = 0 Movement =  left
-	if ((x->command == 1) && (x->rotation == 0) && (x->W == 0)) {
+	if ((current.command == 1) && (current.rotation == 0) && (current.W == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left - 1] = empty;
-		x->position[x->from_top][x->from_left + 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left - 1] = empty;
+		current.position[current.from_top][current.from_left + 1] = empty;
 
-		x->from_left--;
+		current.from_left--;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left - 1] = block;
-		x->position[x->from_top][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left - 1] = block;
+		current.position[current.from_top][current.from_left + 1] = block;
 	}
 
 	////////////////////////
 
 	// Rotation = 1 Movement =  down
-	if ((x->command == 0) && (x->rotation == 1) && (x->S == 0)) {
+	if ((current.command == 0) && (current.rotation == 1) && (current.S == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left + 1] = empty;
-		x->position[x->from_top - 2][x->from_left + 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left + 1] = empty;
+		current.position[current.from_top - 2][current.from_left + 1] = empty;
 
-		x->from_top++;
+		current.from_top++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left + 1] = block;
-		x->position[x->from_top - 2][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left + 1] = block;
+		current.position[current.from_top - 2][current.from_left + 1] = block;
 
 
 	}
 	// Rotation = 1 Movement =  left
-	if ((x->command == 1) && (x->rotation == 1) && (x->W == 0)) {
+	if ((current.command == 1) && (current.rotation == 1) && (current.W == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left + 1] = empty;
-		x->position[x->from_top - 2][x->from_left + 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left + 1] = empty;
+		current.position[current.from_top - 2][current.from_left + 1] = empty;
 
-		x->from_left--;
+		current.from_left--;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left + 1] = block;
-		x->position[x->from_top - 2][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left + 1] = block;
+		current.position[current.from_top - 2][current.from_left + 1] = block;
 
 
 	}
 	// Rotation = 1 Movement =  right
-	if ((x->command == 2) && (x->rotation == 1) && (x->E == 0)) {
+	if ((current.command == 2) && (current.rotation == 1) && (current.E == 0)) {
 
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left + 1] = empty;
-		x->position[x->from_top - 2][x->from_left + 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left + 1] = empty;
+		current.position[current.from_top - 2][current.from_left + 1] = empty;
 
-		x->from_left++;
+		current.from_left++;
 
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left + 1] = block;
-		x->position[x->from_top - 2][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left + 1] = block;
+		current.position[current.from_top - 2][current.from_left + 1] = block;
 
 	}
 
@@ -3159,71 +3159,71 @@ void Game::move_Z(piece *x) {
 
 	//This checks if the piece should be set or not, so that it can become apart of the board
 
-	if (x->S == 0) {
-		x->setdelay = x->basedelay;
+	if (current.S == 0) {
+		current.setdelay = current.basedelay;
 	}
 
-	if (x->S == 1) {
-		x->setdelay--;
+	if (current.S == 1) {
+		current.setdelay--;
 	}
-	if ((x->setdelay == 0) && (x->S == 1)) {
-		x->set = 1;
+	if ((current.setdelay == 0) && (current.S == 1)) {
+		current.set = 1;
 	}
 
 
 
 }
-void Game::move_Z_rotate(piece *x) {
-	int i = x->rotation;
+void Game::move_Z_rotate() {
+	int i = current.rotation;
 
-	if ((x->command == 3) && (x->rl == 1)) {
+	if ((current.command == 3) && (current.rl == 1)) {
 		return;
 	}
-	if ((x->command == 4) && (x->rr == 1)) {
+	if ((current.command == 4) && (current.rr == 1)) {
 		return;
 	}
 
-	if (x->command == 3) {
-		x->rotation--;
-		if (x->rotation == -1) {
-			x->rotation = 1;
+	if (current.command == 3) {
+		current.rotation--;
+		if (current.rotation == -1) {
+			current.rotation = 1;
 		}
 	}
-	if (x->command == 4) {
-		x->rotation++;
-		if (x->rotation == 2) {
-			x->rotation = 0;
+	if (current.command == 4) {
+		current.rotation++;
+		if (current.rotation == 2) {
+			current.rotation = 0;
 		}
 	}
 
 
 	if (i == 0) { //clear if rotation is 0
 				  //erase old rotation
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left - 1] = empty;
-		x->position[x->from_top][x->from_left + 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left - 1] = empty;
+		current.position[current.from_top][current.from_left + 1] = empty;
 	}
 	if (i == 1) { //clear if rotation is 0
 				  //erase old rotation
-		x->position[x->from_top][x->from_left] = empty;//middle block
-		x->position[x->from_top - 1][x->from_left] = empty;
-		x->position[x->from_top - 1][x->from_left + 1] = empty;
-		x->position[x->from_top - 2][x->from_left + 1] = empty;
+		current.position[current.from_top][current.from_left] = empty;//middle block
+		current.position[current.from_top - 1][current.from_left] = empty;
+		current.position[current.from_top - 1][current.from_left + 1] = empty;
+		current.position[current.from_top - 2][current.from_left + 1] = empty;
 	}
-	if (x->rotation == 1) {
+	if (current.rotation == 1) {
 		//draw new rotation
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left + 1] = block;
-		x->position[x->from_top - 2][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left + 1] = block;
+		current.position[current.from_top - 2][current.from_left + 1] = block;
 	}
-	if (x->rotation == 0) {
+	if (current.rotation == 0) {
 		//draw new rotation
-		x->position[x->from_top][x->from_left] = block;//middle block
-		x->position[x->from_top - 1][x->from_left] = block;
-		x->position[x->from_top - 1][x->from_left - 1] = block;
-		x->position[x->from_top][x->from_left + 1] = block;
+		current.position[current.from_top][current.from_left] = block;//middle block
+		current.position[current.from_top - 1][current.from_left] = block;
+		current.position[current.from_top - 1][current.from_left - 1] = block;
+		current.position[current.from_top][current.from_left + 1] = block;
 	}
 
 

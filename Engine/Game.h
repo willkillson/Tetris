@@ -135,41 +135,41 @@ private:
 	/*  User Functions              */
 	/********************************/
 
-	void shift_stack(char board[][bWIDTH], int line[bHEIGHT]);
+	void shift_stack();
 	void score_board();
-	void place_piece(char board[][bWIDTH], piece *x);
+	void place_piece();
 	void test();
-	void command(piece *x);
+	void command();
 	void music();
 
-	void master_collision(piece *x, char board[][bWIDTH]);
-	void collision_I_rotation(piece *x, char board[][bWIDTH]);
-	void collision_S_rotation(piece *x, char board[][bWIDTH]);
-	void collision_Z_rotation(piece *x, char board[][bWIDTH]);
-	void collision_L_rotation(piece *x, char board[][bWIDTH]);
-	void collision_J_rotation(piece *x, char board[][bWIDTH]);
-	void collision_T_rotation(piece *x, char board[][bWIDTH]);
-	void collision_I(piece *x, char board[][bWIDTH]);
-	void collision_Q(piece *x, char board[][bWIDTH]);
-	void collision_S(piece *x, char board[][bWIDTH]);
-	void collision_Z(piece *x, char board[][bWIDTH]);
-	void collision_L(piece *x, char board[][bWIDTH]);
-	void collision_J(piece *x, char board[][bWIDTH]);
-	void collision_T(piece *x, char board[][bWIDTH]);
+	void master_collision();
+	void collision_I_rotation();
+	void collision_S_rotation();
+	void collision_Z_rotation();
+	void collision_L_rotation();
+	void collision_J_rotation();
+	void collision_T_rotation();
+	void collision_I();
+	void collision_Q();
+	void collision_S();
+	void collision_Z();
+	void collision_L();
+	void collision_J();
+	void collision_T();
 
-	void move_I_rotate_right(piece *x);
-	void move_S_rotate_right(piece *x);
-	void move_Z_rotate(piece *x);
-	void move_T_rotate(piece *x);
-	void move_J_rotate(piece *x);
-	void move_L_rotate(piece *x);
+	void move_I_rotate_right();
+	void move_S_rotate_right();
+	void move_Z_rotate();
+	void move_T_rotate();
+	void move_J_rotate();
+	void move_L_rotate();
 
-	void master_move(piece *x, char board[][bWIDTH]);
-	void move_I(piece *x);
-	void move_S(piece *x);
-	void move_Z(piece *x);
-	void move_Q(piece *x);
-	void move_L(piece *x);
-	void move_J(piece *x);
-	void move_T(piece *x);
+	void master_move();
+	void move_I();
+	void move_S();
+	void move_Z();
+	void move_Q();
+	void move_L();
+	void move_J();
+	void move_T();
 };
