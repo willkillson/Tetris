@@ -52,33 +52,32 @@ void Game::Go()
 void Game::UpdateModel()
 {
 
-	//while (1) {
+	master_move(&current, board);
+	score_board(board, &current, &score, line);
+	//print_board(board, &current, &score, time, line);
+	current.command = 999;
+	command(&current);
 
-	//	while (!kbhit()) {
-	//		time++;
-	//		if (current.set == 1) {
-	//			place_piece(board, &current);
-	//		}
-	//		Sleep(15);
-	//		time = (clock()*level);//simulates a tick rate of time
-
-	//		if ((time % 1000) <= (25 * level)) {//force move
-	//			Sleep(30);
-	//			current.command = 0;
-	//		}
-
-
-	//		master_move(&current, board);
-	//		score_board(board, &current, &score, line);
-	//		print_board(board, &current, &score, time, line);
-	//		current.command = 999;
-	//	}
-	//	command(&current);
-	//}
 }
 
 void Game::ComposeFrame()
 {
+	for (int i = 0; i < bHEIGHT; i++)
+	{
+		for (int j = 0; j < bWIDTH; j++)
+		{
+			if (board[i][j] == boarder)
+			{
+				gfx.PutPixel(j, i, Colors::Green);
+			}
+			if (board[i][j] == block)
+			{
+				gfx.PutPixel(j, i, Colors::White);
+			}
+		}
+
+	}
+
 }
 
 
