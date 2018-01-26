@@ -99,7 +99,7 @@ void Game::ComposeFrame()
 			/////////////////////////////INDIVIDUAL PIECES HERE
 			if ((current.position[i][j] == block)&&(current.type=='I'))
 			{
-				gfx.DrawRectDem(j*celldem + xpos, i*celldem + ypos, celldem, celldem, Colors::MakeRGB(255,140,0));//dark orange
+				gfx.DrawRectDem(j*celldem + xpos, i*celldem + ypos, celldem, celldem, Colors::MakeRGB(153,0,0));//dark orange
 			}
 			if ((current.position[i][j] == block) && (current.type == 'Q'))
 			{
@@ -138,12 +138,12 @@ void Game::ComposeFrame()
 
 				if (celldem * k == j)
 				{
-					gfx.PutPixel(i, j, Colors::LightGray);
+					gfx.PutPixel(i, j, Colors::Black);
 				}
 
 				if (celldem * k == i)
 				{
-					gfx.PutPixel(i, j, Colors::LightGray);
+					gfx.PutPixel(i, j, Colors::Black);
 				}
 			}
 		}
