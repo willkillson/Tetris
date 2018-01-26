@@ -46,6 +46,20 @@ private:
 	/********************************/
 	/*  User Variables              */
 	/********************************/
+	
+	//What I am going to model
+	//http://tetris.wikia.com/wiki/Tetris_The_Absolute_The_Grand_Master_2
+	//NEWTIMERSSYEM
+	float _ARE = 25;//measurement is in frames
+	float _DAS = 16;
+	float _LOCK = 30;
+	float _LINECLEAR = 40;
+
+	float _GRAVITY = 4;//rows per frame
+
+
+
+
 	float totalTime = 0;
 	unsigned int levelcounter = 0;
 	FrameTimer ft;
@@ -111,7 +125,11 @@ private:
 
 	piece current;
 
-	void print_board(char board[bHEIGHT][bWIDTH], piece *x, int *score, int time, int line[bHEIGHT]);
+private:
+	/********************************/
+	/*  User Functions              */
+	/********************************/
+
 	void shift_stack(char board[][bWIDTH], int line[bHEIGHT]);
 	void score_board(char board[bHEIGHT][bWIDTH], piece *x, int *score, int line[bHEIGHT]);
 	void place_piece(char board[][bWIDTH], piece *x);
