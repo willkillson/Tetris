@@ -202,7 +202,7 @@ void Game::command() {
 
 	if (e.IsRelease() || e.GetCode() == 0x53)	// check if it is a release event
 	{
-
+		//
 		if (e.GetCode() == 0x53)// check the event
 			current.command = 0;		// respond to  key release event
 		if (e.GetCode() == 0x41)// check the event
