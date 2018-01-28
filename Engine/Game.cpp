@@ -82,7 +82,9 @@ void Game::UpdateModel()
 
 	}
 	master_move();
-	score_board();
+	scoreBoard();
+	shiftStack();
+	calculateScore();
 
 
 }
@@ -231,11 +233,8 @@ void Game::command() {
 
 
 }
-
-void Game::shift_stack() {
-
-
-
+void  Game::calculateScore()
+{
 	//calculate how much score you get if line[n] == 10 then we have a point
 	{
 		int score = 0;
@@ -244,16 +243,21 @@ void Game::shift_stack() {
 			if (line[i] == 10)
 			{
 				score++;
-		
+
 			}
 		}
 		this->_SCORE += score;
 
 	}
+}
+
+void Game::shiftStack() {
+
+
 
 
 	//shift stack part
-	{
+	
 	int i = 0;
 	int j = 0;
 	int k = 0;
@@ -279,9 +283,9 @@ void Game::shift_stack() {
 			line[i] = 0;
 		}
 	}
-	}
+	
 }
-void Game::score_board() {
+void Game::scoreBoard() {
 
 	int i = 0;
 	int j = 0;
@@ -309,7 +313,7 @@ void Game::score_board() {
 		c = 0;
 	}
 
-	shift_stack();
+
 
 }
 void Game::place_piece() {

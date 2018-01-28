@@ -135,12 +135,16 @@ private:
 	/*  User Functions              */
 	/********************************/
 
-	void shift_stack();
-	void score_board();
+	void shiftStack();
+	void scoreBoard();
 	void place_piece();
 	void test();
 	void command();
 	void music();
+
+	//custom
+	void calculateScore();
+
 
 	void master_collision();
 	void collision_I_rotation();
