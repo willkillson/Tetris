@@ -136,6 +136,7 @@ private:
 	/********************************/
 
 	void shiftStack();
+	void commitPiecetoBoard();
 	void scoreBoard();
 	void place_piece();
 	void test();

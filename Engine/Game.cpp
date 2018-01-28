@@ -69,24 +69,17 @@ void Game::UpdateModel()
 	{
 		place_piece();
 	}
-	if (msdelay >= 1+delay)//forcing a movement downward
-	{
-		current.command = 0;
-		levelcounter++;
-	}
 	else//players decision
 	{
-
 		command();
 		movementdelaytotal = 0;
-
 	}
+
 	master_move();
 	scoreBoard();
 	shiftStack();
 	calculateScore();
-
-
+	
 }
 void Game::ComposeFrame()
 {
@@ -285,6 +278,17 @@ void Game::shiftStack() {
 	}
 	
 }
+
+void Game::commitPiecetoBoard()
+{
+	if (current.set == 1)
+	{
+
+
+	}
+}
+
+
 void Game::scoreBoard() {
 
 	int i = 0;
@@ -316,6 +320,7 @@ void Game::scoreBoard() {
 
 
 }
+
 void Game::place_piece() {
 
 	int type = 99;
@@ -439,174 +444,7 @@ void Game::place_piece() {
 
 }
 
-void Game::music() {
-	Beep(658, 125);
-	Beep(1320, 500);
-	Beep(990, 250);
-	Beep(1056, 250);
-	Beep(1188, 250);
-	Beep(1320, 125);
-	Beep(1188, 125);
-	Beep(1056, 250);
-	Beep(990, 250);
-	Beep(880, 500);
-	Beep(880, 250);
-	Beep(1056, 250);
-	Beep(1320, 500);
-	Beep(1188, 250);
-	Beep(1056, 250);
-	Beep(990, 750);
-	Beep(1056, 250);
-	Beep(1188, 500);
-	Beep(1320, 500);
-	Beep(1056, 500);
-	Beep(880, 500);
-	Beep(880, 500);
-	Sleep(250);
-	Beep(1188, 500);
-	Beep(1408, 250);
-	Beep(1760, 500);
-	Beep(1584, 250);
-	Beep(1408, 250);
-	Beep(1320, 750);
-	Beep(1056, 250);
-	Beep(1320, 500);
-	Beep(1188, 250);
-	Beep(1056, 250);
-	Beep(990, 500);
-	Beep(990, 250);
-	Beep(1056, 250);
-	Beep(1188, 500);
-	Beep(1320, 500);
-	Beep(1056, 500);
-	Beep(880, 500);
-	Beep(880, 500);
-	Sleep(500);
-	Beep(1320, 500);
-	Beep(990, 250);
-	Beep(1056, 250);
-	Beep(1188, 250);
-	Beep(1320, 125);
-	Beep(1188, 125);
-	Beep(1056, 250);
-	Beep(990, 250);
-	Beep(880, 500);
-	Beep(880, 250);
-	Beep(1056, 250);
-	Beep(1320, 500);
-	Beep(1188, 250);
-	Beep(1056, 250);
-	Beep(990, 750);
-	Beep(1056, 250);
-	Beep(1188, 500);
-	Beep(1320, 500);
-	Beep(1056, 500);
-	Beep(880, 500);
-	Beep(880, 500);
-	Sleep(250);
-	Beep(1188, 500);
-	Beep(1408, 250);
-	Beep(1760, 500);
-	Beep(1584, 250);
-	Beep(1408, 250);
-	Beep(1320, 750);
-	Beep(1056, 250);
-	Beep(1320, 500);
-	Beep(1188, 250);
-	Beep(1056, 250);
-	Beep(990, 500);
-	Beep(990, 250);
-	Beep(1056, 250);
-	Beep(1188, 500);
-	Beep(1320, 500);
-	Beep(1056, 500);
-	Beep(880, 500);
-	Beep(880, 500);
-	Sleep(500);
-	Beep(660, 1000);
-	Beep(528, 1000);
-	Beep(594, 1000);
-	Beep(495, 1000);
-	Beep(528, 1000);
-	Beep(440, 1000);
-	Beep(419, 1000);
-	Beep(495, 1000);
-	Beep(660, 1000);
-	Beep(528, 1000);
-	Beep(594, 1000);
-	Beep(495, 1000);
-	Beep(528, 500);
-	Beep(660, 500);
-	Beep(880, 1000);
-	Beep(838, 2000);
-	Beep(660, 1000);
-	Beep(528, 1000);
-	Beep(594, 1000);
-	Beep(495, 1000);
-	Beep(528, 1000);
-	Beep(440, 1000);
-	Beep(419, 1000);
-	Beep(495, 1000);
-	Beep(660, 1000);
-	Beep(528, 1000);
-	Beep(594, 1000);
-	Beep(495, 1000);
-	Beep(528, 500);
-	Beep(660, 500);
-	Beep(880, 1000);
-	Beep(838, 2000);
-}
-void Game::test() {
 
-	//This function is for automating gameplay, for testing, or to just have fun.  Perhaps this will become AI at some point.
-
-	//Move down = 0
-	//Move left = 1
-	//Move right = 2
-	//rotate right = 3
-
-	//board of commands
-	//,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-
-	//Test I block position 0
-	int test1[10000] = { 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-	//Test I block position 1
-	int test2[10000] = { 3, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,3, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,3, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,3, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,3, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,3, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,3, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,3, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-	//TEST Q block position 0
-	int test3[10000] = { 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-	//TEST S block position 0
-
-	//TEST S block position 1
-
-	//TEST Z block position 0
-
-	//TEST Z block position 1
-
-	//TEST T block position 0
-
-	//TEST T block position 1
-
-	//TEST T block position 2
-
-	//TEST T block position 3
-
-	//TEST J block position 0
-
-	//TEST J block position 1
-
-	//TEST J block position 2
-
-	//TEST J block position 3
-
-	//TEST L block position 0
-
-	//TEST L block position 1
-
-	//TEST L block position 2
-
-	//TEST L block position 3
-
-}
 
 //Move functions first checks collision off the pieces, before they are moved, and then set into the board[][] array.
 
@@ -1063,11 +901,6 @@ void Game::move_I() {
 
 		current.position[current.from_top - 4][current.from_left] = empty;
 		current.position[current.from_top - 3][current.from_left] = empty;
-
-
-
-
-
 	}
 	//Rotation = 1 Movement =  left
 	if ((current.command == 1) && (current.rotation == 1) && (current.W == 0)) {
@@ -1097,54 +930,6 @@ void Game::move_I() {
 		current.position[current.from_top + 1][current.from_left - 1] = empty;
 
 	}
-	//Rotation = 0 Movement = rotate
-	//
-	//
-	//
-	//if ((current.command == 3) && (current.rotation == 0) && (current.W == 0) && (current.E == 0)) {
-
-	//	current.position[current.from_top][current.from_left] = empty;
-	//	current.position[current.from_top][current.from_left - 1] = empty;
-	//	current.position[current.from_top][current.from_left - 2] = empty;
-	//	current.position[current.from_top][current.from_left + 1] = empty;
-
-	//	current.position[current.from_top][current.from_left] = block;//middle block
-	//	current.position[current.from_top + 1][current.from_left] = block;
-	//	current.position[current.from_top - 1][current.from_left] = block;
-	//	current.position[current.from_top - 2][current.from_left] = block;
-
-	//	// set new rotation position
-	//	current.rotation = 1;
-	//	return;
-	//	//void Game::command so it doesn't interact anymore
-	//	current.command = NULL;
-	//}
-	//Rotation = 1 Movement = rotate
-
-	//
-	//
-	//
-	//if ((current.command == 3) && (current.rotation == 1) && (current.W == 0) && (current.E == 0)) {
-
-	//	current.position[current.from_top][current.from_left] = empty;
-	//	current.position[current.from_top - 1][current.from_left] = empty;
-	//	current.position[current.from_top - 2][current.from_left] = empty;
-	//	current.position[current.from_top + 1][current.from_left] = empty;
-
-	//	current.position[current.from_top][current.from_left] = block;
-	//	current.position[current.from_top][current.from_left - 1] = block;
-	//	current.position[current.from_top][current.from_left - 2] = block;
-	//	current.position[current.from_top][current.from_left + 1] = block;
-
-	//	// set new rotation position
-	//	current.rotation = 0;
-	//	//void Game::command so it doesn't interact anymore
-	//	current.command = NULL;
-
-	//}
-
-
-
 }
 
 //Q Piece type = 1
@@ -1860,59 +1645,6 @@ void Game::move_T() {
 		current.position[current.from_top][current.from_left + 1] = block;
 
 	}
-
-
-
-
-
-
-
-
-	//// Rotation = 0 Movement =  rotateright
-	//if ((current.command == 3) && (current.rotation == 0)) {
-
-	//	current.position[current.from_top - 1][current.from_left] = block;
-
-	//	current.position[current.from_top][current.from_left - 1] = empty;
-
-	//	current.rotation = 1;
-	//	return;
-
-	//}
-	//// Rotation = 1 Movement =  rotateright
-	//if ((current.command == 3) && (current.rotation == 1)) {
-
-	//	current.position[current.from_top][current.from_left - 1] = block;
-
-	//	current.position[current.from_top + 1][current.from_left] = empty;
-
-	//	current.rotation = 2;
-	//	return;
-
-	//}
-	//// Rotation = 2 Movement =  rotateright
-	//if ((current.command == 3) && (current.rotation == 2)) {
-
-	//	current.position[current.from_top + 1][current.from_left] = block;
-
-	//	current.position[current.from_top][current.from_left + 1] = empty;
-
-	//	current.rotation = 3;
-	//	return;
-
-	//}
-	//// Rotation = 3 Movement =  rotateright
-	//if ((current.command == 3) && (current.rotation == 3)) {
-
-	//	current.position[current.from_top][current.from_left + 1] = block;
-
-	//	current.position[current.from_top - 1][current.from_left] = empty;
-
-	//	current.rotation = 0;
-	//	return;
-
-	//}
-
 
 
 }
