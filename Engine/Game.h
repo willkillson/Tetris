@@ -52,7 +52,7 @@ private:
 	//NEWTIMERSSYEM
 	float _ARE = 25.0f;//measurement is in frames
 	float _DAS = 16.0f; //delayed auto shift
-	float _LOCK = 30.0f; //lock delay
+	float _LOCK = 3.0f; //lock delay
 	float _LINECLEAR = 40.0f;
 	float _GRAVITY = 4.0 /256.0f;//rows per frame
 	float _GRAVITYEFFECT = 0.0f;
@@ -117,6 +117,8 @@ private:
 		int W;//prevent left movement
 		int rr; //prevent rotate right if rotate right is blocked
 		int rl; //prevent rotate left if rotate left is blocked
+
+		bool isInstantDropping = false;
 
 		int setdelay;
 		int basedelay;

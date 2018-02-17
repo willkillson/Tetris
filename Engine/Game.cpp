@@ -75,10 +75,15 @@ void Game::UpdateModel()
 		command();
 		movementdelaytotal = 0;
 	}
-
+	if (current.isInstantDropping == true)
+	{
+		current.command = 0;
+	}
 	master_move();
 	scoreBoard();
+
 	shiftStack();
+
 	calculateScore();
 	
 }
@@ -216,6 +221,7 @@ void Game::command() {
 	
 	if (_GRAVITYEFFECT >= 1)
 	{
+		gfx.DrawRectDem(200, 200, 5, 5, Colors::Cyan);
 		current.command = 0;
 		_GRAVITYEFFECT = 0.0f;
 	}
@@ -322,7 +328,7 @@ void Game::scoreBoard() {
 void Game::place_piece() {
 
 	int type = 99;
-
+	current.isInstantDropping = false;
 	current.command = 999;
 	type = (rand() % 7);
 
@@ -342,6 +348,7 @@ void Game::place_piece() {
 		current.position[4][5] = block;
 		current.position[4][6] = block;
 		current.position[4][7] = block;
+
 	}
 	if (type == 1) {
 		//drawing a Q square piece
@@ -484,153 +491,86 @@ void Game::master_move() {
 
 
 	//999 prevents further movement
+	if (current.command == 5)
+	{
+		current.isInstantDropping = true;
+	}
 	if (current.command == 999) {
 		return;
 	}
 
 	if (current.type == 'I') {
-		if (current.command == 5) {
-			current.command = 0;
-			while (current.set != 1) {
-				master_collision();
-				move_I();
-				master_collision();
-
-
-			}
-		}
-		else {
 			if (current.S == 0) {//reset delay 
 				current.setdelay = _LOCK;//current.basedelay;
 			}
 			master_collision();
 			move_I();
 			master_collision();
-		}
+		
 
 
 
 	}
 	if (current.type == 'Q') {
-		if (current.command == 5) {
-			current.command = 0;
-			while (current.set != 1) {
-				master_collision();
-				move_Q();
-				master_collision();
 
+		if (current.S == 0) {//reset delay 
+			current.setdelay = _LOCK;//current.basedelay;
+		}
+		master_collision();
+		move_Q();
+		master_collision();
 
-			}
-		}
-		else {
-			if (current.S == 0) {//reset delay 
-				current.setdelay = _LOCK;//current.basedelay;
-			}
-			master_collision();
-			move_Q();
-			master_collision();
-		}
 
 	}
 	if (current.type == 'S') {
-		if (current.command == 5) {
-			current.command = 0;
-			while (current.set != 1) {
-				master_collision();
-				move_S();
-				master_collision();
 
-
-			}
-		}
-		else {
 			if (current.S == 0) {//reset delay 
 				current.setdelay = _LOCK;//current.basedelay;
 			}
 			master_collision();
 			move_S();
 			master_collision();
-		}
+		
 	}
 	if (current.type == 'L') {
-		if (current.command == 5) {
-			current.command = 0;
-			while (current.set != 1) {
-				master_collision();
-				move_L();
-				master_collision();
 
-
-			}
-		}
-		else {
 			if (current.S == 0) {//reset delay 
 				current.setdelay = _LOCK;//current.basedelay;
 			}
 			master_collision();
 			move_L();
 			master_collision();
-		}
+		
 	}
 	if (current.type == 'J') {
-		if (current.command == 5) {
-			current.command = 0;
-			while (current.set != 1) {
-				master_collision();
-				move_J();
-				master_collision();
 
-
-			}
-		}
-		else {
 			if (current.S == 0) {//reset delay 
 				current.setdelay = _LOCK;//current.basedelay;
 			}
 			master_collision();
 			move_J();
 			master_collision();
-		}
+		
 	}
 	if (current.type == 'Z') {
-		if (current.command == 5) {
-			current.command = 0;
-			while (current.set != 1) {
-				master_collision();
-				move_Z();
-				master_collision();
 
-
-			}
-		}
-		else {
 			if (current.S == 0) {//reset delay 
 				current.setdelay = _LOCK;//current.basedelay;
 			}
 			master_collision();
 			move_Z();
 			master_collision();
-		}
 	}
+	
 	if (current.type == 'T') {
-		if (current.command == 5) {
-			current.command = 0;
-			while (current.set != 1) {
-				master_collision();
-				move_T();
-				master_collision();
 
-
-			}
+		if (current.S == 0) {//reset delay 
+			current.setdelay = _LOCK;//current.basedelay;
 		}
-		else {
-			if (current.S == 0) {//reset delay 
-				current.setdelay = _LOCK;//current.basedelay;
-			}
-			master_collision();
-			move_T();
-			master_collision();
-		}
+		master_collision();
+		move_T();
+		master_collision();
+		
 	}
 
 
