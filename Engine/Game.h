@@ -55,13 +55,15 @@ private:
 	float _LOCK = 30.0f; //lock delay
 	float _LINECLEAR = 40.0f;
 	float _GRAVITY = 4.0 /256.0f;//rows per frame
+	float _GRAVITYEFFECT = 0.0f;
 
-	float _TOTFRAMECOUNTER = 0;
-	float _TOTTIME = 0;
+	float _dt = 0.0f;
+	float _TOTFRAMECOUNTER = 0.0f;
+	float _TOTTIME = 0.0f;
 
-	float _FPSCOUNTER = 0;
-	float _FPSFRAMECOUNT = 0;
-	float _FPSFRAMETIME = 0;
+	float _FPSCOUNTER = 0.0f;
+	float _FPSFRAMECOUNT = 0.0f;
+	float _FPSFRAMETIME = 0.0f;
 
 	unsigned int _SCORE = 0;
 
