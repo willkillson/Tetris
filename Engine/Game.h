@@ -120,9 +120,9 @@ private:
 
 		bool isInstantDropping = false;
 
-		int setdelay;
-		int basedelay;
-		int set;// setting a piece will then copy the array position into the array of the board
+		float setdelay;
+		float basedelay;
+		bool set;// setting a piece will then copy the array position into the array of the board
 		int from_left;//x position to calculate bounds of a block
 		int from_top;//y position to calculate bounds of a block
 		int rotation;//Left and right 
