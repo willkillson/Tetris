@@ -221,6 +221,7 @@ void Game::command() {
 			current.command = 3;		// respond to  key release event
 		if (e.GetCode() == 0x4B)// check the event
 			current.command = 4;		// respond to  key release event
+		current.setdelay = _LOCK;
 	}
 	else
 	{
