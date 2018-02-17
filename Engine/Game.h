@@ -75,7 +75,7 @@ private:
 	float msdelay = 0;
 	bool duringmovement = false;
 
-	float movementdelaytotal = 0;
+	//float movementdelaytotal = 0;
 	static constexpr float movementdelay = 0.15f;
 
 
@@ -148,6 +148,7 @@ private:
 	void music();
 
 	//custom
+	void PerformInstantDropRoutine();
 	void calculateScore();
 	void CheckIfSetOrNot();
 

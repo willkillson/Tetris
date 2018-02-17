@@ -72,27 +72,22 @@ void Game::UpdateModel()
 	}
 	else//players decision
 	{
-		command();
-		movementdelaytotal = 0;
-	}
-	if (current.isInstantDropping == true)
-	{
-		current.command = 0;
-
-		while (current.S != 1)
+		if (current.isInstantDropping == true)
 		{
+			PerformInstantDropRoutine();
+		}
+		else
+		{
+			command();
 			master_move();
 			scoreBoard();
 			shiftStack();
 			calculateScore();
 		}
 	}
-	master_move();
-	scoreBoard();
 
-	shiftStack();
 
-	calculateScore();
+
 	
 }
 void Game::ComposeFrame()
@@ -242,7 +237,32 @@ void Game::command() {
 	}
 
 
+}
+void Game::PerformInstantDropRoutine()
+{
+	current.command = 0;
 
+	while (1)
+	{
+		master_move();
+		current.set = 0;
+		current.basedelay = _LOCK;
+
+		scoreBoard();
+		shiftStack();
+		calculateScore();
+
+		if (current.S == 1)
+		{
+			current.isInstantDropping = false;
+			current.basedelay = _LOCK;
+			current.command = 999;
+			break;
+		}
+
+
+
+	}
 }
 void Game::calculateScore()
 {
@@ -273,7 +293,7 @@ void Game::CheckIfSetOrNot()
 	if (current.S == 1) {
 		current.setdelay -= _LOCK * _dt;
 	}
-	if ((current.setdelay <= 0) && (current.S == 1)) {
+	if ((current.setdelay <= 0) && (current.S == 1)||((current.command==0)&&(current.S==1))) {
 		current.set = 1;
 	}
 
@@ -508,6 +528,7 @@ void Game::master_collision() {
 	if (current.type == 'T') {
 		collision_T();
 	}
+
 	CheckIfSetOrNot();
 	///////for all pieces
 
@@ -523,6 +544,7 @@ void Game::master_move() {
 		current.isInstantDropping = true;
 	}
 	if (current.command == 999) {
+		//CheckIfSetOrNot();
 		return;
 	}
 
@@ -532,7 +554,7 @@ void Game::master_move() {
 			}
 			master_collision();
 			move_I();
-			master_collision();
+
 		
 
 
@@ -545,7 +567,7 @@ void Game::master_move() {
 		}
 		master_collision();
 		move_Q();
-		master_collision();
+
 
 
 	}
@@ -556,7 +578,7 @@ void Game::master_move() {
 			}
 			master_collision();
 			move_S();
-			master_collision();
+
 		
 	}
 	if (current.type == 'L') {
@@ -566,7 +588,7 @@ void Game::master_move() {
 			}
 			master_collision();
 			move_L();
-			master_collision();
+
 		
 	}
 	if (current.type == 'J') {
@@ -576,7 +598,7 @@ void Game::master_move() {
 			}
 			master_collision();
 			move_J();
-			master_collision();
+
 		
 	}
 	if (current.type == 'Z') {
@@ -586,7 +608,7 @@ void Game::master_move() {
 			}
 			master_collision();
 			move_Z();
-			master_collision();
+
 	}
 	
 	if (current.type == 'T') {
@@ -596,7 +618,7 @@ void Game::master_move() {
 		}
 		master_collision();
 		move_T();
-		master_collision();
+
 		
 	}
 
