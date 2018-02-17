@@ -6,6 +6,7 @@
 Keys are WASD for movement, and JK for rotate left / rotate right. Instant drop with W.
 
 
-**Changes**
+Changes
+\n
 -Instant drop added
 -Lock delay added
