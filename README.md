@@ -1,5 +1,5 @@
 # Tetris
-This project uses the planet chili framework for initializing OpenGL.
+This project uses the planet chili framework for initializing OpenGL. 
 https://github.com/planetchili/chili_framework. 
 
 All code by me can be found in Game.h
