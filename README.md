@@ -2,6 +2,8 @@
 
 All code by me can be found in Game.h
 
+fixes 1
+
 This project uses [the planet chili framework](https://github.com/planetchili/chili_framework) for initializing OpenGL.
 
 Seven segment counter can be found [here](https://github.com/willkillson/SevenSegmentDisplay) which also uses the framework.
